@@ -132,14 +132,14 @@
                         <inset key="separatorInset" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="AddFirstNameTableViewCellId" id="xv6-9a-8WB" customClass="AddFirstNameTableViewCell" customModule="MyTableApp" customModuleProvider="target">
-                                <rect key="frame" x="16" y="32" width="343" height="48"/>
+                                <rect key="frame" x="16" y="32" width="343" height="48.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xv6-9a-8WB" id="Liz-uW-OOE">
-                                    <rect key="frame" x="0.0" y="0.0" width="343" height="48"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="343" height="48.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Имя" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DxG-aC-Eid">
-                                            <rect key="frame" x="16" y="11" width="311" height="26"/>
+                                            <rect key="frame" x="16" y="11" width="311" height="26.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                             <textInputTraits key="textInputTraits"/>
                                             <connections>
@@ -159,14 +159,14 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="AddSecondNameTableViewCellId" id="ric-Tr-2XA" customClass="AddSecondNameTableViewCell" customModule="MyTableApp" customModuleProvider="target">
-                                <rect key="frame" x="16" y="80" width="343" height="48.5"/>
+                                <rect key="frame" x="16" y="80.5" width="343" height="48"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ric-Tr-2XA" id="mxI-J7-gDO">
-                                    <rect key="frame" x="0.0" y="0.0" width="343" height="48.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="343" height="48"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Фамилия" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="isl-lp-2Zv">
-                                            <rect key="frame" x="16" y="11" width="311" height="26.5"/>
+                                            <rect key="frame" x="16" y="11" width="311" height="26"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                             <textInputTraits key="textInputTraits"/>
                                         </textField>
@@ -183,14 +183,14 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="AddDateTableViewCellId" id="uSh-3A-Fhk" customClass="AddDateTableViewCell" customModule="MyTableApp" customModuleProvider="target">
-                                <rect key="frame" x="16" y="128.5" width="343" height="48"/>
+                                <rect key="frame" x="16" y="128.5" width="343" height="48.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="uSh-3A-Fhk" id="F1h-fS-Is4">
-                                    <rect key="frame" x="0.0" y="0.0" width="343" height="48"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="343" height="48.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Дата рождения" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4TF-r2-2Fk" customClass="add">
-                                            <rect key="frame" x="16" y="11" width="311" height="26"/>
+                                            <rect key="frame" x="16" y="11" width="311" height="26.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                             <textInputTraits key="textInputTraits"/>
                                         </textField>
@@ -207,14 +207,14 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="AddPhoneNumberTableViewCellId" id="7eK-nK-UFx" customClass="AddPhoneNumberTableViewCell" customModule="MyTableApp" customModuleProvider="target">
-                                <rect key="frame" x="16" y="176.5" width="343" height="48.5"/>
+                                <rect key="frame" x="16" y="177" width="343" height="48"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7eK-nK-UFx" id="PNr-RA-KgA">
-                                    <rect key="frame" x="0.0" y="0.0" width="343" height="48.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="343" height="48"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Номер телефона" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pQ5-kl-nhp">
-                                            <rect key="frame" x="16" y="11" width="311" height="26.5"/>
+                                            <rect key="frame" x="16" y="11" width="311" height="26"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                             <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
                                         </textField>
@@ -231,14 +231,14 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="AddSexTableViewCellId" id="gqh-vI-Uis" customClass="AddSexTableViewCell" customModule="MyTableApp" customModuleProvider="target">
-                                <rect key="frame" x="16" y="225" width="343" height="48"/>
+                                <rect key="frame" x="16" y="225" width="343" height="48.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="gqh-vI-Uis" id="Ubo-Gb-Gfq">
-                                    <rect key="frame" x="0.0" y="0.0" width="343" height="48"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="343" height="48.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Пол" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="o4Z-GG-7yC">
-                                            <rect key="frame" x="16" y="11" width="311" height="26"/>
+                                            <rect key="frame" x="16" y="11" width="311" height="26.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                             <textInputTraits key="textInputTraits"/>
                                         </textField>
@@ -255,14 +255,14 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="AddStatusEventHolderTableViewCellId" id="xcJ-rM-V7L" customClass="AddStatusEventHolderTableViewCell" customModule="MyTableApp" customModuleProvider="target">
-                                <rect key="frame" x="16" y="273" width="343" height="48"/>
+                                <rect key="frame" x="16" y="273.5" width="343" height="48.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xcJ-rM-V7L" id="cO1-WY-Mvx">
-                                    <rect key="frame" x="0.0" y="0.0" width="343" height="48"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="343" height="48.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Статус" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="t6Q-Uy-lE5">
-                                            <rect key="frame" x="16" y="11" width="311" height="26"/>
+                                            <rect key="frame" x="16" y="11" width="311" height="26.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                             <textInputTraits key="textInputTraits"/>
                                         </textField>
@@ -279,20 +279,27 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="AddEventTableViewCellId" id="nKb-wm-m0Y" customClass="AddEventTableViewCell" customModule="MyTableApp" customModuleProvider="target">
-                                <rect key="frame" x="16" y="321" width="343" height="43.5"/>
+                                <rect key="frame" x="16" y="322" width="343" height="43"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="nKb-wm-m0Y" id="jo2-q2-inL">
-                                    <rect key="frame" x="0.0" y="0.0" width="343" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="343" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Oh-ni-ADg">
-                                            <rect key="frame" x="66" y="11" width="42" height="21.5"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="wwwwwww" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Oh-ni-ADg">
+                                            <rect key="frame" x="66" y="11" width="90" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KSn-xp-UD1">
                                             <rect key="frame" x="166" y="11" width="42" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XzG-Bp-ZLc">
+                                            <rect key="frame" x="249" y="12" width="42" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
