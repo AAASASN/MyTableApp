@@ -33,6 +33,9 @@ class StartTableViewController: UITableViewController {
 - titleForHeaderInSection - НЕ обязательный метод протокола UITableViewDataSource, возврвщает заголовок в секцию
 */
 
+// qqqqqqqqqqq
+
+
 extension StartTableViewController {
     
     // возвращаем количество секций
