@@ -1,14 +1,18 @@
 //
-//  EventTableViewCell.swift
+//  ChangeEventHolderStatusCustomTableViewCell.swift
 //  MyTableApp
 //
-//  Created by Александр Мараенко on 18.07.2022.
+//  Created by Александр Мараенко on 29.07.2022.
 //
 
 import UIKit
 
-class AddEventTableViewCell: UITableViewCell {
+class ChangeEventHolderStatusCustomTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var statusNameLabel: UILabel!
+    @IBOutlet weak var statusDescriptionLabel: UILabel!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

@@ -7,12 +7,19 @@
 
 import Foundation
 
+enum EventHolderSex : String {
+    case male = "мужской"
+    case female = "женский"
+    case third = "третий пол"
+    case none = "пол не выбран"
+}
+
 enum EventHolderStatus : String {
-    case schoolFriend  = "школьный друг"
-    case bestFriend = "лучший друг"
-    case someFriend = "просто знакомый"
-    case none = "статус не определен"
-    case colleague  = "коллега"
+    case schoolFriend  = "Школьный друг"
+    case bestFriend = "Лучший друг"
+    case someFriend = "Просто знакомый"
+    case none = "Статус не определен"
+    case colleague  = "Коллега"
 }
 
 enum EventType : String {

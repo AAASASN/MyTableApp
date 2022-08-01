@@ -10,27 +10,41 @@ import Foundation
 protocol EventHolderProtocol {
     var eventHolderFirstName : String { get set }
     var eventHolderLastName : String { get set }
-    var eventHolderStatus : EventHolderStatus { get set }
-    var events : [EventProtocol] { get set }
+    var eventHolderBirthdayDate : String { get set }
     var eventHolderPhoneNumber : String { get set }
     var sex : Bool { get set }
+    var eventHolderStatus : EventHolderStatus { get set }
+    var events : [EventProtocol] { get set }
+
+
 }
 
 class EventHolder : EventHolderProtocol {
     var eventHolderFirstName = String()
     var eventHolderLastName = String()
-    var eventHolderStatus: EventHolderStatus
-    var events: [EventProtocol]
+    var eventHolderBirthdayDate: String
     var eventHolderPhoneNumber: String
     var sex: Bool
+    var eventHolderStatus: EventHolderStatus
+    var events: [EventProtocol]
+    
 
-    init(eventHolderFirstName : String, eventHolderLastName : String, eventHolderStatus : EventHolderStatus, events : [EventProtocol], eventHolderPhoneNumber : String, sex : Bool) {
+    init(eventHolderFirstName : String,
+         eventHolderLastName : String,
+         eventHolderBirthdayDate : String,
+         eventHolderPhoneNumber : String,
+         sex : Bool,
+         eventHolderStatus : EventHolderStatus,
+         events : [EventProtocol] ) {
         self.eventHolderFirstName = eventHolderFirstName
         self.eventHolderLastName = eventHolderLastName
-        self.eventHolderStatus = eventHolderStatus
-        self.events = events
+        self.eventHolderBirthdayDate = eventHolderBirthdayDate
         self.eventHolderPhoneNumber = eventHolderPhoneNumber
         self.sex = sex
+        self.eventHolderStatus = eventHolderStatus
+        self.events = events
+        
+        
     }
 }
 

@@ -67,7 +67,13 @@ extension StartTableViewController {
         
         //var nameForLabel = Event(eventHolder: "", eventDate: "", eventDiscription: <#String#>, eventHolderStatus: .none, isActual: <#Bool#>, eventType: .none)
         
-        var nameForLabel = EventHolder(eventHolderFirstName: "", eventHolderLastName: "", eventHolderStatus: .none, events: [], eventHolderPhoneNumber: "", sex: true)
+        var nameForLabel = EventHolder(eventHolderFirstName: "",
+                                       eventHolderLastName: "",
+                                       eventHolderBirthdayDate: "",
+                                       eventHolderPhoneNumber: "",
+                                       sex: true,
+                                       eventHolderStatus: .none,
+                                       events: [])
         if let nameForLabelInIf = eventsArrayFromEventsStatusHolder[indexPath.row] as? EventHolder {
             nameForLabel = nameForLabelInIf
         }

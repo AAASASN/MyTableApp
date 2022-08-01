@@ -52,59 +52,106 @@ class EventStorage: EventStorageProtocol {
     // эта функция присваивает свойству eventArray тестовый массив событий(Event), в будующем массив будет вытаскиваться из userDefaults
     func getDataFromUserDefaults() -> [EventHolderProtocol] {
         
-        let someEventHolderArray = [EventHolder(eventHolderFirstName: "Вася", eventHolderLastName: "Васин", eventHolderStatus: .bestFriend,
+        let someEventHolderArray = [EventHolder(eventHolderFirstName: "Вася",
+                                                eventHolderLastName: "Васин",
+                                                eventHolderBirthdayDate: "01.12.1990",
+                                                eventHolderPhoneNumber : "+79051234567",
+                                                sex: true,
+                                                eventHolderStatus: .bestFriend,
                                                 events: [Event(eventDate: "01.12.1990", eventType: .wedding,         eventDiscription: "описание", isActual: true),
                                                          Event(eventDate: "17.03.2019", eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
-                                                         Event(eventDate: "11.07.1964", eventType: .birthday,        eventDiscription: "описание", isActual: true)],
-                                                eventHolderPhoneNumber : "+79051234567", sex: true),
+                                                         Event(eventDate: "11.07.1964", eventType: .birthday,        eventDiscription: "описание", isActual: true)]
+                                               ),
                                     
-                                    EventHolder(eventHolderFirstName: "Владимир", eventHolderLastName: "Васин", eventHolderStatus: .schoolFriend,
+                                    EventHolder(eventHolderFirstName: "Владимир",
+                                                eventHolderLastName: "Васин",
+                                                eventHolderBirthdayDate: "11.07.1964",
+                                                eventHolderPhoneNumber : "+79051234567",
+                                                sex: true,
+                                                eventHolderStatus: .schoolFriend,
                                                 events: [Event(eventDate: "01.12.1990", eventType: .wedding,         eventDiscription: "описание", isActual: true),
                                                          Event(eventDate: "17.03.2019", eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
-                                                         Event(eventDate: "11.07.1964", eventType: .birthday,        eventDiscription: "описание", isActual: true)],
-                                                eventHolderPhoneNumber : "+79051234567", sex: true),
+                                                         Event(eventDate: "11.07.1964", eventType: .birthday,        eventDiscription: "описание", isActual: true)]
+                                                ),
                                     
-                                    EventHolder(eventHolderFirstName: "Стас", eventHolderLastName: "Владимиров", eventHolderStatus: .schoolFriend,
+                                    EventHolder(eventHolderFirstName: "Стас",
+                                                eventHolderLastName: "Владимиров",
+                                                eventHolderBirthdayDate: "11.07.1964",
+                                                eventHolderPhoneNumber : "+79051234567",
+                                                sex: true,
+                                                eventHolderStatus: .schoolFriend,
                                                 events: [Event(eventDate: "01.12.1990", eventType: .wedding,         eventDiscription: "описание", isActual: true),
                                                          Event(eventDate: "17.03.2019", eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
-                                                         Event(eventDate: "11.07.1964", eventType: .birthday,        eventDiscription: "описание", isActual: true)],
-                                                eventHolderPhoneNumber : "+79051234567", sex: true),
+                                                         Event(eventDate: "11.07.1964", eventType: .birthday,        eventDiscription: "описание", isActual: true)]
+                                                ),
                                     
-                                    EventHolder(eventHolderFirstName: "Сергей", eventHolderLastName: "Стасов", eventHolderStatus: .colleague,
+                                    EventHolder(eventHolderFirstName: "Сергей",
+                                                eventHolderLastName: "Стасов",
+                                                eventHolderBirthdayDate: "11.07.1964",
+                                                eventHolderPhoneNumber : "+79051234567",
+                                                sex: true,
+                                                eventHolderStatus: .colleague,
                                                 events: [Event(eventDate: "01.12.1990", eventType: .wedding,         eventDiscription: "описание", isActual: true),
                                                          Event(eventDate: "17.03.2019", eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
-                                                         Event(eventDate: "11.07.1964", eventType: .birthday,        eventDiscription: "описание", isActual: true)],
-                                                eventHolderPhoneNumber : "+79051234567", sex: true),
+                                                         Event(eventDate: "11.07.1964", eventType: .birthday,        eventDiscription: "описание", isActual: true)]
+                                                ),
                                     
-                                    EventHolder(eventHolderFirstName: "Роман", eventHolderLastName: "Сергеев", eventHolderStatus: .colleague,
+                                    EventHolder(eventHolderFirstName: "Роман",
+                                                eventHolderLastName: "Сергеев",
+                                                eventHolderBirthdayDate: "11.07.1964",
+                                                eventHolderPhoneNumber : "+79051234567",
+                                                sex: true,
+                                                eventHolderStatus: .colleague,
                                                 events: [Event(eventDate: "01.12.1990", eventType: .wedding,         eventDiscription: "описание", isActual: true),
                                                          Event(eventDate: "17.03.2019", eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
-                                                         Event(eventDate: "11.07.1964", eventType: .birthday,        eventDiscription: "описание", isActual: true)],
-                                                eventHolderPhoneNumber : "+79051234567", sex: true),
+                                                         Event(eventDate: "11.07.1964", eventType: .birthday,        eventDiscription: "описание", isActual: true)]
+                                                
+                                               ),
                                     
-                                    EventHolder(eventHolderFirstName: "Андрей", eventHolderLastName: "Романов", eventHolderStatus: .colleague,
+                                    EventHolder(eventHolderFirstName: "Андрей",
+                                                eventHolderLastName: "Романов",
+                                                eventHolderBirthdayDate: "11.07.1964",
+                                                eventHolderPhoneNumber : "+79051234567",
+                                                sex: true,
+                                                eventHolderStatus: .colleague,
                                                 events: [Event(eventDate: "01.12.1990", eventType: .wedding,         eventDiscription: "описание", isActual: true),
                                                          Event(eventDate: "17.03.2019", eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
-                                                         Event(eventDate: "11.07.1964", eventType: .birthday,        eventDiscription: "описание", isActual: true)],
-                                                eventHolderPhoneNumber : "+79051234567", sex: true),
+                                                         Event(eventDate: "11.07.1964", eventType: .birthday,        eventDiscription: "описание", isActual: true)]
+                                                ),
                                     
-                                    EventHolder(eventHolderFirstName: "Екатерина", eventHolderLastName: "Андреева", eventHolderStatus: .someFriend,
+                                    EventHolder(eventHolderFirstName: "Екатерина",
+                                                eventHolderLastName: "Андреева",
+                                                eventHolderBirthdayDate: "11.07.1964",
+                                                eventHolderPhoneNumber : "+79051234567",
+                                                sex: false,
+                                                eventHolderStatus: .someFriend,
                                                 events: [Event(eventDate: "01.12.1990", eventType: .wedding,         eventDiscription: "описание", isActual: true),
                                                          Event(eventDate: "17.03.2019", eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
-                                                         Event(eventDate: "11.07.1964", eventType: .birthday,        eventDiscription: "описание", isActual: true)],
-                                                eventHolderPhoneNumber : "+79051234567", sex: false),
+                                                         Event(eventDate: "11.07.1964", eventType: .birthday,        eventDiscription: "описание", isActual: true)]
+                                                ),
                                     
-                                    EventHolder(eventHolderFirstName: "София", eventHolderLastName: "Старовойтова", eventHolderStatus: .someFriend,
+                                    EventHolder(eventHolderFirstName: "София",
+                                                eventHolderLastName: "Старовойтова",
+                                                eventHolderBirthdayDate: "11.07.1964",
+                                                eventHolderPhoneNumber : "+79051234567",
+                                                sex: false,
+                                                eventHolderStatus: .someFriend,
                                                 events: [Event(eventDate: "01.12.1990", eventType: .wedding,         eventDiscription: "описание", isActual: true),
                                                          Event(eventDate: "17.03.2019", eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
-                                                         Event(eventDate: "11.07.1964", eventType: .birthday,        eventDiscription: "описание", isActual: true)],
-                                                eventHolderPhoneNumber : "+79051234567", sex: false),
+                                                         Event(eventDate: "11.07.1964", eventType: .birthday,        eventDiscription: "описание", isActual: true)]
+                                                
+                                                ),
                                     
-                                    EventHolder(eventHolderFirstName: "Алла", eventHolderLastName: "Пугчева", eventHolderStatus: .none,
+                                    EventHolder(eventHolderFirstName: "Алла",
+                                                eventHolderLastName: "Пугчева",
+                                                eventHolderBirthdayDate: "11.07.1964",
+                                                eventHolderPhoneNumber : "+79051234567",
+                                                sex: false,
+                                                eventHolderStatus: .none,
                                                 events: [Event(eventDate: "01.12.1990", eventType: .wedding,         eventDiscription: "описание", isActual: true),
                                                          Event(eventDate: "17.03.2019", eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
-                                                         Event(eventDate: "11.07.1964", eventType: .birthday,        eventDiscription: "описание", isActual: true)],
-                                                eventHolderPhoneNumber : "+79051234567", sex: false)]
+                                                         Event(eventDate: "11.07.1964", eventType: .birthday,        eventDiscription: "описание", isActual: true)]
+                                                )]
          return someEventHolderArray
     }
     
