@@ -13,8 +13,9 @@ protocol EventStorageProtocol {
     
     //func getDataFromUserDefaults() -> [EventProtocol]
     func getDataFromUserDefaults() -> [EventHolderProtocol]
+    func getEventHolderAndEventArray() -> [(EventHolderProtocol, EventProtocol)]
     
-    func sortEventStorageByEventHolderStatus() -> [EventHolderStatus : [EventHolderProtocol]]
+    // func sortEventStorageByEventHolderStatus() -> [EventHolderStatus : [EventHolderProtocol]]
     func saveDataTouserDefaults(eventArray: [EventProtocol]) -> Void
 }
 
@@ -54,35 +55,35 @@ class EventStorage: EventStorageProtocol {
         
         let someEventHolderArray = [EventHolder(eventHolderFirstName: "Вася",
                                                 eventHolderLastName: "Васин",
-                                                eventHolderBirthdayDate: "01.12.1990",
+                                                eventHolderBirthdayDate: "25.04.1984",
                                                 eventHolderPhoneNumber : "+79051234567",
                                                 sex: true,
                                                 eventHolderStatus: .bestFriend,
-                                                events: [Event(eventDate: "01.12.1990", eventType: .wedding,         eventDiscription: "описание", isActual: true),
+                                                events: [Event(eventDate: "25.04.1984", eventType: .birthday,        eventDiscription: "описание", isActual: true),
                                                          Event(eventDate: "17.03.2019", eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
-                                                         Event(eventDate: "11.07.1964", eventType: .birthday,        eventDiscription: "описание", isActual: true)]
+                                                         Event(eventDate: "01.12.1990", eventType: .wedding,         eventDiscription: "описание", isActual: true)]
                                                ),
                                     
                                     EventHolder(eventHolderFirstName: "Владимир",
                                                 eventHolderLastName: "Васин",
-                                                eventHolderBirthdayDate: "11.07.1964",
+                                                eventHolderBirthdayDate: "01.12.1990",
                                                 eventHolderPhoneNumber : "+79051234567",
                                                 sex: true,
                                                 eventHolderStatus: .schoolFriend,
                                                 events: [Event(eventDate: "01.12.1990", eventType: .wedding,         eventDiscription: "описание", isActual: true),
                                                          Event(eventDate: "17.03.2019", eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
-                                                         Event(eventDate: "11.07.1964", eventType: .birthday,        eventDiscription: "описание", isActual: true)]
+                                                         Event(eventDate: "01.12.1990", eventType: .birthday,        eventDiscription: "описание", isActual: true)]
                                                 ),
                                     
                                     EventHolder(eventHolderFirstName: "Стас",
                                                 eventHolderLastName: "Владимиров",
-                                                eventHolderBirthdayDate: "11.07.1964",
+                                                eventHolderBirthdayDate: "03.09.2006",
                                                 eventHolderPhoneNumber : "+79051234567",
                                                 sex: true,
                                                 eventHolderStatus: .schoolFriend,
                                                 events: [Event(eventDate: "01.12.1990", eventType: .wedding,         eventDiscription: "описание", isActual: true),
                                                          Event(eventDate: "17.03.2019", eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
-                                                         Event(eventDate: "11.07.1964", eventType: .birthday,        eventDiscription: "описание", isActual: true)]
+                                                         Event(eventDate: "03.09.2006", eventType: .birthday,        eventDiscription: "описание", isActual: true)]
                                                 ),
                                     
                                     EventHolder(eventHolderFirstName: "Сергей",
@@ -98,93 +99,109 @@ class EventStorage: EventStorageProtocol {
                                     
                                     EventHolder(eventHolderFirstName: "Роман",
                                                 eventHolderLastName: "Сергеев",
-                                                eventHolderBirthdayDate: "11.07.1964",
+                                                eventHolderBirthdayDate: "20.08.1978",
                                                 eventHolderPhoneNumber : "+79051234567",
                                                 sex: true,
                                                 eventHolderStatus: .colleague,
                                                 events: [Event(eventDate: "01.12.1990", eventType: .wedding,         eventDiscription: "описание", isActual: true),
                                                          Event(eventDate: "17.03.2019", eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
-                                                         Event(eventDate: "11.07.1964", eventType: .birthday,        eventDiscription: "описание", isActual: true)]
+                                                         Event(eventDate: "20.08.1978", eventType: .birthday,        eventDiscription: "описание", isActual: true)]
                                                 
                                                ),
                                     
                                     EventHolder(eventHolderFirstName: "Андрей",
                                                 eventHolderLastName: "Романов",
-                                                eventHolderBirthdayDate: "11.07.1964",
+                                                eventHolderBirthdayDate: "06.10.2000",
                                                 eventHolderPhoneNumber : "+79051234567",
                                                 sex: true,
                                                 eventHolderStatus: .colleague,
                                                 events: [Event(eventDate: "01.12.1990", eventType: .wedding,         eventDiscription: "описание", isActual: true),
                                                          Event(eventDate: "17.03.2019", eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
-                                                         Event(eventDate: "11.07.1964", eventType: .birthday,        eventDiscription: "описание", isActual: true)]
+                                                         Event(eventDate: "06.10.2000", eventType: .birthday,        eventDiscription: "описание", isActual: true)]
                                                 ),
                                     
                                     EventHolder(eventHolderFirstName: "Екатерина",
                                                 eventHolderLastName: "Андреева",
-                                                eventHolderBirthdayDate: "11.07.1964",
+                                                eventHolderBirthdayDate: "07.12.2014",
                                                 eventHolderPhoneNumber : "+79051234567",
                                                 sex: false,
                                                 eventHolderStatus: .someFriend,
                                                 events: [Event(eventDate: "01.12.1990", eventType: .wedding,         eventDiscription: "описание", isActual: true),
                                                          Event(eventDate: "17.03.2019", eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
-                                                         Event(eventDate: "11.07.1964", eventType: .birthday,        eventDiscription: "описание", isActual: true)]
+                                                         Event(eventDate: "07.12.2014", eventType: .birthday,        eventDiscription: "описание", isActual: true)]
                                                 ),
                                     
                                     EventHolder(eventHolderFirstName: "София",
                                                 eventHolderLastName: "Старовойтова",
-                                                eventHolderBirthdayDate: "11.07.1964",
+                                                eventHolderBirthdayDate: "31.12.2004",
                                                 eventHolderPhoneNumber : "+79051234567",
                                                 sex: false,
                                                 eventHolderStatus: .someFriend,
                                                 events: [Event(eventDate: "01.12.1990", eventType: .wedding,         eventDiscription: "описание", isActual: true),
                                                          Event(eventDate: "17.03.2019", eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
-                                                         Event(eventDate: "11.07.1964", eventType: .birthday,        eventDiscription: "описание", isActual: true)]
+                                                         Event(eventDate: "31.12.2004", eventType: .birthday,        eventDiscription: "описание", isActual: true)]
                                                 
                                                 ),
                                     
                                     EventHolder(eventHolderFirstName: "Алла",
-                                                eventHolderLastName: "Пугчева",
-                                                eventHolderBirthdayDate: "11.07.1964",
+                                                eventHolderLastName: "Пугачева",
+                                                eventHolderBirthdayDate: "19.01.2011",
                                                 eventHolderPhoneNumber : "+79051234567",
                                                 sex: false,
                                                 eventHolderStatus: .none,
                                                 events: [Event(eventDate: "01.12.1990", eventType: .wedding,         eventDiscription: "описание", isActual: true),
                                                          Event(eventDate: "17.03.2019", eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
-                                                         Event(eventDate: "11.07.1964", eventType: .birthday,        eventDiscription: "описание", isActual: true)]
+                                                         Event(eventDate: "19.01.2011", eventType: .birthday,        eventDiscription: "описание", isActual: true)]
                                                 )]
          return someEventHolderArray
     }
     
-    // функция возвращает словарь dicForReturn ключами которого являются EventHolderStatus а значениями массив событий EventHolder
-    func sortEventStorageByEventHolderStatus() -> [EventHolderStatus : [EventHolderProtocol]] {
+//    // функция возвращает словарь dicForReturn ключами которого являются EventHolderStatus а значениями массив событий EventHolder
+//    func sortEventStorageByEventHolderStatus() -> [EventHolderStatus : [EventHolderProtocol]] {
+//        
+//        // присвоим свойству eventHolderArray значения из UserDefaults
+//        eventHolderArray = getDataFromUserDefaults()
+//
+//        // переменная для хранения возврощаемого значения
+//        var dicForReturn = [EventHolderStatus : [EventHolderProtocol]]()
+//        
+//        // в переменной eventHolderStatusArray будем хранить просто список уникальных статусов типа EventHolderStatus  из массива eventHolderArray
+//        var eventHolderStatusArray : [EventHolderStatus] = []
+//        // сначало заполним eventHolderStatusArray значениями
+//        for i in eventHolderArray {
+//            if !eventHolderStatusArray.contains(i.eventHolderStatus) {
+//                eventHolderStatusArray.append(i.eventHolderStatus)
+//            }
+//        }
+//        
+//        //теперь заполним словарь dicForReturn в качестве ключей будем использовать значения из EventHolderStatusArray а значениями будут массивы типа EventHolder содержащие этот статус
+//        for i in eventHolderStatusArray {
+//            var eventHolderArrayForSort = [EventHolderProtocol]()
+//            for s in eventHolderArray {
+//                if i == s.eventHolderStatus {
+//                    eventHolderArrayForSort.append(s)
+//                }
+//            }
+//            dicForReturn[i] = eventHolderArrayForSort
+//        }
+//        return dicForReturn
+//    }
+    
+    // новая функция которая будет возвращать массив кортежей  [(EventHolder, Event)] и сортировать по приближению даты Event
+    func getEventHolderAndEventArray() -> [(EventHolderProtocol, EventProtocol)] {
         
         // присвоим свойству eventHolderArray значения из UserDefaults
         eventHolderArray = getDataFromUserDefaults()
-
-        // переменная для хранения возврощаемого значения
-        var dicForReturn = [EventHolderStatus : [EventHolderProtocol]]()
         
-        // в переменной eventHolderStatusArray будем хранить просто список уникальных статусов типа EventHolderStatus  из массива eventHolderArray
-        var eventHolderStatusArray : [EventHolderStatus] = []
-        // сначало заполним eventHolderStatusArray значениями
-        for i in eventHolderArray {
-            if !eventHolderStatusArray.contains(i.eventHolderStatus) {
-                eventHolderStatusArray.append(i.eventHolderStatus)
+        var tupleForReturn :  [(EventHolderProtocol, EventProtocol)] = []
+        for item in eventHolderArray {
+            for i in item.events{
+                tupleForReturn.append((item, i))
             }
         }
         
-        //теперь заполним словарь dicForReturn в качестве ключей будем использовать значения из EventHolderStatusArray а значениями будут массивы типа EventHolder содержащие этот статус
-        for i in eventHolderStatusArray {
-            var eventHolderArrayForSort = [EventHolderProtocol]()
-            for s in eventHolderArray {
-                if i == s.eventHolderStatus {
-                    eventHolderArrayForSort.append(s)
-                }
-            }
-            dicForReturn[i] = eventHolderArrayForSort
-        }
-        return dicForReturn
+        // сортировка
+        // var sortedTupleForReturn = tupleForReturn.sorted(by: {_, })
+        return tupleForReturn
     }
-    
-    
 }
