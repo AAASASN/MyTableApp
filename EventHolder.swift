@@ -10,7 +10,7 @@ import Foundation
 protocol EventHolderProtocol {
     var eventHolderFirstName : String { get set }
     var eventHolderLastName : String { get set }
-    var eventHolderBirthdayDate : String { get set }
+    var eventHolderBirthdayDate : Date { get set }
     var eventHolderPhoneNumber : String { get set }
     var sex : Bool { get set }
     var eventHolderStatus : EventHolderStatus { get set }
@@ -22,7 +22,7 @@ protocol EventHolderProtocol {
 class EventHolder : EventHolderProtocol {
     var eventHolderFirstName = String()
     var eventHolderLastName = String()
-    var eventHolderBirthdayDate: String
+    var eventHolderBirthdayDate: Date
     var eventHolderPhoneNumber: String
     var sex: Bool
     var eventHolderStatus: EventHolderStatus
@@ -31,7 +31,7 @@ class EventHolder : EventHolderProtocol {
 
     init(eventHolderFirstName : String,
          eventHolderLastName : String,
-         eventHolderBirthdayDate : String,
+         eventHolderBirthdayDate : Date,
          eventHolderPhoneNumber : String,
          sex : Bool,
          eventHolderStatus : EventHolderStatus,

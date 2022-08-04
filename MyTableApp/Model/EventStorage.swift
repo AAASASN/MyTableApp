@@ -53,105 +53,180 @@ class EventStorage: EventStorageProtocol {
     // эта функция присваивает свойству eventArray тестовый массив событий(Event), в будующем массив будет вытаскиваться из userDefaults
     func getDataFromUserDefaults() -> [EventHolderProtocol] {
         
+        let date_1 = "25.06.1984 23:59:59"
+        let date_2 = "05.06.2000 23:59:59"
+        let date_3 = "02.11.1998 23:59:59"
+
+        let date_4 = "01.12.1990 23:59:59"
+        let date_5 = "15.07.2011 23:59:59"
+        let date_6 = "02.12.2013 23:59:59"
+
+        let date_7 = "03.09.2006 23:59:59"
+        let date_8 = "18.03.2020 23:59:59"
+        let date_9 = "14.07.2021 23:59:59"
+
+        let date_10 = "17.03.2019 23:59:59"
+        let date_11 = "03.08.1981 23:59:59"
+        let date_12 = "01.10.2013 23:59:59"
+
+        let date_13 = "11.07.1964 23:59:59"
+        let date_14 = "14.02.1999 23:59:59"
+        let date_15 = "21.09.2009 23:59:59"
+
+        let date_16 = "04.08.1978 23:59:59"
+        let date_17 = "06.08.1984 23:59:59"
+        let date_18 = "19.09.1980 23:59:59"
+
+        let date_19 = "06.10.2000 23:59:59"
+        let date_20 = "08.01.2010 23:59:59"
+        let date_22 = "29.11.2019 23:59:59"
+
+        let date_21 = "07.12.2014 23:59:59"
+        let date_23 = "09.10.2020 23:59:59"
+        let date_24 = "14.05.2019 23:59:59"
+
+        let date_25 = "31.12.2004 23:59:59"
+        let date_26 = "05.08.2019 23:59:59"
+        let date_27 = "17.04.2021 23:59:59"
+
+        
+//         let date_1 = "02.08.22"
+//         let date_2 = "05.06"
+//         let date_3 = "02.11"
+//         
+//         let date_4 = "01.12"
+//         let date_5 = "15.07"
+//         let date_6 = "02.12"
+//         
+//         let date_7 = "03.09"
+//         let date_8 = "25.06"
+//         let date_9 = "25.06"
+//         
+//         let date_10 = "17.03"
+//         let date_11 = "25.06"
+//         let date_12 = "25.06"
+//         
+//         let date_13 = "11.07"
+//         let date_14 = "25.06"
+//         let date_15 = "25.06"
+//         
+//         let date_16 = "20.08"
+//         let date_17 = "25.06"
+//         let date_18 = "25.06"
+//         
+//         let date_19 = "06.10"
+//         let date_20 = "25.06"
+//         let date_22 = "25.06"
+//         
+//         let date_21 = "07.12"
+//         let date_23 = "25.06"
+//         let date_24 = "25.06"
+//         
+//         let date_25 = "31.12"
+//         let date_26 = "25.06"
+//         let date_27 = "25.06"
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd.MM.yy HH:mm:ss"
+        
         let someEventHolderArray = [EventHolder(eventHolderFirstName: "Вася",
                                                 eventHolderLastName: "Васин",
-                                                eventHolderBirthdayDate: "25.04.1984",
+                                                eventHolderBirthdayDate: dateFormatter.date(from: date_1)!,
                                                 eventHolderPhoneNumber : "+79051234567",
                                                 sex: true,
                                                 eventHolderStatus: .bestFriend,
-                                                events: [Event(eventDate: "25.04.1984", eventType: .birthday,        eventDiscription: "описание", isActual: true),
-                                                         Event(eventDate: "17.03.2019", eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
-                                                         Event(eventDate: "01.12.1990", eventType: .wedding,         eventDiscription: "описание", isActual: true)]
+                                                events: [Event(eventDate: CustomDate(date: dateFormatter.date(from: date_1)!), eventType: .birthday,        eventDiscription: "описание", isActual: true),
+                                                         Event(eventDate: CustomDate(date: dateFormatter.date(from: date_2)!), eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
+                                                         Event(eventDate: CustomDate(date: dateFormatter.date(from: date_3)!), eventType: .wedding,         eventDiscription: "описание", isActual: true)]
                                                ),
                                     
                                     EventHolder(eventHolderFirstName: "Владимир",
                                                 eventHolderLastName: "Васин",
-                                                eventHolderBirthdayDate: "01.12.1990",
+                                                eventHolderBirthdayDate: dateFormatter.date(from: date_4)!,
                                                 eventHolderPhoneNumber : "+79051234567",
                                                 sex: true,
                                                 eventHolderStatus: .schoolFriend,
-                                                events: [Event(eventDate: "01.12.1990", eventType: .wedding,         eventDiscription: "описание", isActual: true),
-                                                         Event(eventDate: "17.03.2019", eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
-                                                         Event(eventDate: "01.12.1990", eventType: .birthday,        eventDiscription: "описание", isActual: true)]
+                                                events: [Event(eventDate: CustomDate(date: dateFormatter.date(from: date_5)!), eventType: .wedding,         eventDiscription: "описание", isActual: true),
+                                                         Event(eventDate: CustomDate(date: dateFormatter.date(from: date_6)!), eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
+                                                         Event(eventDate: CustomDate(date: dateFormatter.date(from: date_4)!), eventType: .birthday,        eventDiscription: "описание", isActual: true)]
                                                 ),
                                     
                                     EventHolder(eventHolderFirstName: "Стас",
                                                 eventHolderLastName: "Владимиров",
-                                                eventHolderBirthdayDate: "03.09.2006",
+                                                eventHolderBirthdayDate: dateFormatter.date(from: date_7)!,
                                                 eventHolderPhoneNumber : "+79051234567",
                                                 sex: true,
                                                 eventHolderStatus: .schoolFriend,
-                                                events: [Event(eventDate: "01.12.1990", eventType: .wedding,         eventDiscription: "описание", isActual: true),
-                                                         Event(eventDate: "17.03.2019", eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
-                                                         Event(eventDate: "03.09.2006", eventType: .birthday,        eventDiscription: "описание", isActual: true)]
+                                                events: [Event(eventDate: CustomDate(date: dateFormatter.date(from: date_8)!), eventType: .wedding,         eventDiscription: "описание", isActual: true),
+                                                         Event(eventDate: CustomDate(date: dateFormatter.date(from: date_9)!), eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
+                                                         Event(eventDate: CustomDate(date: dateFormatter.date(from: date_7)!), eventType: .birthday,        eventDiscription: "описание", isActual: true)]
                                                 ),
                                     
                                     EventHolder(eventHolderFirstName: "Сергей",
                                                 eventHolderLastName: "Стасов",
-                                                eventHolderBirthdayDate: "11.07.1964",
+                                                eventHolderBirthdayDate: dateFormatter.date(from: date_10)!,
                                                 eventHolderPhoneNumber : "+79051234567",
                                                 sex: true,
                                                 eventHolderStatus: .colleague,
-                                                events: [Event(eventDate: "01.12.1990", eventType: .wedding,         eventDiscription: "описание", isActual: true),
-                                                         Event(eventDate: "17.03.2019", eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
-                                                         Event(eventDate: "11.07.1964", eventType: .birthday,        eventDiscription: "описание", isActual: true)]
+                                                events: [Event(eventDate: CustomDate(date: dateFormatter.date(from: date_11)!), eventType: .wedding,         eventDiscription: "описание", isActual: true),
+                                                         Event(eventDate: CustomDate(date: dateFormatter.date(from: date_12)!), eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
+                                                         Event(eventDate: CustomDate(date: dateFormatter.date(from: date_10)!), eventType: .birthday,        eventDiscription: "описание", isActual: true)]
                                                 ),
                                     
                                     EventHolder(eventHolderFirstName: "Роман",
                                                 eventHolderLastName: "Сергеев",
-                                                eventHolderBirthdayDate: "20.08.1978",
+                                                eventHolderBirthdayDate: dateFormatter.date(from: date_13)!,
                                                 eventHolderPhoneNumber : "+79051234567",
                                                 sex: true,
                                                 eventHolderStatus: .colleague,
-                                                events: [Event(eventDate: "01.12.1990", eventType: .wedding,         eventDiscription: "описание", isActual: true),
-                                                         Event(eventDate: "17.03.2019", eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
-                                                         Event(eventDate: "20.08.1978", eventType: .birthday,        eventDiscription: "описание", isActual: true)]
+                                                events: [Event(eventDate: CustomDate(date: dateFormatter.date(from: date_14)!), eventType: .wedding,         eventDiscription: "описание", isActual: true),
+                                                         Event(eventDate: CustomDate(date: dateFormatter.date(from: date_15)!), eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
+                                                         Event(eventDate: CustomDate(date: dateFormatter.date(from: date_13)!), eventType: .birthday,        eventDiscription: "описание", isActual: true)]
                                                 
                                                ),
                                     
                                     EventHolder(eventHolderFirstName: "Андрей",
                                                 eventHolderLastName: "Романов",
-                                                eventHolderBirthdayDate: "06.10.2000",
+                                                eventHolderBirthdayDate: dateFormatter.date(from: date_16)!,
                                                 eventHolderPhoneNumber : "+79051234567",
                                                 sex: true,
                                                 eventHolderStatus: .colleague,
-                                                events: [Event(eventDate: "01.12.1990", eventType: .wedding,         eventDiscription: "описание", isActual: true),
-                                                         Event(eventDate: "17.03.2019", eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
-                                                         Event(eventDate: "06.10.2000", eventType: .birthday,        eventDiscription: "описание", isActual: true)]
+                                                events: [Event(eventDate: CustomDate(date: dateFormatter.date(from: date_17)!), eventType: .wedding,         eventDiscription: "описание",  isActual: true),
+                                                         Event(eventDate: CustomDate(date: dateFormatter.date(from: date_18)!), eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
+                                                         Event(eventDate: CustomDate(date: dateFormatter.date(from: date_16)!), eventType: .birthday,        eventDiscription: "описание", isActual: true)]
                                                 ),
                                     
                                     EventHolder(eventHolderFirstName: "Екатерина",
                                                 eventHolderLastName: "Андреева",
-                                                eventHolderBirthdayDate: "07.12.2014",
+                                                eventHolderBirthdayDate: dateFormatter.date(from: date_19)!,
                                                 eventHolderPhoneNumber : "+79051234567",
                                                 sex: false,
                                                 eventHolderStatus: .someFriend,
-                                                events: [Event(eventDate: "01.12.1990", eventType: .wedding,         eventDiscription: "описание", isActual: true),
-                                                         Event(eventDate: "17.03.2019", eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
-                                                         Event(eventDate: "07.12.2014", eventType: .birthday,        eventDiscription: "описание", isActual: true)]
+                                                events: [Event(eventDate: CustomDate(date: dateFormatter.date(from: date_20)!), eventType: .wedding,         eventDiscription: "описание", isActual: true),
+                                                         Event(eventDate: CustomDate(date: dateFormatter.date(from: date_21)!), eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
+                                                         Event(eventDate: CustomDate(date: dateFormatter.date(from: date_19)!), eventType: .birthday,        eventDiscription: "описание", isActual: true)]
                                                 ),
                                     
                                     EventHolder(eventHolderFirstName: "София",
                                                 eventHolderLastName: "Старовойтова",
-                                                eventHolderBirthdayDate: "31.12.2004",
+                                                eventHolderBirthdayDate: dateFormatter.date(from: date_22)!,
                                                 eventHolderPhoneNumber : "+79051234567",
                                                 sex: false,
                                                 eventHolderStatus: .someFriend,
-                                                events: [Event(eventDate: "01.12.1990", eventType: .wedding,         eventDiscription: "описание", isActual: true),
-                                                         Event(eventDate: "17.03.2019", eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
-                                                         Event(eventDate: "31.12.2004", eventType: .birthday,        eventDiscription: "описание", isActual: true)]
+                                                events: [Event(eventDate: CustomDate(date: dateFormatter.date(from: date_23)!), eventType: .wedding,         eventDiscription: "описание", isActual: true),
+                                                         Event(eventDate: CustomDate(date: dateFormatter.date(from: date_24)!), eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
+                                                         Event(eventDate: CustomDate(date: dateFormatter.date(from: date_22)!), eventType: .birthday,        eventDiscription: "описание", isActual: true)]
                                                 
                                                 ),
                                     
                                     EventHolder(eventHolderFirstName: "Алла",
                                                 eventHolderLastName: "Пугачева",
-                                                eventHolderBirthdayDate: "19.01.2011",
+                                                eventHolderBirthdayDate: dateFormatter.date(from: date_25)!,
                                                 eventHolderPhoneNumber : "+79051234567",
                                                 sex: false,
                                                 eventHolderStatus: .none,
-                                                events: [Event(eventDate: "01.12.1990", eventType: .wedding,         eventDiscription: "описание", isActual: true),
-                                                         Event(eventDate: "17.03.2019", eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
-                                                         Event(eventDate: "19.01.2011", eventType: .birthday,        eventDiscription: "описание", isActual: true)]
+                                                events: [Event(eventDate: CustomDate(date: dateFormatter.date(from: date_26)!), eventType: .wedding,         eventDiscription: "описание", isActual: true),
+                                                         Event(eventDate: CustomDate(date: dateFormatter.date(from: date_27)!), eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
+                                                         Event(eventDate: CustomDate(date: dateFormatter.date(from: date_25)!), eventType: .birthday,        eventDiscription: "описание", isActual: true)]
                                                 )]
          return someEventHolderArray
     }
@@ -193,15 +268,16 @@ class EventStorage: EventStorageProtocol {
         // присвоим свойству eventHolderArray значения из UserDefaults
         eventHolderArray = getDataFromUserDefaults()
         
-        var tupleForReturn :  [(EventHolderProtocol, EventProtocol)] = []
+        var tupleArrayForReturn :  [(EventHolderProtocol, EventProtocol)] = []
         for item in eventHolderArray {
             for i in item.events{
-                tupleForReturn.append((item, i))
+                tupleArrayForReturn.append((item, i))
             }
         }
         
-        // сортировка
-        // var sortedTupleForReturn = tupleForReturn.sorted(by: {_, })
-        return tupleForReturn
+        // сортировка по дате
+        let sortedTuplesArrayForReturn = tupleArrayForReturn.sorted(by: { $0.1.eventDate.daysCountBeforeEvent  <= $1.1.eventDate.daysCountBeforeEvent})
+        return sortedTuplesArrayForReturn
     }
+    
 }

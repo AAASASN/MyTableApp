@@ -64,7 +64,7 @@ class ChangeEventHolderSexTableViewController: UITableViewController {
         for row in 0..<numberOfRows {
             
             if let cell = tableView.cellForRow(at: NSIndexPath(row: row, section: section) as IndexPath) {
-                //cell.accessoryType = .none
+                cell.accessoryType = .none
                 if indexPath.row == row {
                     
                     switch row {

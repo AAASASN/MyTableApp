@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1104807E28994F4600A0512B /* CustomDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1104807D28994F4600A0512B /* CustomDate.swift */; };
 		114D264A28780ED600F44967 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114D264928780ED600F44967 /* AppDelegate.swift */; };
 		114D264C28780ED600F44967 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114D264B28780ED600F44967 /* SceneDelegate.swift */; };
 		114D265128780ED600F44967 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 114D264F28780ED600F44967 /* Main.storyboard */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1104807D28994F4600A0512B /* CustomDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDate.swift; sourceTree = "<group>"; };
 		114D264628780ED600F44967 /* MyTableApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyTableApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		114D264928780ED600F44967 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		114D264B28780ED600F44967 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				114D26612878132600F44967 /* Event.swift */,
+				1104807D28994F4600A0512B /* CustomDate.swift */,
 				11E640C0288171270018DBD1 /* EventHolder.swift */,
 				114D26642878160A00F44967 /* EventStorage.swift */,
 			);
@@ -194,6 +197,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1104807E28994F4600A0512B /* CustomDate.swift in Sources */,
 				11E640CB2885E6990018DBD1 /* AddEventHolderTableViewController.swift in Sources */,
 				11F3A6952896A63000EABCE0 /* ChangeEventHolderSexTableViewController.swift in Sources */,
 				11547FC5289425EC001BBBCB /* ChangeEventHolderStatusCustomTableViewCell.swift in Sources */,

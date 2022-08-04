@@ -31,18 +31,18 @@ enum EventType : String {
 }
 
 protocol EventProtocol {
-    var eventDate : String { get set }
+    var eventDate : CustomDate { get set }
     var eventType : EventType { get set }
     var eventDiscription : String { get set }
 }
 
 class Event : EventProtocol {
-    var eventDate = String()
+    var eventDate : CustomDate
     var eventType : EventType
     var eventDiscription : String
     var isActual : Bool
     
-    init(eventDate: String, eventType: EventType, eventDiscription : String, isActual : Bool ) {
+    init(eventDate: CustomDate,  eventType: EventType, eventDiscription : String, isActual : Bool ) {
         self.eventDate = eventDate
         self.eventType = eventType
         self.eventDiscription = "Краткое описание события"
