@@ -8,5 +8,8 @@ v 0.1.1
 Переработан экран StartTableViewController
 - секции больше не используются
 - добавлено удаление ячейки по свайпу влево
-Изменен EventStorage
-- добавлен метод getEventHolderAndEventArray()
+- добавлен метод getEventHolderAndEventArray() в класс EventStorage
+
+v 0.1.2 
+- добавлен класс CustomDate позволяющий работать в объектом класса Date и вычислять в свойстве daysCountBeforeEvent количество дней до события
+- внесены правки в StartTableViewController для отображения daysCountBeforeEvent в ячейке StartControllerCustomCell
