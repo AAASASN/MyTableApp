@@ -7,12 +7,19 @@
 
 import Foundation
 
+enum EventHolderSex : String {
+    case male = "мужской"
+    case female = "женский"
+    case third = "третий пол"
+    case none = "пол не выбран"
+}
+
 enum EventHolderStatus : String {
-    case schoolFriend  = "школьный друг"
-    case bestFriend = "лучший друг"
-    case someFriend = "просто знакомый"
-    case none = "статус не определен"
-    case colleague  = "коллега"
+    case schoolFriend  = "Школьный друг"
+    case bestFriend = "Лучший друг"
+    case someFriend = "Просто знакомый"
+    case none = "Статус не определен"
+    case colleague  = "Коллега"
 }
 
 enum EventType : String {
@@ -24,18 +31,18 @@ enum EventType : String {
 }
 
 protocol EventProtocol {
-    var eventDate : String { get set }
+    var eventDate : CustomDate { get set }
     var eventType : EventType { get set }
     var eventDiscription : String { get set }
 }
 
 class Event : EventProtocol {
-    var eventDate = String()
+    var eventDate : CustomDate
     var eventType : EventType
     var eventDiscription : String
     var isActual : Bool
     
-    init(eventDate: String, eventType: EventType, eventDiscription : String, isActual : Bool ) {
+    init(eventDate: CustomDate,  eventType: EventType, eventDiscription : String, isActual : Bool ) {
         self.eventDate = eventDate
         self.eventType = eventType
         self.eventDiscription = "Краткое описание события"
