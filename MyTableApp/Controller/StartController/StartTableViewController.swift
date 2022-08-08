@@ -45,17 +45,16 @@ extension StartTableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.MM.yy"
+        dateFormatter.dateFormat = "MM.dd.yyyy"
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "startControllerCellReuseIdentifier", for: indexPath) as! StartControllerCustomCell
 
         let tuple = eventHolderAndEventArray[indexPath.row]
         cell.nameLabel.text = tuple.0.eventHolderFirstName + " " + tuple.0.eventHolderLastName
 
-        cell.dateLabel.text =   dateFormatter.string(from: tuple.1.eventDate.date) + " - " + String(tuple.1.eventDate.daysCountBeforeEvent)
+        cell.dateLabel.text =  String(tuple.1.eventDate.daysCountBeforeEvent)
         
-        cell.eventTypeLabel.text = tuple.1.eventType.rawValue
-        cell.friendStatusLabel.text = tuple.0.eventHolderStatus.rawValue
+        cell.eventTypeLabel.text = tuple.1.eventType.rawValue + " " + dateFormatter.string(from: tuple.1.eventDate.date)
         return cell
     }
     

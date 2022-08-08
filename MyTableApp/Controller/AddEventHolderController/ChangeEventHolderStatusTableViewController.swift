@@ -17,16 +17,18 @@ class ChangeEventHolderStatusTableViewController: UITableViewController {
         let description : String
     }
     
-    let tableContent = [ContentForCustomCell(status: .bestFriend, description: "fgdbvf fvdf  bvfdbgfbgb g bfgbfgbf gb bfffgbb"),
-                        ContentForCustomCell(status: .colleague, description: "sd gf bbfgbgf gbfgbb bghfbf fgbg b bfgb fsf"),
-                        ContentForCustomCell(status: .schoolFriend, description: "Вl,kijmuj mikmjjhnhg jngjnjm ngn ng  ngtnbtgyhby tyhtnа"),
-                        ContentForCustomCell(status: .someFriend, description: "dff gff gfgdhg ghnn df"),
+    // это будет датаСурс нашей таблицы
+    let tableContent = [ContentForCustomCell(status: .bestFriend, description: "Этот статус подойдет для по настоящему близких друзей"),
+                        ContentForCustomCell(status: .colleague, description: "Отлично подойдет для коллег и деловых партнеров"),
+                        ContentForCustomCell(status: .schoolFriend, description: "Школьный друг или одногрупник по колледжу"),
+                        ContentForCustomCell(status: .someFriend, description: "Можно выбрать для приятелей и соседей"),
                         ContentForCustomCell(status: MyTableApp.EventHolderStatus.none, description: "Выбирайте этот статус если не можете определиться со статусом этого контакта"),]
     
     // в этой переменной будет храниться текущий статус
     var selectedStatus : EventHolderStatus = .none
     
     // обработчик выбора Статуса
+    // замыкание для передачи информации о выбраном поле на предыдущий экран в иерархии Навигейшен контроллера
     var doAfterStatusSelected: ((EventHolderStatus) -> Void)?
     
     override func viewDidLoad() {
@@ -51,10 +53,9 @@ class ChangeEventHolderStatusTableViewController: UITableViewController {
         return 5
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        // создаем экземпляь ячейки из кастомного типа ChangeEventHolderStatusCustomTableViewCell
+        // создаем экземпляр ячейки из кастомного типа ChangeEventHolderStatusCustomTableViewCell
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChangeEventHolderStatusCustomTableViewCellId") as! ChangeEventHolderStatusCustomTableViewCell
         
         // создаем экземпляр для хранения возможных вариантов наполнения ячейки и присваиваем ему именно то наполнение
@@ -79,9 +80,24 @@ class ChangeEventHolderStatusTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        // получаем значение выбранного(текущего) статуса
+        // создаем переменную для хранения статуса соответствующего нажатой ячейке
         let selectedStatus = tableContent[indexPath.row].status
         
+        let section = indexPath.section
+        let numberOfRows = tableView.numberOfRows(inSection: section)
+        
+        // пройдемся циктом по всем  ячейкам секции для того что бы убрать галку .checkmark
+        for row in 0..<numberOfRows {
+            if let cell = tableView.cellForRow(at: NSIndexPath(row: row, section: section) as IndexPath) {
+                cell.accessoryType = .none
+            }
+        }
+        
+        // ставим галку в нажатой ячейке
+        if let cell = tableView.cellForRow(at: indexPath){
+            cell.accessoryType = .checkmark
+        }
+
         // вызов обработчика - передаем в замыкание doAfterStatusSelected значение типа
         // EventHolderStatus в зависимости от .row нажатой ячейки
         doAfterStatusSelected?(selectedStatus)

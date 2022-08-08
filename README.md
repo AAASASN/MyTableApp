@@ -11,3 +11,6 @@ v 0.1.1 Переработан экран StartTableViewController
 v 0.1.2 Добавлен класс CustomDate
 - добавлен класс CustomDate позволяющий работать в объектом класса Date и вычислять в свойстве daysCountBeforeEvent количество дней до события
 - внесены правки в StartTableViewController для отображения daysCountBeforeEvent в ячейке StartControllerCustomCell
+
+v 0.1.3 Изменены ChangeEventHolderStatusCustomTableViewCell и ChangeEventHolderSexTableViewController
+- доработана логика установки галочки на экранах выбора пола и статуса 

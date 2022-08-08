@@ -54,10 +54,10 @@ class AddEventHolderTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        addFirstNameTextField.text = eventHolderFirstName
-        addSecondNameTextField.text = eventHolderLastName
-        addEventHolderBirthdayDateTextField.text = eventHolderBirthdayDate
-        addEventHolderPhoneNumberTextField.text = eventHolderPhoneNumber
+//        addFirstNameTextField.text = eventHolderFirstName
+//        addSecondNameTextField.text = eventHolderLastName
+//        addEventHolderBirthdayDateTextField.text = eventHolderBirthdayDate
+//        addEventHolderPhoneNumberTextField.text = eventHolderPhoneNumber
         
         eventHolderSexLabel.text = "Пол не выбран"
         // обновление метки eventHolderStatusLabel в соответствии текущим типом

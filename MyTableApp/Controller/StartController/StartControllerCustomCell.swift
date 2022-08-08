@@ -11,7 +11,6 @@ class StartControllerCustomCell: UITableViewCell {
     
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var dateLabel: UILabel!
-    @IBOutlet var friendStatusLabel: UILabel!
     @IBOutlet var eventTypeLabel: UILabel!
 
 
