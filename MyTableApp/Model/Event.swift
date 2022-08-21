@@ -7,11 +7,13 @@
 
 import Foundation
 
+
+
 enum EventHolderSex : String {
-    case male = "мужской"
-    case female = "женский"
-    case third = "третий пол"
-    case none = "пол не выбран"
+    case male = "Мужской"
+    case female = "Женский"
+    case third = "Третий пол"
+    case none = "Пол не выбран"
 }
 
 enum EventHolderStatus : String {
@@ -25,9 +27,10 @@ enum EventHolderStatus : String {
 enum EventType : String {
     case birthday = "день рождения"
     case birthOfChildren = "день рождения ребенка"
-    case wedding = "годовщина свадьбы"
+    case wedding = "свадьба"
     case housewarming = "новоселье"
     case none  = "none"
+    case addEventButton = "addEventButton"
 }
 
 protocol EventProtocol {

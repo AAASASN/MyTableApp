@@ -10,7 +10,6 @@ import UIKit
 
 class AddEventHolderTableViewController: UITableViewController {
     
-    
     @IBOutlet weak var addFirstNameTextField: UITextField!
     @IBOutlet weak var addSecondNameTextField: UITextField!
     @IBOutlet weak var addEventHolderBirthdayDateTextField: UITextField!
@@ -19,13 +18,17 @@ class AddEventHolderTableViewController: UITableViewController {
     @IBOutlet weak var eventHolderSexLabel: UILabel!
     @IBOutlet weak var eventHolderStatusLabel: UILabel!
     
-    var labelForCell6 = ""
+    @IBOutlet weak var saveButtonOutlet: UIBarButtonItem!
+    @IBOutlet weak var sexCellButton: UIButton!
+    @IBOutlet weak var statusCellButton: UIButton!
     
-    var eventHolderFirstName = String("введите имя")
-    var eventHolderLastName = String("введите фамилию")
-    var eventHolderBirthdayDate = String("какая-то дата")
-    var eventHolderPhoneNumber: String = "введите номер или добавте из контактов"
-    var sex: EventHolderSex = .none
+    // аутлеты для ячейки в которой будет отображаться вновь добавленное событие
+    @IBOutlet weak var eventTypeLabel: UILabel!
+    @IBOutlet weak var eventDateLabel: UILabel!
+    @IBOutlet weak var countDaysBeforeEventLabel: UILabel!
+    
+    
+    var labelForCell6 = ""
     
     // переменная для хранения текущего статуса Юбиляра
     var currentEventHolderStatus: EventHolderStatus = .none
@@ -33,7 +36,11 @@ class AddEventHolderTableViewController: UITableViewController {
     // переменная для хранения текущего пола Юбиляра
     var currentEventHolderSex: EventHolderSex = .none
     
+    // при добавлении Юбиляра будет создаваться событие которое будет храниться в массиве
     var events: [EventProtocol] = []
+    
+    // создаем пустой экземрляр Юбиляра кроторый будет заполнен данными и потом добавлен в хранилище юбиляров
+    var eventHolder: EventHolder!
     
     var doAfterEdit: ((String,
                        String,
@@ -51,89 +58,233 @@ class AddEventHolderTableViewController: UITableViewController {
         .colleague:  EventHolderStatus.colleague.rawValue,
         .someFriend : EventHolderStatus.someFriend.rawValue ]
     
+    // создадим экземпляр UIDatePicker, далее в методе viewDidLoad
+    // назначим его как способ ввода в текстовое поле addEventHolderBirthdayDateTextField
+    var datePicker = UIDatePicker()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        addFirstNameTextField.text = eventHolderFirstName
-//        addSecondNameTextField.text = eventHolderLastName
-//        addEventHolderBirthdayDateTextField.text = eventHolderBirthdayDate
-//        addEventHolderPhoneNumberTextField.text = eventHolderPhoneNumber
+        // настроим кнопку "Сохранить"
+        saveButtonOutlet.title = "Сохранить"
+        // деактивируем ее до тех пор пока все поля не будут заполнены
+        saveButtonOutlet.isEnabled = false
         
+        // настроим тулбар
+        createAndAddingToolBarToKeyboard()
+        
+        // настроим datePicker
+        datePickerSwttings()
+        
+        // настроим статус по умолчанию
         eventHolderSexLabel.text = "Пол не выбран"
+        
         // обновление метки eventHolderStatusLabel в соответствии текущим типом
         eventHolderStatusLabel?.text = statusTitles[currentEventHolderStatus]
         
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+        // в этом фрагиенте кода проходим по массиву текстовых полей и запускаем для каждого из них
+        // наблюдателя .addTarget
+        let textFields = [addFirstNameTextField, addSecondNameTextField, addEventHolderPhoneNumberTextField, addEventHolderBirthdayDateTextField]
+        for textField in textFields {
+            if textField?.isEditing == false{
+                // метод addTarget унаследованный от UIControl позволяет выполнять функцию в селекторе #selector()
+                // при выполнения условия for: .editingChanged
+                textField!.addTarget(self, action: #selector(editingChanged(_:)), for: .editingChanged)
+                //                textField.addTarget(self, action: #selector(editingBegan(_:)), for: .editingDidBegin)
+                //                textField!.addTarget(self, action: #selector(editingEnded(_:)), for: .editingDidEnd)
+            }
+        }
         
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    
+    
+    // функция проверяет что все поля заполнены и активирует кнопку "Сохранить", если же кнопка была активна
+    // и какое либо поле очистили кнопка деактивируется
+    @objc func editingChanged(_ textField: UITextField) {
+        if saveButtonOutlet.isEnabled == false {
+            if !addFirstNameTextField.text!.isEmpty && !addSecondNameTextField.text!.isEmpty && !addEventHolderPhoneNumberTextField.text!.isEmpty && !addEventHolderBirthdayDateTextField.text!.isEmpty {
+                saveButtonOutlet.isEnabled.toggle()
+            }
+        }
+        if saveButtonOutlet.isEnabled == true {
+            if addFirstNameTextField.text!.isEmpty || addSecondNameTextField.text!.isEmpty || addEventHolderPhoneNumberTextField.text!.isEmpty || addEventHolderBirthdayDateTextField.text!.isEmpty {
+                saveButtonOutlet.isEnabled.toggle()
+                
+            }
+        }
+        
+        //    //////////////////////////////////////////////////////////////////////
+        //
+        //      ЕЩЕ ВАРИАНТЫ
+        //
+        //    @objc func editingBegan(_ textField: UITextField) {
+        //        //пользователь попал в поле, но еще ничего не ввел
+        //    }
+        //
+        //    @objc func editingChanged(_ textField: UITextField) {
+        //        //текст изменился
+        //    }
+        //
+        //    @objc func editingEnded(_ textField: UITextField) {
+        //        //ввод окончен, к примеру нажали "return" на клавиатуре
+        //    }
+        //    /////////////////////////////////////////////////////////////////////
+        
+    }
+    
+    
+    // MARK: - сохранение EventHolder и создание Event
+    @IBAction func saveButtonAction(_ sender: UIBarButtonItem) {
+        // перед нажатием на кнопку сохранить проверяем заполнены ли поля Пол и Статус
+        // и рекомендуем заполнить вызывая UIAlertController
+        if saveButtonOutlet.title == "Сохранить" {
+            if currentEventHolderStatus == .none && currentEventHolderSex == .none {
+                let alertSexAndStatus = UIAlertController(title: "Внимание!", message: "Вы оставили поля Пол и Статус без изменений, рекомендуем их заполнить", preferredStyle: .alert)
+                presentAlert(alertController: alertSexAndStatus)
+            }
+            if currentEventHolderStatus == .none && currentEventHolderSex != .none {
+                let alertSexAndStatus = UIAlertController(title: "Внимание!", message: "Вы оставили поле Статус без изменений, рекомендуем его заполнить", preferredStyle: .alert)
+                presentAlert(alertController: alertSexAndStatus)
+            }
+            if currentEventHolderStatus != .none && currentEventHolderSex == .none {
+                let alertSexAndStatus = UIAlertController(title: "Внимание!", message: "Вы оставили поле Пол без изменений, рекомендуем его заполнить", preferredStyle: .alert)
+                presentAlert(alertController: alertSexAndStatus)
+            }
+            if currentEventHolderStatus != .none && currentEventHolderSex != .none {
+                //
+                savingOrEditEventHolderAndCreateBirthdayEvent()
+            }
+        } else {
+            if saveButtonOutlet.title == "Изменить" {
+                savingOrEditEventHolderAndCreateBirthdayEvent()
+            }
+        }
+    }
+    // функция будет принимать UIAlertController, создавать два UIAlertAction
+    // и отображать их
+    func presentAlert(alertController: UIAlertController) {
+        let alertActionCancel = UIAlertAction(title: "Дополнить", style: .default, handler: {_ in
+            // скрываем клавиатуру
+            self.tableView.endEditing(true)
+        })
+        let alertActionSave = UIAlertAction(title: "Все равно сохранить", style: .cancel, handler: {_ in
+            self.savingOrEditEventHolderAndCreateBirthdayEvent()
+            // скрываем клавиатуру
+            self.tableView.endEditing(true)
+        })
+        alertController.addAction(alertActionCancel)
+        alertController.addAction(alertActionSave)
+        // ///
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    // функция либо разрешает либо запрещает редактировать поля в зависимости от статуса
+    // кнопки saveButtonOutlet - Сохранить или Изменить
+    // а так же создает Юбиляра с событие Birthday по умолчанию и сохраняет его
+    // в массив events[]
+    func savingOrEditEventHolderAndCreateBirthdayEvent(){
+        if saveButtonOutlet.title == "Сохранить" {
+            // меняем название кнопки saveButtonOutlet с "Сохранить" на "Изменить"
+            self.saveButtonOutlet.title = "Изменить"
+            // запрещаем редактировать всех textField
+            self.addFirstNameTextField.isEnabled.toggle()
+            self.addSecondNameTextField.isEnabled.toggle()
+            self.addEventHolderBirthdayDateTextField.isEnabled.toggle()
+            self.addEventHolderPhoneNumberTextField.isEnabled.toggle()
+            // скрываем клавиатуру
+            self.tableView.endEditing(true)
+            // скрываем кнопку sexCellButton таким образом запрещаем переход по сигвею по нажатию какбы на ячейку - на самом деле переход
+            // осуществляется при помощи прозрачной кнопки
+            sexCellButton.isHidden.toggle()
+            statusCellButton.isHidden.toggle()
+                        
+            // для корректного формата даты
+            let dateFormatter = DateFormatter()
+            // настроим локализацию - для отображения на русском языке
+            dateFormatter.locale = Locale(identifier: "ru_RU")
+            // настроим вид отображения даты в текстовом виде
+            dateFormatter.dateFormat = "d MMMM yyyy"
+            
+            // создаем новый экземпляр tempEventHolder: EventHolder, потом мы присвоим его eventHolder
+            let tempEventHolder = EventHolder(eventHolderFirstName: addFirstNameTextField.text ?? "error",
+                                              eventHolderLastName: addSecondNameTextField.text ?? "error",
+                                              eventHolderBirthdayDate: dateFormatter.date(from: addEventHolderBirthdayDateTextField.text ?? "11 августа 2011") ?? Date(),
+                                              eventHolderPhoneNumber: addEventHolderPhoneNumberTextField.text ?? "error",
+                                              sex: currentEventHolderSex,
+                                              eventHolderStatus: currentEventHolderStatus,
+                                              // добавляем сам ДР
+                                              events: [
+//                                                Event(eventDate: CustomDate(date: dateFormatter.date(from: addEventHolderBirthdayDateTextField.text ?? "11 августа 2011") ?? Date()),
+//                                                      eventType: .birthday,
+//                                                      eventDiscription: "описание",
+//                                                      isActual: true),
+//                                                // еще одно ДР для проверки
+                                                Event(eventDate: CustomDate(date: dateFormatter.date(from: addEventHolderBirthdayDateTextField.text ?? "11 августа 2011") ?? Date()),
+                                                      eventType: .birthday,
+                                                      eventDiscription: "описание",
+                                                      isActual: true)
+                                              ])
+            // теперь присваиваем наше tempEventHolder в постоянное свойство класса eventHolder
+            eventHolder = tempEventHolder
+            
+            // выводим в первую ячейку второй секции данные о дне рождении - первом и автоматически
+            // созданном событии Юбиляря
+            eventTypeLabel.text = eventHolder.events[0].eventType.rawValue
+            countDaysBeforeEventLabel.text = String(eventHolder.events[0].eventDate.daysCountBeforeEvent)
+            eventDateLabel.text = dateFormatter.string(from: (eventHolder.events[0].eventDate.date))
+            
+            tableView.reloadData()
+            
+        } else {
+            if saveButtonOutlet.title == "Изменить" {
+                // меняем название кнопки saveButtonOutlet с "Изменить" на "Сохранить"
+                self.saveButtonOutlet.title = "Сохранить"
+                // разрешаем редактировать всех textField
+                self.addFirstNameTextField.isEnabled.toggle()
+                self.addSecondNameTextField.isEnabled.toggle()
+                self.addEventHolderBirthdayDateTextField.isEnabled = true
+                self.addEventHolderPhoneNumberTextField.isEnabled = true
+                // скрываем клавиатуру
+                self.tableView.endEditing(true)
+                // делаем кнопку sexCellButton доступной таким образом разрешаемпереход по сигвею по нажатию
+                sexCellButton.isHidden.toggle()
+                statusCellButton.isHidden.toggle()
+            }
+        }
+        
     }
     
     // MARK: - Table view data source
-    
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 2
+        return 3
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        if section == 0 { return 6 } else { return 1 }
+        
+        if section == 0 {
+            return 6
+        }
+        
+        if section == 1 {
+            if eventHolder == nil {
+                return 0
+            } else {
+                return eventHolder.events.count
+            }
+        }
+        
+        if section == 2 {
+            if eventHolder == nil {
+                return 0
+            } else {
+                return 1
+            }
+        }
+        return 0
     }
     
-    
-    //    override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-    //        if indexPath.section == 0 && indexPath.row == 0 {
-    //            let cell1 = tableView.dequeueReusableCell(withIdentifier: "AddFirstNameTableViewCellId") as! AddFirstNameTableViewCell
-    //            //print("str - \(cell1.str)")
-    //            eventHolderFirstName = cell1.str
-    //            cell1.nameLabel.text = eventHolderFirstName
-    //            print(eventHolderFirstName)
-    //            tableView.reloadData()
-    //        }
-    //    }
-    //
-    
-    
-    /*
-     // Override to support conditional editing of the table view.
-     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the specified item to be editable.
-     return true
-     }
-     */
-    
-    /*
-     // Override to support editing the table view.
-     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-     if editingStyle == .delete {
-     // Delete the row from the data source
-     tableView.deleteRows(at: [indexPath], with: .fade)
-     } else if editingStyle == .insert {
-     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-     }
-     }
-     */
-    
-    /*
-     // Override to support rearranging the table view.
-     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-     
-     }
-     */
-    
-    /*
-     // Override to support conditional rearranging of the table view.
-     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the item to be re-orderable.
-     return true
-     }
-     */
-    
-    
     // MARK: - Navigation
-    
     // при переходе с экрана AddEventHolderTableViewController на ChangeEventHolderStatusTableViewController
     // при помощи сегвея с Id - "toChangeEventHolderStatusTableViewControllerId" реализуем передачу данных
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -159,7 +310,6 @@ class AddEventHolderTableViewController: UITableViewController {
                 
                 // таким образом мы выполнили операции в AddEventHolderTableViewController при помощи замыкания doAfterStatusSelected вызвав его
                 // вообще в другом контроллере
-                
             }
         }
         
@@ -173,34 +323,73 @@ class AddEventHolderTableViewController: UITableViewController {
         }
     }
     
-    //    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    //
-    //        if indexPath.section == 0 && indexPath.row == 2 {
-    //
-    //            let cell = tableView.dequeueReusableCell(withIdentifier: "AddDateTableViewCellId", for: indexPath) as! AddDateTableViewCell
-    //
-    //        }
+    
+    // MARK: - настройка ToolBar вызывается во viewDidLoad
+    
+    // функция будет настраивать ToolBar и кнопку Done для скрытия клавиатуры
+    func createAndAddingToolBarToKeyboard() {
+        // создадим Тулбар, позже расположим его над клавиатурой
+        let toolBar = UIToolbar()
+        //
+        toolBar.sizeToFit()
+        // добавим на ТулБар кнопку Готово
+        // создадим кнопку
+        let doneButton = UIBarButtonItem(title: "Готово", style: .plain, target: self, action: #selector(doneAction))
+        
+        // создадим "поле-пробел" что бы заполнить им пространство слева на ТулБаре
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        
+        // подключим кнопку к тулБару и настроим положение кнопки Готово на Тулбаре - справа
+        toolBar.setItems([flexSpace, doneButton], animated: true)
+        
+        // подключаем созданный ТулБар ко всем текстовым полям
+        addFirstNameTextField.inputAccessoryView = toolBar
+        addSecondNameTextField .inputAccessoryView = toolBar
+        addEventHolderPhoneNumberTextField.inputAccessoryView = toolBar
+        addEventHolderBirthdayDateTextField.inputAccessoryView = toolBar
+    }
     
     
+    // MARK: - настройка DateDicker
     
-    //        if indexPath.section == 0 && indexPath.row == 5 {
-    //
-    //            let statusCell = tableView.dequeueReusableCell(withIdentifier: "AddStatusEventHolderTableViewCellId", for: indexPath) as! AddStatusEventHolderTableViewCell
-    //
-    //            let alert = UIAlertController(title: "Выберите пол", message: nil, preferredStyle: .alert)
-    //
-    //            alert.addAction(UIAlertAction(title: "Да", style: .default, handler: { action in
-    //                print("нажато ДА")
-    //                self.labelForCell6 = "Что то было выбрано"
-    //                //statusCell.statusLabel.text = "Что то было выбрано"
-    //
-    //            }))
-    //
-    //            alert.addAction(UIAlertAction(title: "Нет", style: .cancel, handler: nil))
-    //
-    //            self.present(alert, animated: true)
-    //
-    //        }
-    //  }
+    //вызывается во viewDidLoad
+    func datePickerSwttings() {
+        
+        // и назначим datePicker способом ввода в текстовое поле
+        addEventHolderBirthdayDateTextField.inputView = datePicker
+        // назначим стиль - колесики
+        datePicker.preferredDatePickerStyle = .wheels
+        // установим первое значение на текущую дату
+        datePicker.datePickerMode = .date
+        // установим текущую дату максимальным значеним на datePicker
+        datePicker.maximumDate = .now
+        // чтобы значения в addEventHolderBirthdayDateTextField менялись при прокручивании колесика datePicker "повесим событие" на datePicker
+        datePicker.addTarget(self, action: #selector(dateChanged), for: .valueChanged)
+        // настроим формат отображения даты в соответствии с языковыми настройками айфона пользователя
+        let localeID = Locale.preferredLanguages.first
+        datePicker.locale = Locale(identifier: localeID!)
+    }
+    
+    // Создадим функцию которая будет возвращать дату в нужном формате и передавать ее в текстовом виде в текстовое поле
+    func getDateFromPicker() {
+        // создадим экземпляр типа DateFormatter
+        let formater = DateFormatter()
+        // настроим локализацию - для отображения на русском языке
+        formater.locale = Locale(identifier: "ru_RU")
+        // настроим вид отображения даты в текстовом виде
+        formater.dateFormat = "d MMMM yyyy"
+        // передадим в текстовое поле dateField строку обработанное форматером принятое от datePicker
+        addEventHolderBirthdayDateTextField.text = formater.string(from: datePicker.date)
+    }
+    
+    // при изменении значений на datePicker будет обновлять dateField
+    @objc func dateChanged (){
+        getDateFromPicker()
+    }
+    
+    // при нажатии на кнопку Готово на тулбаре скрывает клавиатуру
+    @objc func doneAction (){
+        self.tableView.endEditing(true)
+    }
     
 }

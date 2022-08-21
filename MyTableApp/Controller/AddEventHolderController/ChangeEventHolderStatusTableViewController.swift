@@ -18,7 +18,7 @@ class ChangeEventHolderStatusTableViewController: UITableViewController {
     }
     
     // это будет датаСурс нашей таблицы
-    let tableContent = [ContentForCustomCell(status: .bestFriend, description: "Этот статус подойдет для по настоящему близких друзей"),
+    let tableContent = [ContentForCustomCell(status: .bestFriend, description: "Этот статус подойдет для близких друзей"),
                         ContentForCustomCell(status: .colleague, description: "Отлично подойдет для коллег и деловых партнеров"),
                         ContentForCustomCell(status: .schoolFriend, description: "Школьный друг или одногрупник по колледжу"),
                         ContentForCustomCell(status: .someFriend, description: "Можно выбрать для приятелей и соседей"),
@@ -108,6 +108,8 @@ class ChangeEventHolderStatusTableViewController: UITableViewController {
         navigationController?.popViewController(animated: true)
     }
 
+
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

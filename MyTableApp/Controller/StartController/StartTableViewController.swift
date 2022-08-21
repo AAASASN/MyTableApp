@@ -45,7 +45,8 @@ extension StartTableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM.dd.yyyy"
+        dateFormatter.locale = Locale(identifier: "ru_RU")
+        dateFormatter.dateFormat = "d MMMM yyyy"
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "startControllerCellReuseIdentifier", for: indexPath) as! StartControllerCustomCell
 

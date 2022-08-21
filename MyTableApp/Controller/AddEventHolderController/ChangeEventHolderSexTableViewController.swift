@@ -46,7 +46,7 @@ class ChangeEventHolderSexTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        return "в будущем варианты выбора пола будут расширены... возможно"
+        return "в будущем варианты возможно будут расширены..."
     }
 
     // действия при нажатии на ячейку
