@@ -24,22 +24,23 @@ enum EventHolderStatus : String {
     case colleague  = "Коллега"
 }
 
-enum EventType : String {
+enum EventType : String, CaseIterable {
     case birthday = "день рождения"
     case birthOfChildren = "день рождения ребенка"
     case wedding = "свадьба"
     case housewarming = "новоселье"
-    case none  = "none"
-    case addEventButton = "addEventButton"
+    case none  = "тип события не выбран"
+    //case addEventButton = "addEventButton"
 }
 
 protocol EventProtocol {
     var eventDate : CustomDate { get set }
     var eventType : EventType { get set }
     var eventDiscription : String { get set }
+    var isActual : Bool { get set }
 }
 
-class Event : EventProtocol {
+class Event: EventProtocol {
     var eventDate : CustomDate
     var eventType : EventType
     var eventDiscription : String
@@ -48,7 +49,7 @@ class Event : EventProtocol {
     init(eventDate: CustomDate,  eventType: EventType, eventDiscription : String, isActual : Bool ) {
         self.eventDate = eventDate
         self.eventType = eventType
-        self.eventDiscription = "Краткое описание события"
+        self.eventDiscription = eventDiscription
         self.isActual = isActual
     }
 }

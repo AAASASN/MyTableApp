@@ -19,9 +19,14 @@
 		114D26652878160A00F44967 /* EventStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114D26642878160A00F44967 /* EventStorage.swift */; };
 		11547FC328941C06001BBBCB /* ChangeEventHolderStatusTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11547FC228941C06001BBBCB /* ChangeEventHolderStatusTableViewController.swift */; };
 		11547FC5289425EC001BBBCB /* ChangeEventHolderStatusCustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11547FC4289425EC001BBBCB /* ChangeEventHolderStatusCustomTableViewCell.swift */; };
+		11D2AB2228C0AB59002F3748 /* ShowAllEventsOfSomeHolderTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D2AB2128C0AB59002F3748 /* ShowAllEventsOfSomeHolderTableViewController.swift */; };
+		11D2AB2428C0ABC5002F3748 /* OneEventSomeHolderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D2AB2328C0ABC5002F3748 /* OneEventSomeHolderTableViewCell.swift */; };
+		11D2AB2628C0AC43002F3748 /* AddEventButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D2AB2528C0AC43002F3748 /* AddEventButtonTableViewCell.swift */; };
 		11E640C1288171270018DBD1 /* EventHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E640C0288171270018DBD1 /* EventHolder.swift */; };
 		11E640CB2885E6990018DBD1 /* AddEventHolderTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E640CA2885E6990018DBD1 /* AddEventHolderTableViewController.swift */; };
 		11F3A6952896A63000EABCE0 /* ChangeEventHolderSexTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F3A6942896A63000EABCE0 /* ChangeEventHolderSexTableViewController.swift */; };
+		11F88EA428BB847C000E1E59 /* AddEventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F88EA328BB847C000E1E59 /* AddEventTableViewController.swift */; };
+		11F88EA828BB964C000E1E59 /* SelectEventTypeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F88EA728BB964C000E1E59 /* SelectEventTypeTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,9 +44,14 @@
 		114D26642878160A00F44967 /* EventStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventStorage.swift; sourceTree = "<group>"; };
 		11547FC228941C06001BBBCB /* ChangeEventHolderStatusTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeEventHolderStatusTableViewController.swift; sourceTree = "<group>"; };
 		11547FC4289425EC001BBBCB /* ChangeEventHolderStatusCustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeEventHolderStatusCustomTableViewCell.swift; sourceTree = "<group>"; };
+		11D2AB2128C0AB59002F3748 /* ShowAllEventsOfSomeHolderTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowAllEventsOfSomeHolderTableViewController.swift; sourceTree = "<group>"; };
+		11D2AB2328C0ABC5002F3748 /* OneEventSomeHolderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneEventSomeHolderTableViewCell.swift; sourceTree = "<group>"; };
+		11D2AB2528C0AC43002F3748 /* AddEventButtonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventButtonTableViewCell.swift; sourceTree = "<group>"; };
 		11E640C0288171270018DBD1 /* EventHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventHolder.swift; sourceTree = SOURCE_ROOT; };
 		11E640CA2885E6990018DBD1 /* AddEventHolderTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventHolderTableViewController.swift; sourceTree = "<group>"; };
 		11F3A6942896A63000EABCE0 /* ChangeEventHolderSexTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeEventHolderSexTableViewController.swift; sourceTree = "<group>"; };
+		11F88EA328BB847C000E1E59 /* AddEventTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventTableViewController.swift; sourceTree = "<group>"; };
+		11F88EA728BB964C000E1E59 /* SelectEventTypeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectEventTypeTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +107,16 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		11D2AB2028C0AABC002F3748 /* ShowAllEventsOfSomeHolder */ = {
+			isa = PBXGroup;
+			children = (
+				11D2AB2128C0AB59002F3748 /* ShowAllEventsOfSomeHolderTableViewController.swift */,
+				11D2AB2328C0ABC5002F3748 /* OneEventSomeHolderTableViewCell.swift */,
+				11D2AB2528C0AC43002F3748 /* AddEventButtonTableViewCell.swift */,
+			);
+			path = ShowAllEventsOfSomeHolder;
+			sourceTree = "<group>";
+		};
 		11E640C22885B5400018DBD1 /* StartController */ = {
 			isa = PBXGroup;
 			children = (
@@ -120,10 +140,29 @@
 		11E640CC2886AA020018DBD1 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				11F88EA028BB7AC4000E1E59 /* EditAndAddEvents */,
 				11E640C32885B5790018DBD1 /* AddEventHolderController */,
 				11E640C22885B5400018DBD1 /* StartController */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		11F88EA028BB7AC4000E1E59 /* EditAndAddEvents */ = {
+			isa = PBXGroup;
+			children = (
+				11D2AB2028C0AABC002F3748 /* ShowAllEventsOfSomeHolder */,
+				11F88EA928BBBBF7000E1E59 /* AddEvent */,
+			);
+			path = EditAndAddEvents;
+			sourceTree = "<group>";
+		};
+		11F88EA928BBBBF7000E1E59 /* AddEvent */ = {
+			isa = PBXGroup;
+			children = (
+				11F88EA328BB847C000E1E59 /* AddEventTableViewController.swift */,
+				11F88EA728BB964C000E1E59 /* SelectEventTypeTableViewController.swift */,
+			);
+			path = AddEvent;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -204,10 +243,15 @@
 				114D26652878160A00F44967 /* EventStorage.swift in Sources */,
 				11547FC328941C06001BBBCB /* ChangeEventHolderStatusTableViewController.swift in Sources */,
 				114D26622878132600F44967 /* Event.swift in Sources */,
+				11D2AB2628C0AC43002F3748 /* AddEventButtonTableViewCell.swift in Sources */,
 				11E640C1288171270018DBD1 /* EventHolder.swift in Sources */,
+				11F88EA428BB847C000E1E59 /* AddEventTableViewController.swift in Sources */,
+				11D2AB2428C0ABC5002F3748 /* OneEventSomeHolderTableViewCell.swift in Sources */,
 				114D264A28780ED600F44967 /* AppDelegate.swift in Sources */,
 				114D265E287810A000F44967 /* StartTableViewController.swift in Sources */,
+				11D2AB2228C0AB59002F3748 /* ShowAllEventsOfSomeHolderTableViewController.swift in Sources */,
 				114D264C28780ED600F44967 /* SceneDelegate.swift in Sources */,
+				11F88EA828BB964C000E1E59 /* SelectEventTypeTableViewController.swift in Sources */,
 				114D2660287811F800F44967 /* StartControllerCustomCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

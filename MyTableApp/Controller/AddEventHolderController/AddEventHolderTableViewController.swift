@@ -22,11 +22,8 @@ class AddEventHolderTableViewController: UITableViewController {
     @IBOutlet weak var sexCellButton: UIButton!
     @IBOutlet weak var statusCellButton: UIButton!
     
-    // аутлеты для ячейки в которой будет отображаться вновь добавленное событие
-    @IBOutlet weak var eventTypeLabel: UILabel!
-    @IBOutlet weak var eventDateLabel: UILabel!
-    @IBOutlet weak var countDaysBeforeEventLabel: UILabel!
-    
+    // аутлет для ячейки в которой будет отображаться количество  событий пользователя
+    @IBOutlet weak var eventCountLabel: UILabel!
     
     var labelForCell6 = ""
     
@@ -36,12 +33,13 @@ class AddEventHolderTableViewController: UITableViewController {
     // переменная для хранения текущего пола Юбиляра
     var currentEventHolderSex: EventHolderSex = .none
     
-    // при добавлении Юбиляра будет создаваться событие которое будет храниться в массиве
-    var events: [EventProtocol] = []
+//    // при добавлении Юбиляра будет создаваться событие которое будет храниться в массиве
+//    var events: [EventProtocol] = []
     
     // создаем пустой экземрляр Юбиляра кроторый будет заполнен данными и потом добавлен в хранилище юбиляров
     var eventHolder: EventHolder!
     
+    // ??? что это?
     var doAfterEdit: ((String,
                        String,
                        String,
@@ -50,13 +48,6 @@ class AddEventHolderTableViewController: UITableViewController {
                        EventHolderStatus,
                        [EventProtocol]) -> Void)?
     
-    // Словарь для eventHolderStatus
-    private var statusTitles: [EventHolderStatus : String] = [
-        .none : EventHolderStatus.none.rawValue,
-        .bestFriend : EventHolderStatus.bestFriend.rawValue,
-        .schoolFriend : EventHolderStatus.schoolFriend.rawValue,
-        .colleague:  EventHolderStatus.colleague.rawValue,
-        .someFriend : EventHolderStatus.someFriend.rawValue ]
     
     // создадим экземпляр UIDatePicker, далее в методе viewDidLoad
     // назначим его как способ ввода в текстовое поле addEventHolderBirthdayDateTextField
@@ -77,12 +68,14 @@ class AddEventHolderTableViewController: UITableViewController {
         datePickerSwttings()
         
         // настроим статус по умолчанию
-        eventHolderSexLabel.text = "Пол не выбран"
+        eventHolderSexLabel.text = currentEventHolderSex.rawValue
         
         // обновление метки eventHolderStatusLabel в соответствии текущим типом
-        eventHolderStatusLabel?.text = statusTitles[currentEventHolderStatus]
+        eventHolderStatusLabel?.text = currentEventHolderStatus.rawValue
+
         
-        // в этом фрагиенте кода проходим по массиву текстовых полей и запускаем для каждого из них
+        
+        // в этом фрагменте кода проходим по массиву текстовых полей и запускаем для каждого из них
         // наблюдателя .addTarget
         let textFields = [addFirstNameTextField, addSecondNameTextField, addEventHolderPhoneNumberTextField, addEventHolderBirthdayDateTextField]
         for textField in textFields {
@@ -95,6 +88,10 @@ class AddEventHolderTableViewController: UITableViewController {
             }
         }
         
+    }
+    
+    func reloadTableViewFunc() {
+        tableView.reloadData()
     }
     
     
@@ -160,6 +157,7 @@ class AddEventHolderTableViewController: UITableViewController {
             }
         }
     }
+    
     // функция будет принимать UIAlertController, создавать два UIAlertAction
     // и отображать их
     func presentAlert(alertController: UIAlertController) {
@@ -205,35 +203,39 @@ class AddEventHolderTableViewController: UITableViewController {
             // настроим вид отображения даты в текстовом виде
             dateFormatter.dateFormat = "d MMMM yyyy"
             
-            // создаем новый экземпляр tempEventHolder: EventHolder, потом мы присвоим его eventHolder
-            let tempEventHolder = EventHolder(eventHolderFirstName: addFirstNameTextField.text ?? "error",
-                                              eventHolderLastName: addSecondNameTextField.text ?? "error",
-                                              eventHolderBirthdayDate: dateFormatter.date(from: addEventHolderBirthdayDateTextField.text ?? "11 августа 2011") ?? Date(),
-                                              eventHolderPhoneNumber: addEventHolderPhoneNumberTextField.text ?? "error",
-                                              sex: currentEventHolderSex,
-                                              eventHolderStatus: currentEventHolderStatus,
-                                              // добавляем сам ДР
-                                              events: [
-//                                                Event(eventDate: CustomDate(date: dateFormatter.date(from: addEventHolderBirthdayDateTextField.text ?? "11 августа 2011") ?? Date()),
-//                                                      eventType: .birthday,
-//                                                      eventDiscription: "описание",
-//                                                      isActual: true),
-//                                                // еще одно ДР для проверки
-                                                Event(eventDate: CustomDate(date: dateFormatter.date(from: addEventHolderBirthdayDateTextField.text ?? "11 августа 2011") ?? Date()),
-                                                      eventType: .birthday,
-                                                      eventDiscription: "описание",
-                                                      isActual: true)
-                                              ])
-            // теперь присваиваем наше tempEventHolder в постоянное свойство класса eventHolder
-            eventHolder = tempEventHolder
-            
-            // выводим в первую ячейку второй секции данные о дне рождении - первом и автоматически
-            // созданном событии Юбиляря
-            eventTypeLabel.text = eventHolder.events[0].eventType.rawValue
-            countDaysBeforeEventLabel.text = String(eventHolder.events[0].eventDate.daysCountBeforeEvent)
-            eventDateLabel.text = dateFormatter.string(from: (eventHolder.events[0].eventDate.date))
-            
-            tableView.reloadData()
+            if eventHolder == nil {
+                // создаем новый экземпляр tempEventHolder: EventHolder, потом мы присвоим его eventHolder
+                let tempEventHolder = EventHolder(eventHolderFirstName: addFirstNameTextField.text ?? "error",
+                                                  eventHolderLastName: addSecondNameTextField.text ?? "error",
+                                                  eventHolderBirthdayDate: dateFormatter.date(from: addEventHolderBirthdayDateTextField.text ?? "11 августа 2011") ?? Date(),
+                                                  eventHolderPhoneNumber: addEventHolderPhoneNumberTextField.text ?? "error",
+                                                  sex: currentEventHolderSex,
+                                                  eventHolderStatus: currentEventHolderStatus,
+                                                  // добавляем сам ДР
+                                                  events: [Event(eventDate: CustomDate(date: dateFormatter.date(from: addEventHolderBirthdayDateTextField.text ?? "11 августа 2011") ?? Date()),
+                                                          eventType: .birthday,
+                                                          eventDiscription: "",
+                                                          isActual: true)]
+                                                  )
+                // теперь присваиваем наше tempEventHolder в постоянное свойство класса eventHolder
+                eventHolder = tempEventHolder
+                
+                // выводим в первую ячейку второй секции количество событий
+                eventCountLabel.text = String( eventHolder.events.count)
+                tableView.reloadData()
+            } else {
+                eventHolder.eventHolderFirstName = addFirstNameTextField.text ?? "error"
+                eventHolder.eventHolderLastName = addSecondNameTextField.text ?? "error"
+                eventHolder.eventHolderBirthdayDate = dateFormatter.date(from: addEventHolderBirthdayDateTextField.text ?? "11 августа 2011") ?? Date()
+                eventHolder.eventHolderPhoneNumber = addEventHolderPhoneNumberTextField.text ?? "error"
+                eventHolder.sex = currentEventHolderSex
+                eventHolder.eventHolderStatus = currentEventHolderStatus
+                
+                //eventCountLabel.text = String(eventHolder.events.count)
+
+                tableView.reloadData()
+            }
+
             
         } else {
             if saveButtonOutlet.title == "Изменить" {
@@ -246,18 +248,18 @@ class AddEventHolderTableViewController: UITableViewController {
                 self.addEventHolderPhoneNumberTextField.isEnabled = true
                 // скрываем клавиатуру
                 self.tableView.endEditing(true)
-                // делаем кнопку sexCellButton доступной таким образом разрешаемпереход по сигвею по нажатию
+                // делаем кнопку sexCellButton доступной таким образом разрешаем переход по сигвею по нажатию
                 sexCellButton.isHidden.toggle()
                 statusCellButton.isHidden.toggle()
             }
         }
-        
+        print(eventHolder.events.count)
     }
     
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 3
+        return 2
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -270,17 +272,17 @@ class AddEventHolderTableViewController: UITableViewController {
             if eventHolder == nil {
                 return 0
             } else {
-                return eventHolder.events.count
-            }
-        }
-        
-        if section == 2 {
-            if eventHolder == nil {
-                return 0
-            } else {
                 return 1
             }
         }
+        
+//        if section == 2 {
+//            if eventHolder == nil {
+//                return 0
+//            } else {
+//                return 1
+//            }
+//        }
         return 0
     }
     
@@ -306,7 +308,7 @@ class AddEventHolderTableViewController: UITableViewController {
                 // изменяем статус пользователя в контроллере AddEventHolderTableViewController
                 self.currentEventHolderStatus = selectedStatus
                 // обновляем метку с текущим типом в AddEventHolderTableViewController
-                eventHolderStatusLabel?.text = statusTitles[currentEventHolderStatus]
+                eventHolderStatusLabel?.text = currentEventHolderStatus.rawValue
                 
                 // таким образом мы выполнили операции в AddEventHolderTableViewController при помощи замыкания doAfterStatusSelected вызвав его
                 // вообще в другом контроллере
@@ -321,6 +323,12 @@ class AddEventHolderTableViewController: UITableViewController {
                 eventHolderSexLabel.text = currentEventHolderSex.rawValue
             }
         }
+        
+        if segue.identifier == "toAllEventsSegueID" {
+            let destination = segue.destination as! ShowAllEventsOfSomeHolderTableViewController
+            destination.events = eventHolder.events
+        }
+                
     }
     
     

@@ -20,3 +20,9 @@ v 0.1.4 Проработка экрана AddEventHolderTableViewController
 - доработана логика активации кнопки Сохранить при заполнении полей, выбора Статуса и Пола
 - создание и отображение события по умолчанию (это ДР) после нажания кнопки сохранить - добавление еще одной секции
 - добавлена кнопка "Добавить событие" в третьей секции
+
+v 0.1.5 Проработка экрана AddEventHolderTableViewController, добавлен экран ShowAllEventsOfSomeHolderTableViewController
+- с экрана AddEventHolderTableViewController убрана кнопка Сохранить
+- на экране AddEventHolderTableViewController в отдельной ячейке просто указывается количество событий пользователя, при нажатии на эту ячейку отображается экран ShowAllEventsOfSomeHolderTableViewController, в нем отображаются все события пользователя через динамическую таблицу а так же в отдельной секции отображается кнопка "Добавить событие"
+- на экране ShowAllEventsOfSomeHolderTableViewController при нажатии на кнопку "Добавить событие" открывается экран AddEventTableViewController на нем можно добавить новое событие
+- между экранами AddEventTableViewController , ShowAllEventsOfSomeHolderTableViewController и AddEventHolderTableViewController данные передаются при помощи self.navigationController?.viewControllers.forEach{
