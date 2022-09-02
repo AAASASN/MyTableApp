@@ -7,11 +7,13 @@
 
 import Foundation
 
+
+
 enum EventHolderSex : String {
-    case male = "мужской"
-    case female = "женский"
-    case third = "третий пол"
-    case none = "пол не выбран"
+    case male = "Мужской"
+    case female = "Женский"
+    case third = "Третий пол"
+    case none = "Пол не выбран"
 }
 
 enum EventHolderStatus : String {
@@ -22,21 +24,23 @@ enum EventHolderStatus : String {
     case colleague  = "Коллега"
 }
 
-enum EventType : String {
+enum EventType : String, CaseIterable {
     case birthday = "день рождения"
     case birthOfChildren = "день рождения ребенка"
-    case wedding = "годовщина свадьбы"
+    case wedding = "свадьба"
     case housewarming = "новоселье"
-    case none  = "none"
+    case none  = "тип события не выбран"
+    //case addEventButton = "addEventButton"
 }
 
 protocol EventProtocol {
     var eventDate : CustomDate { get set }
     var eventType : EventType { get set }
     var eventDiscription : String { get set }
+    var isActual : Bool { get set }
 }
 
-class Event : EventProtocol {
+class Event: EventProtocol {
     var eventDate : CustomDate
     var eventType : EventType
     var eventDiscription : String
@@ -45,7 +49,7 @@ class Event : EventProtocol {
     init(eventDate: CustomDate,  eventType: EventType, eventDiscription : String, isActual : Bool ) {
         self.eventDate = eventDate
         self.eventType = eventType
-        self.eventDiscription = "Краткое описание события"
+        self.eventDiscription = eventDiscription
         self.isActual = isActual
     }
 }

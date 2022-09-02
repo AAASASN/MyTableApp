@@ -14,8 +14,25 @@ import Foundation
 class CustomDate {
     /// собственно дата
     var date : Date
+    
+    /// вычисляемое свойство которое будет хранить дату в текстовом формате
+    var dateAsString : String {
+        func getDateAsStringFromDate() -> String {
+            // создадим экземпляр типа DateFormatter
+            let formater = DateFormatter()
+            // настроим локализацию - для отображения на русском языке
+            formater.locale = Locale(identifier: "ru_RU")
+            // настроим вид отображения даты в текстовом виде
+            formater.dateFormat = "d MMMM yyyy"
+            // передадим в текстовое поле dateField строку обработанное форматером принятое от datePicker
+            return formater.string(from: date)
+        }
+        return getDateAsStringFromDate()
+    }
+    
     ///  вычисляемое свойство для отслеживания количества дней до события
     ///  вычисляется из date и текущей даты на устройстве
+
     var daysCountBeforeEvent : Int {
         
         /// несколько функций для повторяющегося кода

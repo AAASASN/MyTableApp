@@ -12,7 +12,7 @@ protocol EventHolderProtocol {
     var eventHolderLastName : String { get set }
     var eventHolderBirthdayDate : Date { get set }
     var eventHolderPhoneNumber : String { get set }
-    var sex : Bool { get set }
+    var sex : EventHolderSex { get set }
     var eventHolderStatus : EventHolderStatus { get set }
     var events : [EventProtocol] { get set }
 
@@ -24,7 +24,7 @@ class EventHolder : EventHolderProtocol {
     var eventHolderLastName = String()
     var eventHolderBirthdayDate: Date
     var eventHolderPhoneNumber: String
-    var sex: Bool
+    var sex: EventHolderSex
     var eventHolderStatus: EventHolderStatus
     var events: [EventProtocol]
     
@@ -33,18 +33,16 @@ class EventHolder : EventHolderProtocol {
          eventHolderLastName : String,
          eventHolderBirthdayDate : Date,
          eventHolderPhoneNumber : String,
-         sex : Bool,
+         sex : EventHolderSex,
          eventHolderStatus : EventHolderStatus,
          events : [EventProtocol] ) {
         self.eventHolderFirstName = eventHolderFirstName
         self.eventHolderLastName = eventHolderLastName
         self.eventHolderBirthdayDate = eventHolderBirthdayDate
         self.eventHolderPhoneNumber = eventHolderPhoneNumber
-        self.sex = sex
+        self.sex = EventHolderSex.none
         self.eventHolderStatus = eventHolderStatus
         self.events = events
-        
-        
     }
 }
 

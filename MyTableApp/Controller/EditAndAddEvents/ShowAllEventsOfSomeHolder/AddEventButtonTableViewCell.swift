@@ -1,18 +1,13 @@
 //
-//  StartControllerCustomCell.swift
+//  AddEventButtonTableViewCell.swift
 //  MyTableApp
 //
-//  Created by Александр Мараенко on 08.07.2022.
+//  Created by Александр Мараенко on 01.09.2022.
 //
 
 import UIKit
 
-class StartControllerCustomCell: UITableViewCell {
-    
-    @IBOutlet var nameLabel: UILabel!
-    @IBOutlet var dateLabel: UILabel!
-    @IBOutlet var eventTypeLabel: UILabel!
-
+class AddEventButtonTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
