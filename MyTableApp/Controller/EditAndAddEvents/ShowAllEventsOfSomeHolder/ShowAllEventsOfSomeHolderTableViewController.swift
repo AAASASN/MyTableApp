@@ -25,42 +25,30 @@ class ShowAllEventsOfSomeHolderTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 2
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        if section == 0 {
-            return events.count
-        } else { return 1 }
+        return events.count
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // Configure the cell...
         var cellForReturn = UITableViewCell()
         let cell1 = tableView.dequeueReusableCell(withIdentifier: "OneEventSomeHolderTableViewCellID", for: indexPath) as! OneEventSomeHolderTableViewCell
         cell1.eventTypeLabel.text = events[indexPath.row].eventType.rawValue
         cell1.isActualLabel.text = events[indexPath.row].isActual == true ? "Актуально" : "Не актуально"
-        
-        print("в event \(events[indexPath.row].eventDiscription)")
         cell1.eventDiscriptionLabel.text = events[indexPath.row].eventDiscription
-        print("в label \((cell1.eventDiscriptionLabel.text ?? "error"))")
-
         cell1.dayCountLabel.text = String(events[indexPath.row].eventDate.daysCountBeforeEvent)
         cell1.eventDateLabel.text = events[indexPath.row].eventDate.dateAsString
-        let cell2 = tableView.dequeueReusableCell(withIdentifier: "AddEventButtonTableViewCellID", for: indexPath) as! AddEventButtonTableViewCell
-        
-        // Configure the cell...
+
         if indexPath.section == 0 {
             cellForReturn = cell1
-        } else if indexPath.section == 1 {
-            return cell2
         }
         return cellForReturn
     }
     
-
-
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -69,17 +57,50 @@ class ShowAllEventsOfSomeHolderTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        
+        if indexPath.section == 0 {
+              if editingStyle == .delete {
+                  // Delete the row from the data source
+                  events.remove(at: indexPath.row)
+                  tableView.deleteRows(at: [indexPath], with: .fade)
+                  tableView.reloadData()
+                  
+                  self.navigationController?.viewControllers.forEach{ viewController in
+                      (viewController as? AddEventHolderTableViewController)?.eventHolder.events.remove(at: indexPath.row)
+                      let eventCount = (viewController as? AddEventHolderTableViewController)?.eventHolder.events.count
+                      (viewController as? AddEventHolderTableViewController)?.eventCountLabel.text =  String(eventCount ?? 9999)
+                      (viewController as? AddEventHolderTableViewController)?.tableView.reloadData()
+
+                  }
+              } else if editingStyle == .insert {
+                  // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+              }
+        }
+
     }
-    */
+    
+
+//    func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "toEditEventTableViewControllerID" {
+//            // ссылка на контроллер назначения
+//            let destination = segue.destination as! EditEventTableViewController
+//            destination.oneEvent = events[indexPath.row] as! Event
+//            }
+//    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // получаем вью контроллер, в который происходит переход
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let editScreen = storyboard.instantiateViewController(withIdentifier: "EditEventTableViewControllerID") as! EditEventTableViewController
+        // передаем данные
+        editScreen.oneEvent = events[indexPath.row] as! Event
+        // переходим к следующему экрану
+        self.navigationController?.pushViewController(editScreen , animated: true)
+        // toEditEventTableViewControllerID
+    }
 
     /*
     // Override to support rearranging the table view.
