@@ -11,7 +11,7 @@ import Foundation
 // свойство типа Date и вычисляемое свойство dateIntDayAndMonth : Int
 // в котором будет храниться число дней до дня рождения с учетом текещей даты
 
-class CustomDate {
+class CustomDate: Codable {
     /// собственно дата
     var date : Date
     

@@ -13,7 +13,7 @@ class StartTableViewController: UITableViewController {
     var eventsStorage : EventStorageProtocol = EventStorage()
     
     // в этом свойстве будем хранить массив кортрежей [(EventHolderProtocol, EventProtocol)]
-    var eventHolderAndEventArray : [(EventHolderProtocol, EventProtocol)] = []
+    var eventHolderAndEventArray : [(EventHolder, EventProtocol)] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()

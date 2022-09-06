@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol EventHolderProtocol {
+protocol EventHolderProtocol: Codable {
     var eventHolderFirstName : String { get set }
     var eventHolderLastName : String { get set }
     var eventHolderBirthdayDate : Date { get set }
@@ -15,19 +15,16 @@ protocol EventHolderProtocol {
     var sex : EventHolderSex { get set }
     var eventHolderStatus : EventHolderStatus { get set }
     var events : [EventProtocol] { get set }
-
-
 }
 
-class EventHolder : EventHolderProtocol {
-    var eventHolderFirstName = String()
-    var eventHolderLastName = String()
+class EventHolder: Codable {    
+    var eventHolderFirstName: String
+    var eventHolderLastName: String
     var eventHolderBirthdayDate: Date
     var eventHolderPhoneNumber: String
     var sex: EventHolderSex
     var eventHolderStatus: EventHolderStatus
-    var events: [EventProtocol]
-    
+    var events = [Event]()
 
     init(eventHolderFirstName : String,
          eventHolderLastName : String,
@@ -35,7 +32,7 @@ class EventHolder : EventHolderProtocol {
          eventHolderPhoneNumber : String,
          sex : EventHolderSex,
          eventHolderStatus : EventHolderStatus,
-         events : [EventProtocol] ) {
+         events : [Event] ) {
         self.eventHolderFirstName = eventHolderFirstName
         self.eventHolderLastName = eventHolderLastName
         self.eventHolderBirthdayDate = eventHolderBirthdayDate
@@ -45,5 +42,10 @@ class EventHolder : EventHolderProtocol {
         self.events = events
     }
 }
+  
+
+
+    
+
 
 

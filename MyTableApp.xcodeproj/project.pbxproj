@@ -22,6 +22,7 @@
 		11D2AB2228C0AB59002F3748 /* ShowAllEventsOfSomeHolderTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D2AB2128C0AB59002F3748 /* ShowAllEventsOfSomeHolderTableViewController.swift */; };
 		11D2AB2428C0ABC5002F3748 /* OneEventSomeHolderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D2AB2328C0ABC5002F3748 /* OneEventSomeHolderTableViewCell.swift */; };
 		11D2AB2628C0AC43002F3748 /* AddEventButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D2AB2528C0AC43002F3748 /* AddEventButtonTableViewCell.swift */; };
+		11D2AB2928C2376B002F3748 /* EditEventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D2AB2828C2376B002F3748 /* EditEventTableViewController.swift */; };
 		11E640C1288171270018DBD1 /* EventHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E640C0288171270018DBD1 /* EventHolder.swift */; };
 		11E640CB2885E6990018DBD1 /* AddEventHolderTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E640CA2885E6990018DBD1 /* AddEventHolderTableViewController.swift */; };
 		11F3A6952896A63000EABCE0 /* ChangeEventHolderSexTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F3A6942896A63000EABCE0 /* ChangeEventHolderSexTableViewController.swift */; };
@@ -47,6 +48,7 @@
 		11D2AB2128C0AB59002F3748 /* ShowAllEventsOfSomeHolderTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowAllEventsOfSomeHolderTableViewController.swift; sourceTree = "<group>"; };
 		11D2AB2328C0ABC5002F3748 /* OneEventSomeHolderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneEventSomeHolderTableViewCell.swift; sourceTree = "<group>"; };
 		11D2AB2528C0AC43002F3748 /* AddEventButtonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventButtonTableViewCell.swift; sourceTree = "<group>"; };
+		11D2AB2828C2376B002F3748 /* EditEventTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditEventTableViewController.swift; sourceTree = "<group>"; };
 		11E640C0288171270018DBD1 /* EventHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventHolder.swift; sourceTree = SOURCE_ROOT; };
 		11E640CA2885E6990018DBD1 /* AddEventHolderTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventHolderTableViewController.swift; sourceTree = "<group>"; };
 		11F3A6942896A63000EABCE0 /* ChangeEventHolderSexTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeEventHolderSexTableViewController.swift; sourceTree = "<group>"; };
@@ -117,6 +119,14 @@
 			path = ShowAllEventsOfSomeHolder;
 			sourceTree = "<group>";
 		};
+		11D2AB2728C23717002F3748 /* EditEvent */ = {
+			isa = PBXGroup;
+			children = (
+				11D2AB2828C2376B002F3748 /* EditEventTableViewController.swift */,
+			);
+			path = EditEvent;
+			sourceTree = "<group>";
+		};
 		11E640C22885B5400018DBD1 /* StartController */ = {
 			isa = PBXGroup;
 			children = (
@@ -141,6 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				11F88EA028BB7AC4000E1E59 /* EditAndAddEvents */,
+				11D2AB2728C23717002F3748 /* EditEvent */,
 				11E640C32885B5790018DBD1 /* AddEventHolderController */,
 				11E640C22885B5400018DBD1 /* StartController */,
 			);
@@ -248,6 +259,7 @@
 				11F88EA428BB847C000E1E59 /* AddEventTableViewController.swift in Sources */,
 				11D2AB2428C0ABC5002F3748 /* OneEventSomeHolderTableViewCell.swift in Sources */,
 				114D264A28780ED600F44967 /* AppDelegate.swift in Sources */,
+				11D2AB2928C2376B002F3748 /* EditEventTableViewController.swift in Sources */,
 				114D265E287810A000F44967 /* StartTableViewController.swift in Sources */,
 				11D2AB2228C0AB59002F3748 /* ShowAllEventsOfSomeHolderTableViewController.swift in Sources */,
 				114D264C28780ED600F44967 /* SceneDelegate.swift in Sources */,

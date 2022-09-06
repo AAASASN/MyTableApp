@@ -7,16 +7,14 @@
 
 import Foundation
 
-
-
-enum EventHolderSex : String {
+enum EventHolderSex : String, Codable {
     case male = "Мужской"
     case female = "Женский"
     case third = "Третий пол"
     case none = "Пол не выбран"
 }
 
-enum EventHolderStatus : String {
+enum EventHolderStatus : String, Codable  {
     case schoolFriend  = "Школьный друг"
     case bestFriend = "Лучший друг"
     case someFriend = "Просто знакомый"
@@ -24,23 +22,22 @@ enum EventHolderStatus : String {
     case colleague  = "Коллега"
 }
 
-enum EventType : String, CaseIterable {
+enum EventType : String, CaseIterable, Codable {
     case birthday = "день рождения"
     case birthOfChildren = "день рождения ребенка"
     case wedding = "свадьба"
     case housewarming = "новоселье"
     case none  = "тип события не выбран"
-    //case addEventButton = "addEventButton"
 }
 
-protocol EventProtocol {
+protocol EventProtocol: Codable {
     var eventDate : CustomDate { get set }
     var eventType : EventType { get set }
     var eventDiscription : String { get set }
     var isActual : Bool { get set }
 }
 
-class Event: EventProtocol {
+class Event: EventProtocol, Codable {
     var eventDate : CustomDate
     var eventType : EventType
     var eventDiscription : String

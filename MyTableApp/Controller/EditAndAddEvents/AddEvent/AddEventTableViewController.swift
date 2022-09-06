@@ -24,24 +24,37 @@ class AddEventTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        eventDateTextField.text = ""
+        
         // укажем в лейбле eventTypeLabel значенеие по умолчанию
         eventTypeLabel.text = currentEventType.rawValue
         
         // настроим datePicker
         datePickerSettings()
         
+        // настроим тулбар
+        createAndAddingToolBarToKeyboard()
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return (eventTypeLabel.text == "тип события не выбран" ? 1 : 2)
+        var varForReturn = 1
+        if eventDateTextField.text != "" {
+            if eventTypeLabel.text != "тип события не выбран"  {
+                varForReturn = 2
+            }
+        }
+        return varForReturn
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -83,8 +96,6 @@ class AddEventTableViewController: UITableViewController {
             }
         }
     }
-    
-    
     
     // MARK: - настройка DateDicker
     
@@ -133,14 +144,35 @@ class AddEventTableViewController: UITableViewController {
     // при изменении значений на datePicker будет обновлять dateField
     @objc func dateChanged (){
         getDateFromPicker()
-        // обновим таблицу для отображения кнопки "Сохранить" во второй секции
-        tableView.reloadData()
     }
     
     // при нажатии на кнопку Готово на тулбаре скрывает клавиатуру
     @objc func doneAction (){
         self.tableView.endEditing(true)
     }
+    
+    // MARK: - настройка ToolBar вызывается во viewDidLoad
+    // функция будет настраивать ToolBar и кнопку Done для скрытия клавиатуры
+    func createAndAddingToolBarToKeyboard() {
+        // создадим Тулбар, позже расположим его над клавиатурой
+        let toolBar = UIToolbar()
+        //
+        toolBar.sizeToFit()
+        // добавим на ТулБар кнопку Готово
+        // создадим кнопку
+        let doneButton = UIBarButtonItem(title: "Готово", style: .plain, target: self, action: #selector(doneAction))
+        
+        // создадим "поле-пробел" что бы заполнить им пространство слева на ТулБаре
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        
+        // подключим кнопку к тулБару и настроим положение кнопки Готово на Тулбаре - справа
+        toolBar.setItems([flexSpace, doneButton], animated: true)
+        
+        // подключаем созданный ТулБар ко всем текстовым полям
+        eventDateTextField.inputAccessoryView = toolBar
+        }
+    
+
     
     // при нажатии на ячейку во второй секции будет создаватся Event и передаваться на предыдущий экран
     // (ShowAllEventsOfSomeHolderTableViewController) в
@@ -163,6 +195,5 @@ class AddEventTableViewController: UITableViewController {
             }
             navigationController?.popViewController(animated: true)
         }
-        
     }
 }

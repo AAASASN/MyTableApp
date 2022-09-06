@@ -10,6 +10,9 @@ import UIKit
 
 class AddEventHolderTableViewController: UITableViewController {
     
+    // свойство для загрузки в него хранилища с данными
+    var eventsStorage : EventStorageProtocol = EventStorage()
+    
     @IBOutlet weak var addFirstNameTextField: UITextField!
     @IBOutlet weak var addSecondNameTextField: UITextField!
     @IBOutlet weak var addEventHolderBirthdayDateTextField: UITextField!
@@ -55,6 +58,9 @@ class AddEventHolderTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // получим актуальный список [EventHolder] в хранилище eventsStorage
+        eventsStorage.getUpdatedDataToEventStorage()
         
         // настроим кнопку "Сохранить"
         saveButtonOutlet.title = "Сохранить"
@@ -151,6 +157,7 @@ class AddEventHolderTableViewController: UITableViewController {
                 //
                 savingOrEditEventHolderAndCreateBirthdayEvent()
             }
+            
         } else {
             if saveButtonOutlet.title == "Изменить" {
                 savingOrEditEventHolderAndCreateBirthdayEvent()
@@ -223,6 +230,16 @@ class AddEventHolderTableViewController: UITableViewController {
                 // выводим в первую ячейку второй секции количество событий
                 eventCountLabel.text = String( eventHolder.events.count)
                 tableView.reloadData()
+                
+                // передадим созданное событие в Хранилище EventStorage при помощи метода !!!!!
+                eventsStorage.addEventHolderToEventSrorage(newEventHolder: eventHolder)
+                
+                // передаем созданное событие на экран StartTableViewController
+                self.navigationController?.viewControllers.forEach{ viewController in
+                    (viewController as? StartTableViewController)?.eventHolderAndEventArray.append((eventHolder, eventHolder.events[0]))
+                    (viewController as? StartTableViewController)?.tableView.reloadData()
+                }
+                
             } else {
                 eventHolder.eventHolderFirstName = addFirstNameTextField.text ?? "error"
                 eventHolder.eventHolderLastName = addSecondNameTextField.text ?? "error"
@@ -275,14 +292,6 @@ class AddEventHolderTableViewController: UITableViewController {
                 return 1
             }
         }
-        
-//        if section == 2 {
-//            if eventHolder == nil {
-//                return 0
-//            } else {
-//                return 1
-//            }
-//        }
         return 0
     }
     
