@@ -9,6 +9,10 @@ import UIKit
 
 class AddEventTableViewController: UITableViewController {
 
+    // свойство для загрузки в него хранилища с данными
+    var eventsStorage : EventStorageProtocol = EventStorage()
+    //
+    var currentEventsHolder : EventHolder!
     
     @IBOutlet weak var eventTypeLabel: UILabel!
     @IBOutlet weak var eventDateTextField: UITextField!
@@ -24,6 +28,9 @@ class AddEventTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // получим актуальный список [EventHolder] в хранилище eventsStorage
+        eventsStorage.getUpdatedDataToEventStorage()
+        
         eventDateTextField.text = ""
         
         // укажем в лейбле eventTypeLabel значенеие по умолчанию
@@ -42,6 +49,11 @@ class AddEventTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        // получим актуальный список [EventHolder] в хранилище eventsStorage
+        eventsStorage.getUpdatedDataToEventStorage()
     }
 
     // MARK: - Table view data source
@@ -173,7 +185,7 @@ class AddEventTableViewController: UITableViewController {
         }
     
 
-    
+    // MARK: - нажатие на кнопку сохранить (она же ячейка во второй секции)
     // при нажатии на ячейку во второй секции будет создаватся Event и передаваться на предыдущий экран
     // (ShowAllEventsOfSomeHolderTableViewController) в
     // массиве navigationController?.viewControllers.events, затем таблица предыдущего экрана обновляется
@@ -184,15 +196,15 @@ class AddEventTableViewController: UITableViewController {
                                  eventType: EventType(rawValue: eventTypeLabel.text ?? "тип события не выбран") ?? .none,
                                  eventDiscription: eventDescriptionTextView.text,
                                  isActual: true)
+            
             self.navigationController?.viewControllers.forEach{ viewController in
+                // добавляем событие в массив-датасурс предыдущего контроллера и обновим его
                 (viewController as? ShowAllEventsOfSomeHolderTableViewController)?.events.append(newEvent)
-                (viewController as? ShowAllEventsOfSomeHolderTableViewController)?.tableView.reloadData()
-                // так же добавляем это событие в eventHolder.events на экране AddEventHolderTableViewController
-                // и указываем количество событий пользователя в лейбле AddEventHolderTableViewController.eventCountLabel.text
-                (viewController as? AddEventHolderTableViewController)?.eventHolder.events.append(newEvent)
-                let eventCount = (viewController as? AddEventHolderTableViewController)?.eventHolder.events.count
-                (viewController as? AddEventHolderTableViewController)?.eventCountLabel.text =  String(eventCount ?? 9999)
+                //(viewController as? ShowAllEventsOfSomeHolderTableViewController)?.tableView.reloadData()
             }
+            // добавляем событие в хранилище
+            eventsStorage.addEventToExistedHolder(addingEvent: newEvent, existedHolder: currentEventsHolder)
+            // (viewController as? StartTableViewController)?.tableView.reloadData()
             navigationController?.popViewController(animated: true)
         }
     }

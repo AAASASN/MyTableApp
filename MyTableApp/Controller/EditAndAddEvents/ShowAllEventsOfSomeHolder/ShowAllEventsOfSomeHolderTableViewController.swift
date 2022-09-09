@@ -9,11 +9,18 @@ import UIKit
 
 class ShowAllEventsOfSomeHolderTableViewController: UITableViewController {
 
+    // свойство для загрузки в него хранилища с данными
+    var eventsStorage : EventStorageProtocol = EventStorage()
+    
+    var currentEventsHolder : EventHolder!
     var events: [EventProtocol] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        // получим актуальный список [EventHolder] в хранилище eventsStorage
+        eventsStorage.getUpdatedDataToEventStorage()
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -21,6 +28,14 @@ class ShowAllEventsOfSomeHolderTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        // получим актуальный список [EventHolder] в хранилище eventsStorage
+        eventsStorage.getUpdatedDataToEventStorage()
+        //
+        // обновим таблицу перед отображением
+        tableView.reloadData()
+    }
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -48,6 +63,12 @@ class ShowAllEventsOfSomeHolderTableViewController: UITableViewController {
         }
         return cellForReturn
     }
+    
+        // Вывод заголовка в секцию
+        override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+            return "События \(currentEventsHolder.eventHolderFirstName) \(currentEventsHolder.eventHolderLastName)"
+        }
+    
     
     /*
     // Override to support conditional editing of the table view.
@@ -117,14 +138,17 @@ class ShowAllEventsOfSomeHolderTableViewController: UITableViewController {
     }
     */
 
-    /*
-    // MARK: - Navigation
+  
+     //MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+     //In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "toAddEventTableViewControllerID" {
+            let destination = segue.destination as! AddEventTableViewController
+            destination.currentEventsHolder = self.currentEventsHolder
+        }
     }
-    */
+ 
 
+    
 }

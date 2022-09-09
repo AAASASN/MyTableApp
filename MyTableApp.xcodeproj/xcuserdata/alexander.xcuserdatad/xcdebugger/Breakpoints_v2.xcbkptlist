@@ -30,8 +30,8 @@
             filePath = "MyTableApp/Model/EventStorage.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
+            startingLineNumber = "145"
+            endingLineNumber = "145"
             landmarkName = "EventStorage"
             landmarkType = "3">
          </BreakpointContent>

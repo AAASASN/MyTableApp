@@ -58,7 +58,7 @@ class AddEventHolderTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // получим актуальный список [EventHolder] в хранилище eventsStorage
         eventsStorage.getUpdatedDataToEventStorage()
         
@@ -100,6 +100,15 @@ class AddEventHolderTableViewController: UITableViewController {
         tableView.reloadData()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        // получим актуальный список [EventHolder] в хранилище eventsStorage
+        eventsStorage.getUpdatedDataToEventStorage()
+        for index in 0..<eventsStorage.eventHolderArrayAsClass.eventHolderArray.count {
+            if eventsStorage.eventHolderArrayAsClass.eventHolderArray[index].eventHolderFirstName == addFirstNameTextField.text && eventsStorage.eventHolderArrayAsClass.eventHolderArray[index].eventHolderLastName == addSecondNameTextField.text{
+                eventCountLabel.text = String(eventsStorage.eventHolderArrayAsClass.eventHolderArray[index].events.count)
+            }
+        }
+    }
     
     // функция проверяет что все поля заполнены и активирует кнопку "Сохранить", если же кнопка была активна
     // и какое либо поле очистили кнопка деактивируется
@@ -226,20 +235,22 @@ class AddEventHolderTableViewController: UITableViewController {
                                                   )
                 // теперь присваиваем наше tempEventHolder в постоянное свойство класса eventHolder
                 eventHolder = tempEventHolder
-                
-                // выводим в первую ячейку второй секции количество событий
-                eventCountLabel.text = String( eventHolder.events.count)
-                tableView.reloadData()
-                
-                // передадим созданное событие в Хранилище EventStorage при помощи метода !!!!!
+                                
+                // передадим созданное событие в Хранилище EventStorage при помощи метода
                 eventsStorage.addEventHolderToEventSrorage(newEventHolder: eventHolder)
                 
-                // передаем созданное событие на экран StartTableViewController
-                self.navigationController?.viewControllers.forEach{ viewController in
-                    (viewController as? StartTableViewController)?.eventHolderAndEventArray.append((eventHolder, eventHolder.events[0]))
-                    (viewController as? StartTableViewController)?.tableView.reloadData()
+                // получим актуальный список [EventHolder] в хранилище eventsStorage
+                eventsStorage.getUpdatedDataToEventStorage()
+                // выводим в первую ячейку второй секции количество событий
+                for i in 0..<((eventsStorage.getEventHolderArrayFromEventStorage()).count){
+                    if eventsStorage.getEventHolderArrayFromEventStorage()[i].eventHolderFirstName == eventHolder.eventHolderFirstName && eventsStorage.getEventHolderArrayFromEventStorage()[i].eventHolderLastName == eventHolder.eventHolderLastName {
+                        eventCountLabel.text = String(eventsStorage.getEventHolderArrayFromEventStorage()[i].events.count)
+                    }
                 }
-                
+                eventCountLabel.text = String( eventHolder.events.count)
+
+                eventCountLabel.text = String( eventHolder.events.count)
+                tableView.reloadData()
             } else {
                 eventHolder.eventHolderFirstName = addFirstNameTextField.text ?? "error"
                 eventHolder.eventHolderLastName = addSecondNameTextField.text ?? "error"
@@ -336,6 +347,7 @@ class AddEventHolderTableViewController: UITableViewController {
         if segue.identifier == "toAllEventsSegueID" {
             let destination = segue.destination as! ShowAllEventsOfSomeHolderTableViewController
             destination.events = eventHolder.events
+            destination.currentEventsHolder = eventHolder
         }
                 
     }
