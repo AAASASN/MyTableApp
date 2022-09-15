@@ -20,10 +20,10 @@ protocol EventStorageProtocol {
     func getUpdatedDataToEventStorage()
     func addEventHolderToEventSrorage(newEventHolder: EventHolder)
     func getEventHolderAndEventArray() -> [(EventHolder, EventProtocol)]
-    func removeEventHolderFromEventSrorage(removedEventHolder: EventHolder, removedEvent: EventProtocol)
+    func removeEventOfSomeEventHolderFromSomeEventHolderAndEventSrorage(eventHolder: EventHolder, event: EventProtocol)
     func getEventHolderArrayFromEventStorage() -> [EventHolder]
     func addEventToExistedHolder(addingEvent event: Event, existedHolder: EventHolder)
-
+    func addChangesOfEventHolderToEventStorage(changedEventHolder: EventHolder)
 }
 
 class EventStorage: EventStorageProtocol {
@@ -62,28 +62,54 @@ class EventStorage: EventStorageProtocol {
 
     }
     
-    // удаление EventHolder из хранилища
-    func removeEventHolderFromEventSrorage(removedEventHolder: EventHolder, removedEvent: EventProtocol) {
-        
-//        // выгружаем из UserDefaults данные в eventHolderArrayAsClass
-//        getDataFromUserDefaultsToEventHolderArrayAsClass()
-        var indexForRemove: Int!
+    // внесение изменений в EventHolder принятого в функцию
+    func addChangesOfEventHolderToEventStorage(changedEventHolder: EventHolder) {
+        // создаем временный массив в который переложим всех EventHolder кроме того который пришел в качестве аргумента в функцию
+        var tempEventHolderArray: [EventHolder] = []
+        // проходим по массиву EventHolder в хранилище
         for index in 0..<eventHolderArrayAsClass.eventHolderArray.count {
-            if removedEventHolder.eventHolderFirstName == eventHolderArrayAsClass.eventHolderArray[index].eventHolderFirstName && removedEventHolder.eventHolderLastName == eventHolderArrayAsClass.eventHolderArray[index].eventHolderLastName {
+            // если ID EventHolder-a для принятого в функцию равен ID EventHolder-а в хранилище
+            if changedEventHolder.eventHolderID != eventHolderArrayAsClass.eventHolderArray[index].eventHolderID {
+                // добавляем этого EventHolder-a во временный массив
+                tempEventHolderArray.append(eventHolderArrayAsClass.eventHolderArray[index])
+            }
+        }
+        // теперь добавим во временный массив EventHolder-а который пришел в качестве аргумента в функцию
+        tempEventHolderArray.append(changedEventHolder)
+        // теперь пересохраняем массив EventHolder-ов в хранилище
+        eventHolderArrayAsClass.eventHolderArray = tempEventHolderArray
+        // и после этого обновляем состояние userDefaults с учетом нового элемента
+        saveDataFromEventHolderArrayAsClassToUserDefaults()
+        getDataFromUserDefaultsToEventHolderArrayAsClass()
+    }
+    
+    // удаление EventHolder из хранилища
+    func removeEventOfSomeEventHolderFromSomeEventHolderAndEventSrorage(eventHolder: EventHolder, event: EventProtocol) {
+        // индекс для понимания остались ли у EventHolder события в массиве
+        var indexForRemove: Int!
+        
+        // проходим по массиву EventHolder в хранилище
+        for index in 0..<eventHolderArrayAsClass.eventHolderArray.count {
+            // если ID EventHolder-a для принятого в функцию равен ID EventHolder-а в хранилище
+            if eventHolder.eventHolderID == eventHolderArrayAsClass.eventHolderArray[index].eventHolderID {
+                // и если в хранилище пользоапеля больше чем одно событие
                 if eventHolderArrayAsClass.eventHolderArray[index].events.count > 1 {
+                    // то мы перезаписываем все события из массива событий EventHolder в новый массив исключив из него событие пришедшее на удаление в функцию
                     var newEventArray = [Event]()
                     for indexInArray in 0..<eventHolderArrayAsClass.eventHolderArray[index].events.count {
-                        if eventHolderArrayAsClass.eventHolderArray[index].events[indexInArray].eventType != removedEvent.eventType && eventHolderArrayAsClass.eventHolderArray[index].events[indexInArray].eventDate.date != removedEvent.eventDate.date {
+                        if eventHolderArrayAsClass.eventHolderArray[index].events[indexInArray].eventID != event.eventID {
                             newEventArray.append(eventHolderArrayAsClass.eventHolderArray[index].events[indexInArray])
-                            //eventHolderArrayAsClass.eventHolderArray[index].events.remove(at: indexInArray)
                         }
                     }
+                    // и присваеваем EventHolder новый массив событий
                     eventHolderArrayAsClass.eventHolderArray[index].events = newEventArray
                 } else {
+                    // если же в хранилище пользоапеля только одно событие ставим в indexForRemove присваеваем ему индекс EventHolder-а в массиве хранилища
                     indexForRemove = index
                 }
             }
         }
+        // проверякм indexForRemove - если он не равен nil значит нужно удалить EventHolder-а из массиве хранилища
         if indexForRemove != nil { eventHolderArrayAsClass.eventHolderArray.remove(at: indexForRemove) }
         // сохраняем новое состояние eventHolderArrayAsClass в UserDefaults
         saveDataFromEventHolderArrayAsClassToUserDefaults()

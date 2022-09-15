@@ -31,19 +31,23 @@ enum EventType : String, CaseIterable, Codable {
 }
 
 protocol EventProtocol: Codable {
+    var eventID : String { get set }
     var eventDate : CustomDate { get set }
     var eventType : EventType { get set }
     var eventDiscription : String { get set }
     var isActual : Bool { get set }
+    
 }
 
 class Event: EventProtocol, Codable {
+    var eventID: String
     var eventDate : CustomDate
     var eventType : EventType
     var eventDiscription : String
     var isActual : Bool
     
     init(eventDate: CustomDate,  eventType: EventType, eventDiscription : String, isActual : Bool ) {
+        eventID = "EventID_" + String(Int(Date().timeIntervalSince1970))
         self.eventDate = eventDate
         self.eventType = eventType
         self.eventDiscription = eventDiscription

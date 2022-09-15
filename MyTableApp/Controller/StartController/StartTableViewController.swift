@@ -24,12 +24,22 @@ class StartTableViewController: UITableViewController {
         eventsStorage.getUpdatedDataToEventStorage()
         eventHolderAndEventArray = eventsStorage.getEventHolderAndEventArray()
         tableView.reloadData()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         eventsStorage.getUpdatedDataToEventStorage()
         eventHolderAndEventArray = eventsStorage.getEventHolderAndEventArray()
         tableView.reloadData()
+        
+        // просто проверка создания eventHolderID
+        if eventHolderAndEventArray.isEmpty {
+            print("eventHolderAndEventArray is empty")
+        } else {
+            for i in 0..<eventHolderAndEventArray.count {
+                print(eventHolderAndEventArray[i].0.eventHolderID)
+            }
+        }
     }
 }
 
@@ -138,8 +148,11 @@ extension StartTableViewController {
 
         // действие удаления
         let actionDelete = UIContextualAction(style: .destructive, title: "Удалить") { _,_,_ in
-            // удаляем EventHolder из хранилища
-            self.eventsStorage.removeEventHolderFromEventSrorage(removedEventHolder: self.eventHolderAndEventArray[indexPath.row].0, removedEvent: self.eventHolderAndEventArray[indexPath.row].1)
+            // удаляем конкретное Event-событие из списка событий конкретного EventHolder и затем из хранилища при помощи функции
+            self.eventsStorage.removeEventOfSomeEventHolderFromSomeEventHolderAndEventSrorage(
+                eventHolder: self.eventHolderAndEventArray[indexPath.row].0,
+                event: self.eventHolderAndEventArray[indexPath.row].1
+            )
             //
             
             // обновояем eventHolderAndEventArray (он является массивом из которого наполняется таблица)

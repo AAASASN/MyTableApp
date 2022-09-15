@@ -40,3 +40,8 @@ v 0.1.8 Экран добавления Юбиляра сменил контро
 - настроены клавиатуры ввода для каждого типа данных в текстовые поля
 - настроен NavigationBar
 - настроена передача данных(с использованием замыкания) и выбор пола и статуса между AddEventHolderViewController и ChangeEventHolderSexTableViewController, AddEventHolderViewController и ChangeEventHolderStatusTableViewController
+
+v 0.1.9 Некоторые доработки связанные с переходом с контроллера AddEventHolderTableViewController  на контроллер AddEventHolderViewController
+- доработана модель EventHolder добавлено свойство ID для более удобного учета и операций в хранилище
+- добавлена кнопка "Добывить событие" в виде кастомной ячейки-кнопки во второй секции 
+- доработано сохраненение в хранилище EventHolder и сохранение Event, а также изменение полей AddEventHolderViewController и свойств EventHolder

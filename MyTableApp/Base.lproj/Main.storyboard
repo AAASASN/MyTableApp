@@ -625,11 +625,11 @@
                                             <outlet property="sexOrStatusLabel" destination="feI-uH-1yr" id="PdI-wU-CnJ"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="OneEventSomeHolderTableViewCelliD" rowHeight="245" id="IFP-kT-pn5" customClass="OneEventSomeHolderTableViewCell" customModule="MyTableApp" customModuleProvider="target">
-                                        <rect key="frame" x="16" y="247" width="343" height="245"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="OneEventSomeHolderTableViewCelliD" rowHeight="55" id="IFP-kT-pn5" customClass="OneEventSomeHolderTableViewCell" customModule="MyTableApp" customModuleProvider="target">
+                                        <rect key="frame" x="16" y="247" width="343" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="IFP-kT-pn5" id="Iex-cd-hUv">
-                                            <rect key="frame" x="0.0" y="0.0" width="343" height="245"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="55"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" alignment="top" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="lxo-CY-JQl">
@@ -698,6 +698,29 @@
                                             <outlet property="isActualLabel" destination="iLm-Ri-dcd" id="hVg-7C-3hF"/>
                                             <outlet property="isAtualSwitchIBOutlet" destination="2tk-Xt-osz" id="glK-fD-4nV"/>
                                         </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddEventButtonAsTableViewCellID" rowHeight="72" id="gJw-65-GC3" customClass="AddEventButtonAsTableViewCell" customModule="MyTableApp" customModuleProvider="target">
+                                        <rect key="frame" x="16" y="302" width="343" height="72"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="gJw-65-GC3" id="dtz-Vu-yWY">
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="72"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Добавить событие" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FcS-LA-sT1">
+                                                    <rect key="frame" x="0.0" y="0.0" width="343" height="72"/>
+                                                    <color key="backgroundColor" systemColor="systemCyanColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="FcS-LA-sT1" secondAttribute="trailing" id="36q-DE-Her"/>
+                                                <constraint firstAttribute="bottom" secondItem="FcS-LA-sT1" secondAttribute="bottom" id="YCy-P8-uXm"/>
+                                                <constraint firstItem="FcS-LA-sT1" firstAttribute="top" secondItem="dtz-Vu-yWY" secondAttribute="top" id="bZC-Cw-Qb5"/>
+                                                <constraint firstItem="FcS-LA-sT1" firstAttribute="leading" secondItem="dtz-Vu-yWY" secondAttribute="leading" id="yPX-EV-HYm"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
                                 <sections/>
@@ -1351,6 +1374,9 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemCyanColor">
+            <color red="0.19607843137254902" green="0.67843137254901964" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray3Color">
             <color red="0.7803921568627451" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

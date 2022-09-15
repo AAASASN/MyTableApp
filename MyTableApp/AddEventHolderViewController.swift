@@ -17,19 +17,21 @@ class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITab
     var dateTextFieldCell = DateTextFiedTableViewCell()
     var phoneNumberTextFieldCell = PhoneNumberTextFieldTableViewCell()
     
-//    // свойство для загрузки в него хранилища с данными
-//    var eventsStorage : EventStorageProtocol = EventStorage()
+    // свойство для загрузки в него хранилища с данными
+    var eventsStorage : EventStorageProtocol = EventStorage()
     
     // создаем пустой экземрляр Юбиляра кроторый будет заполнен данными и потом добавлен в хранилище юбиляров
-    var eventHolder: EventHolder = EventHolder(eventHolderFirstName:  "error",
-                                               eventHolderLastName: "error",
-                                               eventHolderBirthdayDate: Date(),
-                                               eventHolderPhoneNumber: "error",
-                                               sex: .none,
-                                               eventHolderStatus: .none,
-                                               // добавляем сам ДР
-                                               events: [Event]()
-                                               )
+    var eventHolder: EventHolder!
+    
+//    = EventHolder(eventHolderFirstName:  "error",
+//                                               eventHolderLastName: "error",
+//                                               eventHolderBirthdayDate: Date(),
+//                                               eventHolderPhoneNumber: "error",
+//                                               sex: .none,
+//                                               eventHolderStatus: .none,
+//                                               // добавляем сам ДР
+//                                               events: [Event]()
+//                                               )
     
     // переменная для хранения текущего статуса Юбиляра
     var currentEventHolderStatus: EventHolderStatus = .none
@@ -55,8 +57,8 @@ class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITab
         phoneNumberTextFieldCell = firstTableView.dequeueReusableCell(withIdentifier: "PhoneNumberTextFieldTableViewCellID") as! PhoneNumberTextFieldTableViewCell
    
         
-//        // получим актуальный список [EventHolder] в хранилище eventsStorage
-//        eventsStorage.getUpdatedDataToEventStorage()
+        // получим актуальный список [EventHolder] в хранилище eventsStorage
+        eventsStorage.getUpdatedDataToEventStorage()
         
         // настроим кнопку "Сохранить"
         saveButtonOutlet.title = "Сохранить"
@@ -68,8 +70,8 @@ class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     override func viewWillAppear(_ animated: Bool) {
-//        // получим актуальный список [EventHolder] в хранилище eventsStorage
-//        eventsStorage.getUpdatedDataToEventStorage()
+        // получим актуальный список [EventHolder] в хранилище eventsStorage
+        eventsStorage.getUpdatedDataToEventStorage()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -151,7 +153,8 @@ class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITab
             // настроим вид отображения даты в текстовом виде
             dateFormatter.dateFormat = "d MMMM yyyy"
             
-            if eventHolder.events.count == 0  {
+            // проверяем свойство eventHolder, если  оно равно nil то и eventHolder по сути еще не создавался и не сохранялся, тогда создаем новый экземпляр tempEventHolder: EventHolder, потом мы присвоим его eventHolder
+            if eventHolder  == nil  {
                 // создаем новый экземпляр tempEventHolder: EventHolder, потом мы присвоим его eventHolder
                 let tempEventHolder = EventHolder(eventHolderFirstName: firstNameTextFieldCell.textField.text ?? "error",
                                                   eventHolderLastName: lastNameTextFieldCell.textField.text ?? "error",
@@ -168,21 +171,25 @@ class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITab
                 // теперь присваиваем наше tempEventHolder в постоянное свойство класса eventHolder
                 eventHolder = tempEventHolder
                                 
-//                // !!!!  передадим созданное событие в Хранилище EventStorage при помощи метода  !!!!!
-//                eventsStorage.addEventHolderToEventSrorage(newEventHolder: eventHolder)
-//
-//                // получим актуальный список [EventHolder] в хранилище eventsStorage
-//                eventsStorage.getUpdatedDataToEventStorage()
+                // !!!!  передадим созданное событие в Хранилище EventStorage при помощи метода  !!!!!
+                eventsStorage.addEventHolderToEventSrorage(newEventHolder: eventHolder)
+
+                // получим актуальный список [EventHolder] в хранилище eventsStorage
+                eventsStorage.getUpdatedDataToEventStorage()
                 
                 firstTableView.reloadData()
 
             } else {
+                // иначе мы можем внести изменения в свойства уже созданного eventHolder а затем сохранить/или пересохранить его в хранилище
                 eventHolder.eventHolderFirstName = firstNameTextFieldCell.textField.text ?? "error"
                 eventHolder.eventHolderLastName = lastNameTextFieldCell.textField.text ?? "error"
                 eventHolder.eventHolderBirthdayDate = dateFormatter.date(from: dateTextFieldCell.textField.text ?? "11 августа 2011") ?? Date()
                 eventHolder.eventHolderPhoneNumber = phoneNumberTextFieldCell.textField.text ?? "error"
                 eventHolder.sex = currentEventHolderSex
                 eventHolder.eventHolderStatus = currentEventHolderStatus
+                
+                // внесем изменения в хранилище eventsStorage с учетом внесенных изменений в свойство eventHolder текущего контроллера
+                eventsStorage.addChangesOfEventHolderToEventStorage(changedEventHolder: eventHolder)
                 
                 print(eventHolder.events.count)
                 firstTableView.reloadData()
@@ -223,17 +230,21 @@ extension AddEventHolderViewController {
     // MARK: - Table view data source
     func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 2
+        return 3
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var forReturn = 0
         if section == 0 { forReturn = 6 }
         if section == 1 {
-            if eventHolder.events.count != 0 {
+            if eventHolder != nil {
                 forReturn = eventHolder.events.count
             }
         }
+        if section == 2 {
+            if eventHolder != nil { forReturn = 1 }
+        }
+        
         return forReturn
     }
     
@@ -282,6 +293,16 @@ extension AddEventHolderViewController {
                 if indexPath.row == i {
                     eventCell.eventTypeLabel.text = eventHolder.events[i].eventType.rawValue
                      varForReturn = eventCell
+                    print("eventCell was return")
+                }
+            }
+        }
+        
+        if indexPath.section == 2 {
+            if eventHolder != nil {
+                if indexPath.row == 0 {
+                    let cellAsButton = firstTableView.dequeueReusableCell(withIdentifier: "AddEventButtonAsTableViewCellID", for: indexPath) as! AddEventButtonAsTableViewCell
+                    varForReturn = cellAsButton
                 }
             }
         }
@@ -393,8 +414,8 @@ extension AddEventHolderViewController {
         var valueForReturn = ""
         if section == 0 {valueForReturn = "введите данные о новом юбиляре"}
         if section == 1 {
-            if eventHolder.events.count < 0 { valueForReturn = "перечень событий"}
-            if eventHolder.events.count == 0 { valueForReturn = "здесь будут показаны события" }
+            if eventHolder != nil { valueForReturn = "перечень событий"}
+            if eventHolder == nil { valueForReturn = "здесь будут показаны события" }
         }
         return valueForReturn
     }
