@@ -17,8 +17,29 @@ class StartTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("viewDidLoad")
+        
+//        // настройка Навигейшен бар
+//        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        
+        eventsStorage.getUpdatedDataToEventStorage()
         eventHolderAndEventArray = eventsStorage.getEventHolderAndEventArray()
+        tableView.reloadData()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        eventsStorage.getUpdatedDataToEventStorage()
+        eventHolderAndEventArray = eventsStorage.getEventHolderAndEventArray()
+        tableView.reloadData()
+        
+        // просто проверка создания eventHolderID
+        if eventHolderAndEventArray.isEmpty {
+            print("eventHolderAndEventArray is empty")
+        } else {
+            for i in 0..<eventHolderAndEventArray.count {
+                print(eventHolderAndEventArray[i].0.eventHolderID)
+            }
+        }
     }
 }
 
@@ -64,6 +85,17 @@ extension StartTableViewController {
         return eventHolderAndEventArray.count
     }
     
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        
+        
+        
+            var valueForReturn = ""
+            if section == 0 {valueForReturn = "заголовок"}
+
+            return valueForReturn
+        }
+    
+    
 //    // Вывод заголовка в секцию
 //    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 //
@@ -94,33 +126,45 @@ extension StartTableViewController {
     
     // метод для редактирования ячеек в таблице, в данном случае будет реализована возможность удалять
     // ячейку свайпом влево
-    
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            self.eventHolderAndEventArray.remove(at: indexPath.row)
-
-            tableView.deleteRows(at: [indexPath], with: .none)
-            tableView.reloadData()
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }
-
-    }
-    
-//    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-//
-//        // действие удаления
-//        let actionDelete = UIContextualAction(style: .destructive, title: "Удалить") { _,_,_ in
+//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//        if editingStyle == .delete {
+//            // Delete the row from the data source
 //            self.eventHolderAndEventArray.remove(at: indexPath.row)
-//            // заново формируем табличное представление
+//
+//            // удаляем из хранилища eventsStorage экземпляр EventHolder соответствующий удаляемой ячейке
+//            eventsStorage.removeEventHolderFromEventSrorage(removedEventHolder: eventHolderAndEventArray[indexPath.row].0)
+//
+//            tableView.deleteRows(at: [indexPath], with: .none)
 //            tableView.reloadData()
+//        } else if editingStyle == .insert {
+//            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
 //        }
 //
-//        // формируем экземпляр, описывающий доступные действия
-//        let actions = UISwipeActionsConfiguration(actions: [actionDelete] )
-//        return actions
-//
 //    }
+    
+    // метод для редактирования ячеек в таблице, в данном случае будет реализована возможность удалять
+    // ячейку свайпом влево
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+
+        // действие удаления
+        let actionDelete = UIContextualAction(style: .destructive, title: "Удалить") { _,_,_ in
+            // удаляем конкретное Event-событие из списка событий конкретного EventHolder и затем из хранилища при помощи функции
+            self.eventsStorage.removeEventOfSomeEventHolderFromSomeEventHolderAndEventSrorage(
+                eventHolder: self.eventHolderAndEventArray[indexPath.row].0,
+                event: self.eventHolderAndEventArray[indexPath.row].1
+            )
+            //
+            
+            // обновояем eventHolderAndEventArray (он является массивом из которого наполняется таблица)
+            self.eventHolderAndEventArray = self.eventsStorage.getEventHolderAndEventArray()
+            // заново формируем табличное представление
+            tableView.reloadData()
+        }
+
+        // формируем экземпляр, описывающий доступные действия
+        let actions = UISwipeActionsConfiguration(actions: [actionDelete] )
+        return actions
+
+    }
     
 }
