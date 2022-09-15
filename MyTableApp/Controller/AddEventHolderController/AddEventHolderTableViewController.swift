@@ -147,7 +147,7 @@ class AddEventHolderTableViewController: UITableViewController {
     
     // MARK: - сохранение EventHolder и создание Event
     @IBAction func saveButtonAction(_ sender: UIBarButtonItem) {
-        // перед нажатием на кнопку сохранить проверяем заполнены ли поля Пол и Статус
+        // по нажатию на кнопку сохранить проверяем заполнены ли поля Пол и Статус
         // и рекомендуем заполнить вызывая UIAlertController
         if saveButtonOutlet.title == "Сохранить" {
             if currentEventHolderStatus == .none && currentEventHolderSex == .none {
@@ -338,6 +338,7 @@ class AddEventHolderTableViewController: UITableViewController {
         if segue.identifier == "toChangeEventHolderSexTableViewControllerId" {
             let destination = segue.destination as! ChangeEventHolderSexTableViewController
             destination.selectedSex = currentEventHolderSex
+            
             destination.doAfterSexSelected = {[self] selectedSex in
                 self.currentEventHolderSex = selectedSex
                 eventHolderSexLabel.text = currentEventHolderSex.rawValue

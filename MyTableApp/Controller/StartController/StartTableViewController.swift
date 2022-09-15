@@ -17,6 +17,10 @@ class StartTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        // настройка Навигейшен бар
+//        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        
         eventsStorage.getUpdatedDataToEventStorage()
         eventHolderAndEventArray = eventsStorage.getEventHolderAndEventArray()
         tableView.reloadData()
@@ -70,6 +74,17 @@ extension StartTableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return eventHolderAndEventArray.count
     }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        
+        
+        
+            var valueForReturn = ""
+            if section == 0 {valueForReturn = "заголовок"}
+
+            return valueForReturn
+        }
+    
     
 //    // Вывод заголовка в секцию
 //    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

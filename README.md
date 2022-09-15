@@ -34,3 +34,9 @@ v 0.1.6 Добавлено сохранение данных в память у�
 
 v 0.1.7 Доработаны связи между экранами
 - все экраны между собой обмениваются данными о EventHolder и Events через хранилище модели EventStorage
+
+v 0.1.8 Экран добавления Юбиляра сменил контроллер AddEventHolderTableViewController на базе TableViewController со статической таблицей на AddEventHolderViewController на базе ViewController с TableView с динамическими ячейками
+- созданы пять кастомных ячеек FirstNameTextFieldTableViewCell, LastNameTextFieldTableViewCell, DateTextFiedTableViewCell, PhoneNumberTextFieldTableViewCell с UITextField для ввода данных и SexAndStatusTableViewCell для отображения и выбора пола и статуса
+- настроены клавиатуры ввода для каждого типа данных в текстовые поля
+- настроен NavigationBar
+- настроена передача данных(с использованием замыкания) и выбор пола и статуса между AddEventHolderViewController и ChangeEventHolderSexTableViewController, AddEventHolderViewController и ChangeEventHolderStatusTableViewController

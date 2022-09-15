@@ -1,5 +1,5 @@
 //
-//  TextFieldTableViewCell.swift
+//  SexAndStatusTableViewCell.swift
 //  MyTableApp
 //
 //  Created by Александр Мараенко on 09.09.2022.
@@ -7,8 +7,11 @@
 
 import UIKit
 
-class TextFieldTableViewCell: UITableViewCell {
+class SexAndStatusTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var sexOrStatusLabel: UILabel!
+    @IBOutlet weak var selectResultLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
