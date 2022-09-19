@@ -28,8 +28,7 @@ class EventHolder: Codable {
     var eventHolderStatus: EventHolderStatus
     var events = [Event]()
 
-    init(//eventHolderID : String,
-         eventHolderFirstName : String,
+    init(eventHolderFirstName : String,
          eventHolderLastName : String,
          eventHolderBirthdayDate : Date,
          eventHolderPhoneNumber : String,

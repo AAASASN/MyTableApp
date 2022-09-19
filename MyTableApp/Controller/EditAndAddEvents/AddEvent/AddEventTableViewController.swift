@@ -42,13 +42,6 @@ class AddEventTableViewController: UITableViewController {
         // настроим тулбар
         createAndAddingToolBarToKeyboard()
         
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -57,7 +50,6 @@ class AddEventTableViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         var varForReturn = 1
@@ -187,7 +179,7 @@ class AddEventTableViewController: UITableViewController {
 
     // MARK: - нажатие на кнопку сохранить (она же ячейка во второй секции)
     // при нажатии на ячейку во второй секции будет создаватся Event и передаваться на предыдущий экран
-    // (ShowAllEventsOfSomeHolderTableViewController) в
+    // (AddEventHolderViewController) в
     // массиве navigationController?.viewControllers.events, затем таблица предыдущего экрана обновляется
     // и предыдущей экран открывается
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -199,9 +191,10 @@ class AddEventTableViewController: UITableViewController {
             
             self.navigationController?.viewControllers.forEach{ viewController in
                 // добавляем событие в массив-датасурс предыдущего контроллера и обновим его
-                (viewController as? ShowAllEventsOfSomeHolderTableViewController)?.events.append(newEvent)
+                (viewController as? AddEventHolderViewController)?.eventHolder.events.append(newEvent)
                 //(viewController as? ShowAllEventsOfSomeHolderTableViewController)?.tableView.reloadData()
             }
+            
             // добавляем событие в хранилище
             eventsStorage.addEventToExistedHolder(addingEvent: newEvent, existedHolder: currentEventsHolder)
             // (viewController as? StartTableViewController)?.tableView.reloadData()
