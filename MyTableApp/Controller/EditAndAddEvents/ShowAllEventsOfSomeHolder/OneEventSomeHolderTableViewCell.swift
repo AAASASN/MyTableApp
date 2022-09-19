@@ -11,10 +11,7 @@ class OneEventSomeHolderTableViewCell: UITableViewCell {
     
     @IBOutlet weak var eventTypeLabel: UILabel!
     @IBOutlet weak var eventDateLabel: UILabel!
-    @IBOutlet weak var eventDiscriptionLabel: UILabel!
     @IBOutlet weak var dayCountLabel: UILabel!
-    @IBOutlet weak var isActualLabel: UILabel!
-    @IBOutlet weak var isAtualSwitchIBOutlet: UISwitch!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -25,10 +22,6 @@ class OneEventSomeHolderTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
-    }
-
-    
-    @IBAction func isActualSwitchAction(_ sender: Any) {
     }
     
 }

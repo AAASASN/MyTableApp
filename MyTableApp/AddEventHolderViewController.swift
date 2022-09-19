@@ -72,6 +72,7 @@ class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITab
     override func viewWillAppear(_ animated: Bool) {
         // получим актуальный список [EventHolder] в хранилище eventsStorage
         eventsStorage.getUpdatedDataToEventStorage()
+        firstTableView.reloadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -292,6 +293,9 @@ extension AddEventHolderViewController {
             for i in 0..<eventHolder.events.count{
                 if indexPath.row == i {
                     eventCell.eventTypeLabel.text = eventHolder.events[i].eventType.rawValue
+                    eventCell.dayCountLabel.text = String(eventHolder.events[i].eventDate.daysCountBeforeEvent)
+                    eventCell.eventDateLabel.text = eventHolder.events[i].eventDate.dateAsString
+
                      varForReturn = eventCell
                     print("eventCell was return")
                 }
@@ -407,6 +411,19 @@ extension AddEventHolderViewController {
                 // переходим к следующему экрану
                 self.navigationController?.pushViewController(changeEventHolderStatusTableViewController, animated: true)
             }
+        }
+        
+        // нажатие на кнопку "Добавить событие"
+        if indexPath.section == 2 && indexPath.row == 0 {
+            
+            // получаем вью контроллер, в который происходит переход
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let addEventTableViewController = storyboard.instantiateViewController(withIdentifier: "AddEventTableViewControllerID") as! AddEventTableViewController
+            
+            // передадим свойству currentEventsHolder контроллера на который сейчас будем переходить экземрляр из свойства  eventsHolder текущего контороллера
+            addEventTableViewController.currentEventsHolder = eventHolder
+            // переходим к следующему экрану
+            self.navigationController?.pushViewController(addEventTableViewController, animated: true)
         }
     }
     
