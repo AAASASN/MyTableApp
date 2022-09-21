@@ -57,6 +57,8 @@ class StartTableViewController: UITableViewController {
 
 extension StartTableViewController {
     
+    
+    
     // возвращаем количество секций
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -87,14 +89,23 @@ extension StartTableViewController {
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
-        
-        
             var valueForReturn = ""
             if section == 0 {valueForReturn = "заголовок"}
 
             return valueForReturn
         }
     
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // получаем вью контроллер, в который происходит переход
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let detailedEventViewController = storyboard.instantiateViewController(withIdentifier: "DetailedEventViewControllerID") as! DetailedEventViewController
+        
+        // передадим свойству eventHolderOfSelectedEvent контроллера на который сейчас будем переходить экземрляр из свойства  eventHolderAndEventArray текущего контороллера
+        detailedEventViewController.eventHolderAndEvent = eventHolderAndEventArray[indexPath.row]
+        // переходим к следующему экрану
+        self.navigationController?.pushViewController(detailedEventViewController, animated: true)
+    }
     
 //    // Вывод заголовка в секцию
 //    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
