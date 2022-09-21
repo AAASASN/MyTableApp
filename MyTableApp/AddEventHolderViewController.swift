@@ -50,6 +50,9 @@ class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITab
         firstTableView.delegate = self
         firstTableView.dataSource = self
 
+        // регистрируем Nib ячейку
+        let cellNib = UINib(nibName: "OneEventSomeHolderTableViewCell_xib", bundle: nil)
+        firstTableView.register(cellNib, forCellReuseIdentifier: "reuseIdentifier")
         
         firstNameTextFieldCell = firstTableView.dequeueReusableCell(withIdentifier: "FirstNameTextFieldTableViewCellID") as! FirstNameTextFieldTableViewCell
         lastNameTextFieldCell = firstTableView.dequeueReusableCell(withIdentifier: "LastNameTextFieldTableViewCellID") as! LastNameTextFieldTableViewCell
@@ -227,11 +230,15 @@ class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITab
 }
 
 extension AddEventHolderViewController {
-    
+
     // MARK: - Table view data source
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 3
+        if eventHolder != nil {
+            return 3
+        }
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -251,12 +258,12 @@ extension AddEventHolderViewController {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        var varForReturn: UITableViewCell = OneEventSomeHolderTableViewCell()
+        var varForReturn = UITableViewCell()
         
-        let sexAndStatusCell = firstTableView.dequeueReusableCell(withIdentifier: "SexAndStatusTableViewCelliD", for: indexPath) as! SexAndStatusTableViewCell
+        let sexAndStatusCell = firstTableView.dequeueReusableCell(withIdentifier: "SexAndStatusTableViewCelliD") as! SexAndStatusTableViewCell
         
         //
-        let eventCell = firstTableView.dequeueReusableCell(withIdentifier: "OneEventSomeHolderTableViewCelliD", for: indexPath) as! OneEventSomeHolderTableViewCell
+        let eventCell = firstTableView.dequeueReusableCell(withIdentifier: "reuseIdentifier") as! OneEventSomeHolderTableViewCell_xib
         
         if indexPath.section == 0 {
             switch indexPath.row {
@@ -295,8 +302,8 @@ extension AddEventHolderViewController {
                     eventCell.eventTypeLabel.text = eventHolder.events[i].eventType.rawValue
                     eventCell.dayCountLabel.text = String(eventHolder.events[i].eventDate.daysCountBeforeEvent)
                     eventCell.eventDateLabel.text = eventHolder.events[i].eventDate.dateAsString
-
-                     varForReturn = eventCell
+                    eventCell.isActualLabel.text = String(eventHolder.events[i].isActual)
+                    varForReturn = eventCell
                     print("eventCell was return")
                 }
             }
@@ -313,47 +320,19 @@ extension AddEventHolderViewController {
         return varForReturn
     }
     
-    
-    
-//
-//    // настройка высоты ячеек в данамической таблице
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//
-//        var valueForReturn = CGFloat(0)
-//        switch indexPath.section {
-//        case 0:
-//            switch indexPath.row {
-//            case 0:
-//                valueForReturn = CGFloat(43.5)
-//            case 1:
-//                valueForReturn = CGFloat(43.5)
-//            case 2:
-//                valueForReturn = CGFloat(43.5)
-//            case 3:
-//                valueForReturn = CGFloat(43.5)
-//            case 4:
-//                valueForReturn = CGFloat(43.5)
-//            case 5:
-//                valueForReturn = CGFloat(43.5)
-//            default:
-//                valueForReturn = CGFloat(43.5)
-//            }
-//        case 1:
-//            if eventHolder.events.count > 0 {
-//                for i in 0..<eventHolder.events.count{
-//                    if indexPath.row == i {
-//                        valueForReturn = CGFloat(200.0)
-//                    }
-//                }
-//            } else {
-//                valueForReturn = CGFloat(200.0)
-//            }
-//
-//        default:
-//            valueForReturn = CGFloat(200.0)
-//        }
-//   return valueForReturn
-//    }
+
+    // настройка высоты ячеек в данамической таблице
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+
+        if indexPath.section == 0 {return 43.5}
+        if indexPath.section == 1 {return 200}
+        if indexPath.section == 2 {return 60}
+        if indexPath.section == 0 && indexPath.row == 3 {return 50}
+        if indexPath.section == 0 && indexPath.row == 4 {return 50}
+        if indexPath.section == 0 && indexPath.row == 5 {return 50}
+
+    return 50
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
