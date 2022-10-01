@@ -50,6 +50,9 @@ class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITab
         firstTableView.delegate = self
         firstTableView.dataSource = self
 
+        // регистрируем Nib ячейку
+        let cellNib = UINib(nibName: "OneEventSomeHolderTableViewCell_xib", bundle: nil)
+        firstTableView.register(cellNib, forCellReuseIdentifier: "reuseIdentifier")
         
         firstNameTextFieldCell = firstTableView.dequeueReusableCell(withIdentifier: "FirstNameTextFieldTableViewCellID") as! FirstNameTextFieldTableViewCell
         lastNameTextFieldCell = firstTableView.dequeueReusableCell(withIdentifier: "LastNameTextFieldTableViewCellID") as! LastNameTextFieldTableViewCell
@@ -60,18 +63,41 @@ class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITab
         // получим актуальный список [EventHolder] в хранилище eventsStorage
         eventsStorage.getUpdatedDataToEventStorage()
         
-        // настроим кнопку "Сохранить"
-        saveButtonOutlet.title = "Сохранить"
-        // деактивируем ее до тех пор пока все поля не будут заполнены
-        saveButtonOutlet.isEnabled = false
-        
         // Настроим Навигейщен Бар
         setupNavigationBar()
+        
+        
+        if eventHolder != nil {
+            // заполним текстовые поля в соответствии с принятыми данными о EventHolder
+            firstNameTextFieldCell.textField.text = eventHolder.eventHolderFirstName
+            lastNameTextFieldCell.textField.text = eventHolder.eventHolderLastName
+            dateTextFieldCell.textField.text = eventHolder.eventHolderBirthdayDate.dateAsString
+            phoneNumberTextFieldCell.textField.text = eventHolder.eventHolderPhoneNumber
+            
+            
+            // настроим кнопку "Сохранить" с "Сохранить" на "Изменить"
+            saveButtonOutlet.title = "Изменить"
+            // деактивируем ее до тех пор пока все поля не будут заполнены
+            saveButtonOutlet.isEnabled = true
+            
+            // запрещаем редактировать все textField
+            firstNameTextFieldCell.textField.isEnabled.toggle()
+            lastNameTextFieldCell.textField.isEnabled.toggle()
+            dateTextFieldCell.textField.isEnabled.toggle()
+            phoneNumberTextFieldCell.textField.isEnabled.toggle()
+            
+        } else {
+            // настроим кнопку "Сохранить"
+            saveButtonOutlet.title = "Сохранить"
+            // деактивируем ее до тех пор пока все поля не будут заполнены
+            saveButtonOutlet.isEnabled = false
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         // получим актуальный список [EventHolder] в хранилище eventsStorage
         eventsStorage.getUpdatedDataToEventStorage()
+        
         firstTableView.reloadData()
     }
     
@@ -82,6 +108,18 @@ class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITab
 
     override func viewWillDisappear(_ animated: Bool) {
     }
+    
+    // MARK: - подготовка экрана при вызове с DetailedEventViewController
+    // в этом случае контроллер AddEventHolderViewController будет использоваться уже не для добавления EventHolder а для просмотра и изменения уже существующего
+    func prepareForReqestFromDetailedEventViewController(someEventHolder: EventHolder) {
+        // передадим значение типа EventHolder
+        eventHolder = someEventHolder
+        
+        currentEventHolderStatus = eventHolder.eventHolderStatus
+        currentEventHolderSex = eventHolder.eventHolderSex
+    
+    }
+    
     
     // MARK: - Кнопка сохранить
     @IBAction func saveEventHolderButton(_ sender: UIBarButtonItem) {
@@ -101,7 +139,6 @@ class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITab
                 presentAlert(alertController: alertSexAndStatus)
             }
             if currentEventHolderStatus != .none && currentEventHolderSex != .none {
-                //
                 savingOrEditEventHolderAndCreateBirthdayEvent()
             }
         } else {
@@ -159,9 +196,9 @@ class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITab
                 // создаем новый экземпляр tempEventHolder: EventHolder, потом мы присвоим его eventHolder
                 let tempEventHolder = EventHolder(eventHolderFirstName: firstNameTextFieldCell.textField.text ?? "error",
                                                   eventHolderLastName: lastNameTextFieldCell.textField.text ?? "error",
-                                                  eventHolderBirthdayDate: dateFormatter.date(from: dateTextFieldCell.textField.text ?? "11 августа 2011") ?? Date(),
+                                                  eventHolderBirthdayDate: CustomDate(date: dateFormatter.date(from: dateTextFieldCell.textField.text ?? "11 августа 2011") ?? Date()),
                                                   eventHolderPhoneNumber: phoneNumberTextFieldCell.textField.text ?? "error",
-                                                  sex: currentEventHolderSex,
+                                                  eventHolderSex: currentEventHolderSex,
                                                   eventHolderStatus: currentEventHolderStatus,
                                                   // добавляем сам ДР
                                                   events: [Event(eventDate: CustomDate(date: dateFormatter.date(from: dateTextFieldCell.textField.text ?? "11 августа 2011") ?? Date()),
@@ -184,9 +221,9 @@ class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITab
                 // иначе мы можем внести изменения в свойства уже созданного eventHolder а затем сохранить/или пересохранить его в хранилище
                 eventHolder.eventHolderFirstName = firstNameTextFieldCell.textField.text ?? "error"
                 eventHolder.eventHolderLastName = lastNameTextFieldCell.textField.text ?? "error"
-                eventHolder.eventHolderBirthdayDate = dateFormatter.date(from: dateTextFieldCell.textField.text ?? "11 августа 2011") ?? Date()
+                eventHolder.eventHolderBirthdayDate = CustomDate(date: dateFormatter.date(from: dateTextFieldCell.textField.text ?? "11 августа 2011") ?? Date())
                 eventHolder.eventHolderPhoneNumber = phoneNumberTextFieldCell.textField.text ?? "error"
-                eventHolder.sex = currentEventHolderSex
+                eventHolder.eventHolderSex = currentEventHolderSex
                 eventHolder.eventHolderStatus = currentEventHolderStatus
                 
                 // внесем изменения в хранилище eventsStorage с учетом внесенных изменений в свойство eventHolder текущего контроллера
@@ -207,56 +244,41 @@ class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITab
                 phoneNumberTextFieldCell.textField.isEnabled.toggle()
                 // скрываем клавиатуру
                 self.firstTableView.endEditing(true)
-//                // делаем кнопку sexCellButton доступной таким образом разрешаем переход по сигвею по нажатию
-//                sexCellButton.isHidden.toggle()
-//                statusCellButton.isHidden.toggle()
             }
         }
         print(eventHolder.events.count)
     }
-    
-    
-    /*
-    // MARK: - Navigation
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 }
 
 extension AddEventHolderViewController {
-    
+
     // MARK: - Table view data source
+    
     func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 3
+        if eventHolder != nil {
+            return 2 + eventHolder.events.count
+        }
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var forReturn = 0
-        if section == 0 { forReturn = 6 }
-        if section == 1 {
-            if eventHolder != nil {
-                forReturn = eventHolder.events.count
-            }
-        }
-        if section == 2 {
+        if section == 0 {
+            forReturn = 6
+        } else {
             if eventHolder != nil { forReturn = 1 }
         }
-        
         return forReturn
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        var varForReturn: UITableViewCell = OneEventSomeHolderTableViewCell()
+        var varForReturn = UITableViewCell()
         
-        let sexAndStatusCell = firstTableView.dequeueReusableCell(withIdentifier: "SexAndStatusTableViewCelliD", for: indexPath) as! SexAndStatusTableViewCell
+        let sexAndStatusCell = firstTableView.dequeueReusableCell(withIdentifier: "SexAndStatusTableViewCelliD") as! SexAndStatusTableViewCell
         
         //
-        let eventCell = firstTableView.dequeueReusableCell(withIdentifier: "OneEventSomeHolderTableViewCelliD", for: indexPath) as! OneEventSomeHolderTableViewCell
+        let eventCell = firstTableView.dequeueReusableCell(withIdentifier: "reuseIdentifier") as! OneEventSomeHolderTableViewCell_xib
         
         if indexPath.section == 0 {
             switch indexPath.row {
@@ -287,22 +309,27 @@ extension AddEventHolderViewController {
             default:
                 break
             }
-        }
-        
-        if indexPath.section == 1 {
-            for i in 0..<eventHolder.events.count{
-                if indexPath.row == i {
-                    eventCell.eventTypeLabel.text = eventHolder.events[i].eventType.rawValue
-                    eventCell.dayCountLabel.text = String(eventHolder.events[i].eventDate.daysCountBeforeEvent)
-                    eventCell.eventDateLabel.text = eventHolder.events[i].eventDate.dateAsString
-
-                     varForReturn = eventCell
+        } else {
+            for i in 1..<eventHolder.events.count + 1 {
+                if indexPath.section == i {
+                    eventCell.configLabelsAndColorStule(event: eventHolder.events[i-1])
+                    varForReturn = eventCell
                     print("eventCell was return")
                 }
             }
         }
         
-        if indexPath.section == 2 {
+//        if indexPath.section > 0 && indexPath.section <= eventHolder.events.count {
+//            for i in 1...eventHolder.events.count {
+//                if indexPath.section == i {
+//                    eventCell.configLabelsAndColorStule(event: eventHolder.events[i-1])
+//                    varForReturn = eventCell
+//                    print("eventCell was return")
+//                }
+//            }
+//        }
+        
+        if indexPath.section == eventHolder.events.count + 1 {
             if eventHolder != nil {
                 if indexPath.row == 0 {
                     let cellAsButton = firstTableView.dequeueReusableCell(withIdentifier: "AddEventButtonAsTableViewCellID", for: indexPath) as! AddEventButtonAsTableViewCell
@@ -313,47 +340,17 @@ extension AddEventHolderViewController {
         return varForReturn
     }
     
-    
-    
-//
-//    // настройка высоты ячеек в данамической таблице
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//
-//        var valueForReturn = CGFloat(0)
-//        switch indexPath.section {
-//        case 0:
-//            switch indexPath.row {
-//            case 0:
-//                valueForReturn = CGFloat(43.5)
-//            case 1:
-//                valueForReturn = CGFloat(43.5)
-//            case 2:
-//                valueForReturn = CGFloat(43.5)
-//            case 3:
-//                valueForReturn = CGFloat(43.5)
-//            case 4:
-//                valueForReturn = CGFloat(43.5)
-//            case 5:
-//                valueForReturn = CGFloat(43.5)
-//            default:
-//                valueForReturn = CGFloat(43.5)
-//            }
-//        case 1:
-//            if eventHolder.events.count > 0 {
-//                for i in 0..<eventHolder.events.count{
-//                    if indexPath.row == i {
-//                        valueForReturn = CGFloat(200.0)
-//                    }
-//                }
-//            } else {
-//                valueForReturn = CGFloat(200.0)
-//            }
-//
-//        default:
-//            valueForReturn = CGFloat(200.0)
-//        }
-//   return valueForReturn
-//    }
+
+    // настройка высоты ячеек в данамической таблице
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == 0 {return 43.5}
+        if indexPath.section > 0 && indexPath.section <= eventHolder.events.count  {return 200}
+        if indexPath.section == 2 + eventHolder.events.count {return 60}
+        if indexPath.section == 0 && indexPath.row == 3 {return 50}
+        if indexPath.section == 0 && indexPath.row == 4 {return 50}
+        if indexPath.section == 0 && indexPath.row == 5 {return 50}
+        return 50
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
@@ -413,29 +410,33 @@ extension AddEventHolderViewController {
             }
         }
         
-        // нажатие на кнопку "Добавить событие"
-        if indexPath.section == 2 && indexPath.row == 0 {
-            
-            // получаем вью контроллер, в который происходит переход
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let addEventTableViewController = storyboard.instantiateViewController(withIdentifier: "AddEventTableViewControllerID") as! AddEventTableViewController
-            
-            // передадим свойству currentEventsHolder контроллера на который сейчас будем переходить экземрляр из свойства  eventsHolder текущего контороллера
-            addEventTableViewController.currentEventsHolder = eventHolder
-            // переходим к следующему экрану
-            self.navigationController?.pushViewController(addEventTableViewController, animated: true)
+        if eventHolder != nil {
+            // нажатие на кнопку "Добавить событие"
+            if indexPath.section == eventHolder.events.count + 1 {
+    //        if indexPath.section == 2 && indexPath.row == 0 {
+                
+                // получаем вью контроллер, в который происходит переход
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let addEventTableViewController = storyboard.instantiateViewController(withIdentifier: "AddEventTableViewControllerID") as! AddEventTableViewController
+                
+                // передадим свойству currentEventsHolder контроллера на который сейчас будем переходить экземрляр из свойства  eventsHolder текущего контороллера
+                addEventTableViewController.currentEventsHolder = eventHolder
+                // переходим к следующему экрану
+                self.navigationController?.pushViewController(addEventTableViewController, animated: true)
+            }
         }
+
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        var valueForReturn = ""
-        if section == 0 {valueForReturn = "введите данные о новом юбиляре"}
-        if section == 1 {
-            if eventHolder != nil { valueForReturn = "перечень событий"}
-            if eventHolder == nil { valueForReturn = "здесь будут показаны события" }
-        }
-        return valueForReturn
-    }
+//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        var valueForReturn = ""
+//        if section == 0 {valueForReturn = "введите данные о новом юбиляре"}
+//        if section == 1 {
+//            if eventHolder != nil { valueForReturn = "перечень событий"}
+//            if eventHolder == nil { valueForReturn = "здесь будут показаны события" }
+//        }
+//        return valueForReturn
+//    }
     
     // MARK: - настройка Navigation Bar
     func setupNavigationBar() {
