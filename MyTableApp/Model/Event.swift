@@ -23,10 +23,10 @@ enum EventHolderStatus : String, Codable  {
 }
 
 enum EventType : String, CaseIterable, Codable {
-    case birthday = "день рождения"
-    case birthOfChildren = "день рождения ребенка"
-    case wedding = "свадьба"
-    case housewarming = "новоселье"
+    case birthday = "День рождения"
+    case birthOfChildren = "День рождения ребенка"
+    case wedding = "Свадьба"
+    case housewarming = "Новоселье"
     case none  = "тип события не выбран"
 }
 

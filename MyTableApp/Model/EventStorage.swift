@@ -194,22 +194,22 @@ class EventStorage: EventStorageProtocol {
 
             let someEventHolderArray = [EventHolder(eventHolderFirstName: "Вася",
                                                     eventHolderLastName: "Васин",
-                                                    eventHolderBirthdayDate: dateFormatter.date(from: date_1)!,
+                                                    eventHolderBirthdayDate: CustomDate(date: dateFormatter.date(from: date_1) ?? Date()),
                                                     eventHolderPhoneNumber : "+79051234567",
-                                                    sex: .male,
+                                                    eventHolderSex: .male,
                                                     eventHolderStatus: .bestFriend,
-                                                    events: [Event(eventDate: CustomDate(date: dateFormatter.date(from: date_1)!), eventType: .birthday,        eventDiscription: "описание", isActual: true),
+                                                    events: [Event(eventDate: CustomDate(date: dateFormatter.date(from: date_1)!), eventType: .birthday,        eventDiscription: "описание", isActual: false),
                                                              Event(eventDate: CustomDate(date: dateFormatter.date(from: date_2)!), eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
                                                              Event(eventDate: CustomDate(date: dateFormatter.date(from: date_3)!), eventType: .wedding,         eventDiscription: "описание", isActual: true)]
                                                    ),
 
                                         EventHolder(eventHolderFirstName: "Алла",
                                                     eventHolderLastName: "Пугачева",
-                                                    eventHolderBirthdayDate: dateFormatter.date(from: date_25)!,
+                                                    eventHolderBirthdayDate: CustomDate(date: dateFormatter.date(from: date_25)!),
                                                     eventHolderPhoneNumber : "+79051234567",
-                                                    sex: .female,
+                                                    eventHolderSex: .female,
                                                     eventHolderStatus: .none,
-                                                    events: [Event(eventDate: CustomDate(date: dateFormatter.date(from: date_26)!), eventType: .wedding,         eventDiscription: "описание", isActual: true),
+                                                    events: [Event(eventDate: CustomDate(date: dateFormatter.date(from: date_26)!), eventType: .wedding,         eventDiscription: "описание", isActual: false),
                                                              Event(eventDate: CustomDate(date: dateFormatter.date(from: date_27)!), eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
                                                              Event(eventDate: CustomDate(date: dateFormatter.date(from: date_25)!), eventType: .birthday,        eventDiscription: "описание", isActual: true)]
                                                    )]

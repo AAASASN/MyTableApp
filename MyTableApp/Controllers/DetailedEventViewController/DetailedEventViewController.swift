@@ -25,7 +25,10 @@ class DetailedEventViewController: UIViewController {
 
     }
     
-
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
+    }
+    
     /*
     // MARK: - Navigation
 
@@ -74,20 +77,31 @@ extension DetailedEventViewController: UITableViewDataSource, UITableViewDelegat
         if indexPath.section == 1 {
             
             let customCell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier") as! OneEventSomeHolderTableViewCell_xib
-            customCell.eventDateLabel.text = eventHolderAndEvent.1.eventDate.dateAsString
-            customCell.dayCountLabel.text = String(eventHolderAndEvent.1.eventDate.daysCountBeforeEvent)
-            customCell.eventTypeLabel.text = eventHolderAndEvent.1.eventType.rawValue
-            customCell.isActualLabel.text = String(eventHolderAndEvent.1.isActual)
 
+            // насторойка ячейки
+            customCell.configLabelsAndColorStule(event: eventHolderAndEvent.1 )
+            
             cellForReturn = customCell
         }
         return cellForReturn
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 1{ return 200}
-        return 45
+        if indexPath.section == 1{ return 200
+        }
+        return 60
     }
     
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0 && indexPath.row == 0 {
+            // получаем вью контроллер, в который происходит переход
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let aboutEventHolderController = storyboard.instantiateViewController(withIdentifier: "AddEventHolderViewControllerID") as! AddEventHolderViewController
+            
+            // настраиваем aboutEventHolderController перед вызовом - передадим экземпляр EventHolder и заполняем текстовые поля
+            aboutEventHolderController.prepareForReqestFromDetailedEventViewController(someEventHolder: eventHolderAndEvent.0)
+            
+            // переходим к следующему экрану
+            self.navigationController?.pushViewController(aboutEventHolderController, animated: true)        }
+    }
 }
