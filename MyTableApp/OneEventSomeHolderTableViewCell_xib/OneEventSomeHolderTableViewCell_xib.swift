@@ -8,22 +8,31 @@
 import UIKit
 
 class OneEventSomeHolderTableViewCell_xib: UITableViewCell {
+    
     @IBOutlet weak var eventTypeLabel: UILabel!
     @IBOutlet weak var eventDateLabel: UILabel!
     @IBOutlet weak var dayCountLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var isActualLabel: UILabel!
     @IBOutlet weak var switchOutlet: UISwitch!
-        
+    
+    // свойство для загрузки в него хранилища с данными
+    var eventsStorage: EventStorageProtocol = EventStorage()
+    var eventID = String()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        eventsStorage.getUpdatedDataToEventStorage()
+        // tableView.reloadData()
     }
     
-    func configLabelsAndColorStule(event: EventProtocol) {
+    func configLabelsAndColorStile(eventID: String) {
+        
+        eventsStorage.getUpdatedDataToEventStorage()
+        
+        self.eventID = eventID
         
         // MARK: - конфигурация ячейки и лейблов
-        
-        
         
         //self.contentView.backgroundColor = UIColor.systemGray5
         self.contentView.layer.cornerRadius = 20
@@ -62,20 +71,20 @@ class OneEventSomeHolderTableViewCell_xib: UITableViewCell {
         descriptionLabel.layer.borderWidth = 2
         
         // MARK: - настройка свича
-        if event.isActual {
-            switchOutlet.setOn(true, animated: true)
-            //switchOutlet.isOn = true
+        if eventsStorage.getEventFromStorageByEventID(eventID: self.eventID).isActual{
+            //switchOutlet.setOn(true, animated: true)
+            switchOutlet.isOn = true
         } else {
-            switchOutlet.setOn(false, animated: true)
-            //switchOutlet.isOn = false
+            //switchOutlet.setOn(false, animated: true)
+            switchOutlet.isOn = false
         }
         
         // MARK: - наполнение лейблов
-        eventDateLabel.text = "  " + event.eventDate.dateAsString
-        dayCountLabel.text = String(event.eventDate.daysCountBeforeEvent)
-        eventTypeLabel.text = "  " + event.eventType.rawValue
-        descriptionLabel.text = "  Какое-то описание"
-        if event.isActual {
+        eventDateLabel.text = "  " + (eventsStorage.getEventFromStorageByEventID(eventID: self.eventID)).eventDate.dateAsString
+        dayCountLabel.text = String((eventsStorage.getEventFromStorageByEventID(eventID: self.eventID)).eventDate.daysCountBeforeEvent)
+        eventTypeLabel.text = "  " + (eventsStorage.getEventFromStorageByEventID(eventID: self.eventID)).eventType.rawValue
+        descriptionLabel.text = "  " + (eventsStorage.getEventFromStorageByEventID(eventID: self.eventID)).eventDiscription
+        if (eventsStorage.getEventFromStorageByEventID(eventID: self.eventID)).isActual {
             isActualLabel.text = "  Актуально"
             isActualLabel.backgroundColor = UIColor(red: 0.76, green: 1.00, blue: 0.89, alpha: 0.61)
         } else {
@@ -86,7 +95,23 @@ class OneEventSomeHolderTableViewCell_xib: UITableViewCell {
     
     
     @IBAction func switchAction(_ sender: UISwitch) {
-        
+        if switchOutlet.isOn == true {
+            print("switch was ON")
+            let someEvent = eventsStorage.getEventFromStorageByEventID(eventID: eventID)
+            eventsStorage.changeIsActualStatusForCurrentEvent(event: someEvent)
+            eventsStorage.getUpdatedDataToEventStorage()
+            switchOutlet.isOn = true
+            isActualLabel.text = "  Актуально"
+            isActualLabel.backgroundColor = UIColor(red: 0.76, green: 1.00, blue: 0.89, alpha: 0.61)
+        } else {
+            print("switch was OFF")
+            let someEvent = eventsStorage.getEventFromStorageByEventID(eventID: eventID)
+            eventsStorage.changeIsActualStatusForCurrentEvent(event: someEvent)
+            eventsStorage.getUpdatedDataToEventStorage()
+            switchOutlet.isOn = false
+            isActualLabel.text = "  Не актуально"
+            isActualLabel.backgroundColor = UIColor(red: 0.98, green: 0.82, blue: 0.76, alpha: 0.61)
+          }
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

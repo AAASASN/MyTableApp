@@ -23,16 +23,6 @@ class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITab
     // создаем пустой экземрляр Юбиляра кроторый будет заполнен данными и потом добавлен в хранилище юбиляров
     var eventHolder: EventHolder!
     
-//    = EventHolder(eventHolderFirstName:  "error",
-//                                               eventHolderLastName: "error",
-//                                               eventHolderBirthdayDate: Date(),
-//                                               eventHolderPhoneNumber: "error",
-//                                               sex: .none,
-//                                               eventHolderStatus: .none,
-//                                               // добавляем сам ДР
-//                                               events: [Event]()
-//                                               )
-    
     // переменная для хранения текущего статуса Юбиляра
     var currentEventHolderStatus: EventHolderStatus = .none
     
@@ -42,6 +32,7 @@ class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITab
     // создадим экземпляр UIDatePicker, далее в методе viewDidLoad
     // назначим его как способ ввода в текстовое поле addEventHolderBirthdayDateTextField
     var datePicker = UIDatePicker()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -110,10 +101,10 @@ class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     // MARK: - подготовка экрана при вызове с DetailedEventViewController
-    // в этом случае контроллер AddEventHolderViewController будет использоваться уже не для добавления EventHolder а для просмотра и изменения уже существующего
-    func prepareForReqestFromDetailedEventViewController(someEventHolder: EventHolder) {
+    // в этом случае контроллер AddEventHolderViewController будет использоваться уже не для добавления EventHolder а для просмотра и изменения уже существующего EventHolder
+    func prepareForReqestFromDetailedEventViewController(someEventHolderID: String) {
         // передадим значение типа EventHolder
-        eventHolder = someEventHolder
+        eventHolder = eventsStorage.getEventHolderFromStorageByEventHolderID(eventHolderID: someEventHolderID)
         
         currentEventHolderStatus = eventHolder.eventHolderStatus
         currentEventHolderSex = eventHolder.eventHolderSex
@@ -312,7 +303,13 @@ extension AddEventHolderViewController {
         } else {
             for i in 1..<eventHolder.events.count + 1 {
                 if indexPath.section == i {
-                    eventCell.configLabelsAndColorStule(event: eventHolder.events[i-1])
+                    // eventHolderAndEvent: (EventHolder, EventProtocol)
+                    // eventCell.configLabelsAndColorStule(event: eventHolder.events[i-1])
+
+                    
+                    
+//                    eventCell.configLabelsAndColorStule(eventHolderAndEvent: (eventHolder, eventHolder.events[i-1]))
+                    eventCell.configLabelsAndColorStile(eventID: (eventHolder, eventHolder.events[i-1]).1.eventID)
                     varForReturn = eventCell
                     print("eventCell was return")
                 }
@@ -383,7 +380,6 @@ extension AddEventHolderViewController {
                 self.navigationController?.pushViewController(changeEventHolderSexTableViewController, animated: true)
             }
             if indexPath.section == 0 && indexPath.row == 5 {
-                
                 // получаем вью контроллер, в который происходит переход
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let changeEventHolderStatusTableViewController = storyboard.instantiateViewController(withIdentifier: "ChangeEventHolderStatusTableViewControllerId") as! ChangeEventHolderStatusTableViewController
@@ -399,6 +395,7 @@ extension AddEventHolderViewController {
                 changeEventHolderStatusTableViewController.doAfterStatusSelected = {[self] selectedStatus in
                     // изменяем статус пользователя в контроллере AddEventHolderViewController
                     self.currentEventHolderStatus = selectedStatus
+                    // получаем ссылку на конкретную ячейку по IndexPath
                     let cell = firstTableView.cellForRow(at: IndexPath(row: 5, section: 0)) as! SexAndStatusTableViewCell
                     cell.selectResultLabel.text = currentEventHolderStatus.rawValue
                     //firstTableView.reloadData()
