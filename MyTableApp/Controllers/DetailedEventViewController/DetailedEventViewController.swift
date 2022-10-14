@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DetailedEventViewController: UIViewController {
+class DetailedEventViewController: UIViewController, UITextViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -22,6 +22,11 @@ class DetailedEventViewController: UIViewController {
 
         tableView.delegate = self
         tableView.dataSource = self
+        
+//        let cellForTextView = tableView.cellForRow(at: IndexPath(row: 0, section: 2)) as! TextViewTableViewCell
+//        cellForTextView.textView.delegate = self
+        
+        self.hideKeyboard()
         
         // зарегистрируем Nib ячейки
         let cellNib = UINib(nibName: "OneEventSomeHolderTableViewCell_xib", bundle: nil)
@@ -129,17 +134,24 @@ extension DetailedEventViewController: UITableViewDataSource, UITableViewDelegat
     }
 }
 
-//
+// это расширение возволяет скрыть клавиатуру при косании вне TextView или TextField.
+// Данное решение подходит для случая когда TextView или TextField расположены внутри ScrollView
 extension DetailedEventViewController {
-
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-        let cellForTextView = tableView.dequeueReusableCell(withIdentifier: "CellForTextView") as! TextViewTableViewCell
-
-        
-        let cellForTextView = tableView.dequeueReusableCell(withIdentifier: "CellForTextView") as! TextViewTableViewCell
-        cellForTextView.textView.endEditing(true)
-        //self.textView.endEditing(true)
-    }
     
+    func hideKeyboard() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(
+            target: self,
+            action: #selector(DetailedEventViewController.dismissKeyboard))
+
+        view.addGestureRecognizer(tap)
+    }
+
+    // есть несколько способов скрыть клавиатуру - разные варианты в закоментированом коде
+    @objc func dismissKeyboard() {
+        tableView.endEditing(true)
+//        let cellForTextView = tableView.cellForRow(at: IndexPath(row: 0, section: 2)) as! TextViewTableViewCell
+//        // cellForTextView.textView.endEditing(true)
+//        cellForTextView.doneAction()
+    }
+
 }

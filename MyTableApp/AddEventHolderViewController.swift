@@ -23,16 +23,6 @@ class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITab
     // создаем пустой экземрляр Юбиляра кроторый будет заполнен данными и потом добавлен в хранилище юбиляров
     var eventHolder: EventHolder!
     
-//    = EventHolder(eventHolderFirstName:  "error",
-//                                               eventHolderLastName: "error",
-//                                               eventHolderBirthdayDate: Date(),
-//                                               eventHolderPhoneNumber: "error",
-//                                               sex: .none,
-//                                               eventHolderStatus: .none,
-//                                               // добавляем сам ДР
-//                                               events: [Event]()
-//                                               )
-    
     // переменная для хранения текущего статуса Юбиляра
     var currentEventHolderStatus: EventHolderStatus = .none
     
@@ -405,6 +395,7 @@ extension AddEventHolderViewController {
                 changeEventHolderStatusTableViewController.doAfterStatusSelected = {[self] selectedStatus in
                     // изменяем статус пользователя в контроллере AddEventHolderViewController
                     self.currentEventHolderStatus = selectedStatus
+                    // получаем ссылку на конкретную ячейку по IndexPath
                     let cell = firstTableView.cellForRow(at: IndexPath(row: 5, section: 0)) as! SexAndStatusTableViewCell
                     cell.selectResultLabel.text = currentEventHolderStatus.rawValue
                     //firstTableView.reloadData()

@@ -56,14 +56,16 @@ extension TextViewTableViewCell {
     }
     
     // при нажатии на кнопку Готово на тулбаре скрывает клавиатуру
-    @objc func doneAction (){
-        // при нажатии на кнопку Готово на тулбаре скрывает клавиатуру
+    @objc func doneAction(){
+        // при нажатии на кнопку Готово на тулбаре скрывается клавиатура
         self.contentView.endEditing(true)
         
         detailedEventViewController.tableView.resignFirstResponder()
         
     }
 
+    
+    // этот код позволяет сдвигать экран DetailedEventViewController вверх и обратно вниз при появлении и проподании клавиатуры
     func registerForKeyboardNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(kbWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(kbWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
