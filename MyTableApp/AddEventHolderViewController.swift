@@ -103,6 +103,11 @@ class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITab
     func prepareForReqestFromDetailedEventViewController(someEventHolderID: String) {
         // передадим значение типа EventHolder
         eventHolder = eventsStorage.getEventHolderFromStorageByEventHolderID(eventHolderID: someEventHolderID)
+        // передаем на navigationItem имя eventHolder
+        self.navigationItem.title = eventHolder.eventHolderFirstName + " " + eventHolder.eventHolderLastName
+        
+        // настройка большого navigationItem.title
+        self.navigationItem.largeTitleDisplayMode = .always
         
         currentEventHolderStatus = eventHolder.eventHolderStatus
         currentEventHolderSex = eventHolder.eventHolderSex
