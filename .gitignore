@@ -1,9 +1,12 @@
 # see https://gist.github.com/muhasturk/df28ec9d2cc18bf1cfc8
 # see https://github.com/github/gitignore/blob/master/Swift.gitignore
 
-*.xcodeproj/*
-!*.xcodeproj/project.pbxproj
-!*.xcodeproj/xcshareddata
+xcodeproj/*
+xcodeproj/project.pbxproj
+xcodeproj/xcshareddata
+
+UserInterfaceState
+
 
 #
 # *.lock - this is used and abused by many editors for many different things.
