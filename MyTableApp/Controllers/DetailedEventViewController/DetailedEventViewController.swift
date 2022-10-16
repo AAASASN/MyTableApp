@@ -26,7 +26,7 @@ class DetailedEventViewController: UIViewController, UITextViewDelegate {
 //        let cellForTextView = tableView.cellForRow(at: IndexPath(row: 0, section: 2)) as! TextViewTableViewCell
 //        cellForTextView.textView.delegate = self
         
-        self.hideKeyboard()
+//        self.hideKeyboard()
         
         // зарегистрируем Nib ячейки
         let cellNib = UINib(nibName: "OneEventSomeHolderTableViewCell_xib", bundle: nil)
@@ -61,7 +61,7 @@ class DetailedEventViewController: UIViewController, UITextViewDelegate {
 extension DetailedEventViewController: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        3
+        4
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -69,28 +69,20 @@ extension DetailedEventViewController: UITableViewDataSource, UITableViewDelegat
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         var cellForReturn = UITableViewCell()
-        
         if indexPath.section == 0 {
             let standartCell = tableView.dequeueReusableCell(withIdentifier: "CellForEventHolder")!
-        
             var content = standartCell.defaultContentConfiguration()
-
-            // Configure content.
             content.image = UIImage(systemName: "star")
             if eventHolderAndEventID != nil {
-                
                 content.text = (eventsStorage.getEventHolderFromStorageByEventHolderID(eventHolderID: eventHolderAndEventID.0).eventHolderFirstName) + " " +
                 (eventsStorage.getEventHolderFromStorageByEventHolderID(eventHolderID: eventHolderAndEventID.0).eventHolderLastName)
                 content.secondaryText = (eventsStorage.getEventHolderFromStorageByEventHolderID(eventHolderID: eventHolderAndEventID.0).eventHolderStatus.rawValue)
             }
-            // Customize appearance.
             content.imageProperties.tintColor = .purple
             standartCell.contentConfiguration = content
             cellForReturn = standartCell
         }
-        
         if indexPath.section == 1 {
             let customCell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier") as! OneEventSomeHolderTableViewCell_xib
             // насторойка ячейки
@@ -98,7 +90,7 @@ extension DetailedEventViewController: UITableViewDataSource, UITableViewDelegat
             cellForReturn = customCell
         }
         
-        /////////
+        //
         if indexPath.section == 2 {
             let cellForTextView = tableView.dequeueReusableCell(withIdentifier: "CellForTextView") as! TextViewTableViewCell
             
@@ -111,13 +103,19 @@ extension DetailedEventViewController: UITableViewDataSource, UITableViewDelegat
             // присваиваем экземпляр для возврата
             cellForReturn = cellForTextView
         }
+        if indexPath.section == 3 {
+            let buttonCell = tableView.dequeueReusableCell(withIdentifier: "AddEventButtonAsTableViewCellID") as! AddEventButtonAsTableViewCell
+            // насторойка ячейки
+            cellForReturn = buttonCell
+        }
         return cellForReturn
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 { return 80 }
+        if indexPath.section == 0 { return 60 }
         if indexPath.section == 1 { return 200 }
-        return 250
+        if indexPath.section == 2 { return 250 }
+        return 60
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -130,28 +128,36 @@ extension DetailedEventViewController: UITableViewDataSource, UITableViewDelegat
             aboutEventHolderController.prepareForReqestFromDetailedEventViewController(someEventHolderID: eventHolderAndEventID.0)
             
             // переходим к следующему экрану
-            self.navigationController?.pushViewController(aboutEventHolderController, animated: true)        }
+            self.navigationController?.pushViewController(aboutEventHolderController, animated: true)
+        }
     }
 }
+
 
 // это расширение возволяет скрыть клавиатуру при косании вне TextView или TextField.
 // Данное решение подходит для случая когда TextView или TextField расположены внутри ScrollView
-extension DetailedEventViewController {
-    
-    func hideKeyboard() {
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(
-            target: self,
-            action: #selector(DetailedEventViewController.dismissKeyboard))
 
-        view.addGestureRecognizer(tap)
-    }
+//extension DetailedEventViewController {
+//
+//    func hideKeyboard() {
+//        let tap: UITapGestureRecognizer = UITapGestureRecognizer(
+//            target: self,
+//            action: #selector(DetailedEventViewController.dismissKeyboard))
+//
+//        view.addGestureRecognizer(tap)
+//    }
+//
+//    // есть несколько способов скрыть клавиатуру - разные варианты в закоментированом коде
+//    @objc func dismissKeyboard() {
+//
+//        tableView.endEditing(true)
+//
+////          let cellForTextView = tableView.cellForRow(at: IndexPath(row: 0, section: 2)) as! TextViewTableViewCell
+////
+////
+//////        cellForTextView.doneAction()
+////          cellForTextView.textView.endEditing(true)
+//    }
+//
+//}
 
-    // есть несколько способов скрыть клавиатуру - разные варианты в закоментированом коде
-    @objc func dismissKeyboard() {
-        tableView.endEditing(true)
-//        let cellForTextView = tableView.cellForRow(at: IndexPath(row: 0, section: 2)) as! TextViewTableViewCell
-//        // cellForTextView.textView.endEditing(true)
-//        cellForTextView.doneAction()
-    }
-
-}
