@@ -24,15 +24,18 @@ protocol EventStorageProtocol {
     func getEventHolderArrayFromEventStorage() -> [EventHolder]
     func addEventToExistedHolder(addingEvent event: Event, existedHolder: EventHolder)
     func addChangesOfEventHolderToEventStorage(changedEventHolder: EventHolder)
+    func changeIsActualStatusForCurrentEvent(event: EventProtocol)
+    func getEventHolderFromStorageByEventHolderID(eventHolderID: String) -> EventHolder
+    func getEventFromStorageByEventID(eventID: String) -> Event
+
 }
 
 class EventStorage: EventStorageProtocol {
-
+    
     // enum для хранения ключей для работы с userDefaults
     enum enumForStoreKeys: String {
         case UDKey
     }
-    
 
     // его экземпляр
     var eventHolderArrayAsClass = EventHolderArrayAsClass()
@@ -152,11 +155,47 @@ class EventStorage: EventStorageProtocol {
         saveDataFromEventHolderArrayAsClassToUserDefaults()
     }
     
+    
+    //эта функция будет менять значение isAcrual на противоположное в событии принятом в качестве аргумента
+    func changeIsActualStatusForCurrentEvent(event: EventProtocol) {
+        for eventHolder in eventHolderArrayAsClass.eventHolderArray {
+            for targetEvent in eventHolder.events {
+                if targetEvent.eventID == event.eventID {
+                    targetEvent.isActual.toggle()
+                    saveDataFromEventHolderArrayAsClassToUserDefaults()
+                    getDataFromUserDefaultsToEventHolderArrayAsClass()
+                }
+            }
+        }
+    }
+    
+    // метод находит возвращает из хранилища экземрляр Event по его eventID
+    func getEventFromStorageByEventID(eventID: String) -> Event {
+        var eventForReturn: Event!
+        for someEventHolder in eventHolderArrayAsClass.eventHolderArray {
+            for someEvent in someEventHolder.events {
+                if someEvent.eventID == eventID {
+                    eventForReturn = someEvent
+                }
+            }
+        }
+        return eventForReturn
+    }
+    
+    
+    // метод находит возвращает из хранилища экземрляр EventHolder по его eventHolderID
+    func getEventHolderFromStorageByEventHolderID(eventHolderID: String) -> EventHolder {
+        getDataFromUserDefaultsToEventHolderArrayAsClass()
+        var eventHolderForReturn: EventHolder!
+        for someEventHolder in eventHolderArrayAsClass.eventHolderArray {
+            if someEventHolder.eventHolderID == eventHolderID {
+                eventHolderForReturn = someEventHolder
+            }
+        }
+        return eventHolderForReturn
+    }
+    
     // MARK: - приватные методы
-//    // обновляем userDefaults до состояния eventHolderArrayAsClass
-//    func setUserDefaultsFromEventHolderArrayAsClass(){
-//        <#function body#>
-//    }
     
     // сохраняем состояние eventHolderArrayAsClass в userDefaults
     private func saveDataFromEventHolderArrayAsClassToUserDefaults() {
@@ -198,7 +237,7 @@ class EventStorage: EventStorageProtocol {
                                                     eventHolderPhoneNumber : "+79051234567",
                                                     eventHolderSex: .male,
                                                     eventHolderStatus: .bestFriend,
-                                                    events: [Event(eventDate: CustomDate(date: dateFormatter.date(from: date_1)!), eventType: .birthday,        eventDiscription: "описание", isActual: false),
+                                                    events: [Event(eventDate: CustomDate(date: dateFormatter.date(from: date_1)!), eventType: .birthday,        eventDiscription: "описание", isActual: true),
                                                              Event(eventDate: CustomDate(date: dateFormatter.date(from: date_2)!), eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
                                                              Event(eventDate: CustomDate(date: dateFormatter.date(from: date_3)!), eventType: .wedding,         eventDiscription: "описание", isActual: true)]
                                                    ),
@@ -209,45 +248,11 @@ class EventStorage: EventStorageProtocol {
                                                     eventHolderPhoneNumber : "+79051234567",
                                                     eventHolderSex: .female,
                                                     eventHolderStatus: .none,
-                                                    events: [Event(eventDate: CustomDate(date: dateFormatter.date(from: date_26)!), eventType: .wedding,         eventDiscription: "описание", isActual: false),
+                                                    events: [Event(eventDate: CustomDate(date: dateFormatter.date(from: date_26)!), eventType: .wedding,         eventDiscription: "описание", isActual: true),
                                                              Event(eventDate: CustomDate(date: dateFormatter.date(from: date_27)!), eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
                                                              Event(eventDate: CustomDate(date: dateFormatter.date(from: date_25)!), eventType: .birthday,        eventDiscription: "описание", isActual: true)]
                                                    )]
             eventHolderArrayAsClass.eventHolderArray = someEventHolderArray
         }
     }
-    
-    //    // функция возвращает словарь dicForReturn ключами которого являются EventHolderStatus а значениями массив событий EventHolder
-    //    func sortEventStorageByEventHolderStatus() -> [EventHolderStatus : [EventHolderProtocol]] {
-    //
-    //        // присвоим свойству eventHolderArray значения из UserDefaults
-    //        eventHolderArray = getDataFromUserDefaults()
-    //
-    //        // переменная для хранения возврощаемого значения
-    //        var dicForReturn = [EventHolderStatus : [EventHolderProtocol]]()
-    //
-    //        // в переменной eventHolderStatusArray будем хранить просто список уникальных статусов типа EventHolderStatus  из массива eventHolderArray
-    //        var eventHolderStatusArray : [EventHolderStatus] = []
-    //        // сначало заполним eventHolderStatusArray значениями
-    //        for i in eventHolderArray {
-    //            if !eventHolderStatusArray.contains(i.eventHolderStatus) {
-    //                eventHolderStatusArray.append(i.eventHolderStatus)
-    //            }
-    //        }
-    //
-    //        //теперь заполним словарь dicForReturn в качестве ключей будем использовать значения из EventHolderStatusArray а значениями будут массивы типа EventHolder содержащие этот статус
-    //        for i in eventHolderStatusArray {
-    //            var eventHolderArrayForSort = [EventHolderProtocol]()
-    //            for s in eventHolderArray {
-    //                if i == s.eventHolderStatus {
-    //                    eventHolderArrayForSort.append(s)
-    //                }
-    //            }
-    //            dicForReturn[i] = eventHolderArrayForSort
-    //        }
-    //        return dicForReturn
-    //    }
-    
-
-    
 }

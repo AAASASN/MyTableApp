@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Contacts
 
 class StartTableViewController: UITableViewController {
     
@@ -25,6 +26,11 @@ class StartTableViewController: UITableViewController {
         eventHolderAndEventArray = eventsStorage.getEventHolderAndEventArray()
         tableView.reloadData()
         
+        // Здесь мы поработаем с контактами из памяти телефона
+        CNContactStore().requestAccess(for: .contacts) { (success, error ) in
+            
+        }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -40,6 +46,7 @@ class StartTableViewController: UITableViewController {
                 print(eventHolderAndEventArray[i].0.eventHolderID)
             }
         }
+        print(eventHolderAndEventArray)
     }
 }
 
@@ -97,12 +104,17 @@ extension StartTableViewController {
     
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         // получаем вью контроллер, в который происходит переход
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let detailedEventViewController = storyboard.instantiateViewController(withIdentifier: "DetailedEventViewControllerID") as! DetailedEventViewController
         
-        // передадим свойству eventHolderOfSelectedEvent контроллера на который сейчас будем переходить экземрляр из свойства  eventHolderAndEventArray текущего контороллера
-        detailedEventViewController.eventHolderAndEvent = eventHolderAndEventArray[indexPath.row]
+        // передадим свойству eventHolderAndEvent контроллера на который сейчас будем переходить экземрляр из свойства  eventHolderAndEventArray текущего контороллера
+        //detailedEventViewController.eventHolderAndEvent = eventHolderAndEventArray[indexPath.row]
+        
+        // передадим свойству eventHolderAndEventID контроллера на который сейчас будем переходить кортед ID-шников eventHolderID и eventID из свойства  eventHolderAndEventArray текущего контороллера соответствующего indexPath.row
+        detailedEventViewController.eventHolderAndEventID = (eventHolderAndEventArray[indexPath.row].0.eventHolderID, eventHolderAndEventArray[indexPath.row].1.eventID)
+
         // переходим к следующему экрану
         self.navigationController?.pushViewController(detailedEventViewController, animated: true)
     }

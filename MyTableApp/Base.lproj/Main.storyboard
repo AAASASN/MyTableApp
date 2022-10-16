@@ -302,8 +302,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="eK2-jE-U2E">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="425"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="10" estimatedSectionHeaderHeight="-1" sectionFooterHeight="1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="eK2-jE-U2E">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CellForEventHolder" rowHeight="91" id="ivj-gd-iMu">
                                         <rect key="frame" x="16" y="49.5" width="343" height="91"/>
@@ -313,34 +313,70 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CellForTextView" rowHeight="219" id="hpp-r5-zYB" customClass="TextViewTableViewCell" customModule="MyTableApp" customModuleProvider="target">
+                                        <rect key="frame" x="16" y="140.5" width="343" height="219"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hpp-r5-zYB" id="qmw-fg-4GV">
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="219"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="kZP-kB-Ell">
+                                                    <rect key="frame" x="0.0" y="2.5" width="343" height="214"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                    <string key="text">Это поле с поздравлением.                               Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                                    <color key="textColor" systemColor="labelColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="kZP-kB-Ell" secondAttribute="trailing" id="EfY-WN-TL2"/>
+                                                <constraint firstItem="kZP-kB-Ell" firstAttribute="top" secondItem="qmw-fg-4GV" secondAttribute="top" constant="2.5" id="fJ2-ta-cdj"/>
+                                                <constraint firstItem="kZP-kB-Ell" firstAttribute="leading" secondItem="qmw-fg-4GV" secondAttribute="leading" id="kmL-xm-Bnm"/>
+                                                <constraint firstAttribute="bottom" secondItem="kZP-kB-Ell" secondAttribute="bottom" constant="2.5" id="mv8-T5-lbs"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="textView" destination="kZP-kB-Ell" id="0il-hm-Fqb"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="blue" indentationWidth="10" reuseIdentifier="AddEventButtonAsTableViewCellID" rowHeight="72" id="aDd-MB-EUV" customClass="AddEventButtonAsTableViewCell" customModule="MyTableApp" customModuleProvider="target">
+                                        <rect key="frame" x="16" y="359.5" width="343" height="72"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="aDd-MB-EUV" id="JpV-wY-2HL">
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="72"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Позвонить" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HKb-33-Mil">
+                                                    <rect key="frame" x="0.0" y="0.0" width="343" height="72"/>
+                                                    <color key="backgroundColor" red="0.030500327374120385" green="0.88693212499999996" blue="0.022039283636161519" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="20"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="HKb-33-Mil" firstAttribute="leading" secondItem="JpV-wY-2HL" secondAttribute="leading" id="6a0-oW-FMs"/>
+                                                <constraint firstAttribute="bottom" secondItem="HKb-33-Mil" secondAttribute="bottom" id="GY1-V6-kfY"/>
+                                                <constraint firstItem="HKb-33-Mil" firstAttribute="top" secondItem="JpV-wY-2HL" secondAttribute="top" id="iBf-4i-onA"/>
+                                                <constraint firstAttribute="trailing" secondItem="HKb-33-Mil" secondAttribute="trailing" id="ofT-wD-iC9"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="Z9M-xw-xhb" id="XeJ-2e-kYN"/>
                                     <outlet property="delegate" destination="Z9M-xw-xhb" id="YZD-HL-rC9"/>
                                 </connections>
                             </tableView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="kZP-kB-Ell">
-                                <rect key="frame" x="16" y="433" width="343" height="214"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="214" id="eFx-LQ-zq7"/>
-                                </constraints>
-                                <string key="text">Это поле с поздравлением.                               Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                <color key="textColor" systemColor="labelColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="DTg-79-qoW"/>
                         <color key="backgroundColor" systemColor="systemGroupedBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="kZP-kB-Ell" secondAttribute="bottom" constant="20" symbolic="YES" id="8PH-jc-p61"/>
-                            <constraint firstItem="eK2-jE-U2E" firstAttribute="leading" secondItem="DTg-79-qoW" secondAttribute="leading" id="JLY-ke-ohq"/>
-                            <constraint firstItem="kZP-kB-Ell" firstAttribute="leading" secondItem="DTg-79-qoW" secondAttribute="leading" constant="16" id="hli-dc-iAy"/>
-                            <constraint firstItem="DTg-79-qoW" firstAttribute="trailing" secondItem="kZP-kB-Ell" secondAttribute="trailing" constant="16" id="kL2-AN-slN"/>
-                            <constraint firstItem="kZP-kB-Ell" firstAttribute="top" secondItem="eK2-jE-U2E" secondAttribute="bottom" constant="8" id="mST-G3-meH"/>
-                            <constraint firstItem="eK2-jE-U2E" firstAttribute="trailing" secondItem="DTg-79-qoW" secondAttribute="trailing" id="mmm-sc-0Fs"/>
-                            <constraint firstItem="eK2-jE-U2E" firstAttribute="top" secondItem="DTg-79-qoW" secondAttribute="top" id="oMg-e5-RBQ"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="eK2-jE-U2E" secondAttribute="bottom" id="3ju-0x-TqR"/>
+                            <constraint firstItem="eK2-jE-U2E" firstAttribute="trailing" secondItem="DTg-79-qoW" secondAttribute="trailing" id="Pxf-va-TWa"/>
+                            <constraint firstItem="eK2-jE-U2E" firstAttribute="top" secondItem="DTg-79-qoW" secondAttribute="top" id="add-L5-FqX"/>
+                            <constraint firstItem="eK2-jE-U2E" firstAttribute="leading" secondItem="DTg-79-qoW" secondAttribute="leading" id="b5a-yv-jXv"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
@@ -354,7 +390,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wky-6s-VBn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2421.5999999999999" y="235.23238380809596"/>
+            <point key="canvasLocation" x="2372" y="-24"/>
         </scene>
         <!--Добавить событие-->
         <scene sceneID="Gp3-GX-bdJ">
