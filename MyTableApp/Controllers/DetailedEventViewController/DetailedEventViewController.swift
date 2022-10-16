@@ -26,6 +26,9 @@ class DetailedEventViewController: UIViewController, UITextViewDelegate {
 //        let cellForTextView = tableView.cellForRow(at: IndexPath(row: 0, section: 2)) as! TextViewTableViewCell
 //        cellForTextView.textView.delegate = self
         
+        
+        
+//        но пока при этом решенеии не работает didSelectRowAt
 //        self.hideKeyboard()
         
         // зарегистрируем Nib ячейки
@@ -35,7 +38,13 @@ class DetailedEventViewController: UIViewController, UITextViewDelegate {
         eventsStorage.getUpdatedDataToEventStorage()
         tableView.reloadData()
 
-        //tableView.contentOffset = 
+        
+        //
+        self.navigationItem.title = eventsStorage.getEventHolderFromStorageByEventHolderID(eventHolderID: eventHolderAndEventID.0).eventHolderFirstName + " " + eventsStorage.getEventHolderFromStorageByEventHolderID(eventHolderID: eventHolderAndEventID.0).eventHolderLastName
+        
+        // настройка большого navigationItem.title в DetailedEventViewController
+        self.navigationItem.largeTitleDisplayMode = .always
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -118,6 +127,8 @@ extension DetailedEventViewController: UITableViewDataSource, UITableViewDelegat
         return 60
     }
     
+    // при нажатии на первую ячейку/секцию будет совершен переход на контороллер AddEventHolderViewController
+    // и в дальнейшем он будет использоваться для просмотра событий юбиляра и редактирования его свойств(характеристик)
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 && indexPath.row == 0 {
             // получаем вью контроллер, в который происходит переход
@@ -133,6 +144,8 @@ extension DetailedEventViewController: UITableViewDataSource, UITableViewDelegat
     }
 }
 
+
+// но пока при этом решенеии не работает didSelectRowAt
 
 // это расширение возволяет скрыть клавиатуру при косании вне TextView или TextField.
 // Данное решение подходит для случая когда TextView или TextField расположены внутри ScrollView
