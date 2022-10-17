@@ -4,6 +4,7 @@
 xcodeproj/*
 xcodeproj/project.pbxproj
 xcodeproj/xcshareddata
+xcodeproj/xcuserdata
 
 
 #
@@ -47,7 +48,7 @@ DerivedData/
 !default.mode2v3
 *.perspectivev3
 !default.perspectivev3
-xcuserdata/*
+
 
 ## Other
 *.xccheckout
