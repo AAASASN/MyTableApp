@@ -36,7 +36,7 @@ protocol EventProtocol: Codable {
     var eventType : EventType { get set }
     var eventDiscription : String { get set }
     var isActual : Bool { get set }
-    
+    var congratulation : String { get set }
 }
 
 class Event: EventProtocol, Codable {
@@ -45,6 +45,7 @@ class Event: EventProtocol, Codable {
     var eventType : EventType
     var eventDiscription : String
     var isActual : Bool
+    var congratulation: String = ""
     
     init(eventDate: CustomDate,  eventType: EventType, eventDiscription : String, isActual : Bool ) {
         eventID = "EventID_" + String(Int(Date().timeIntervalSince1970))

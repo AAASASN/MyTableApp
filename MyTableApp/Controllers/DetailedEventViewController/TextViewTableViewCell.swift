@@ -14,6 +14,12 @@ class TextViewTableViewCell: UITableViewCell {
     // свойство для хранения экземпляра DetailedEventViewController что бы потом обращаться к нему при скрытии клавиатуры
     var detailedEventViewController: DetailedEventViewController!
     
+    // var eventHolderAndEvent : (EventHolder, EventProtocol)!
+    var eventHolderAndEventID: (String, String)!
+    
+    // свойство для загрузки в него хранилища с данными
+    var eventsStorage : EventStorageProtocol = EventStorage()
+    
     deinit {
         removeKeyboardNotifications()
     }
@@ -25,6 +31,10 @@ class TextViewTableViewCell: UITableViewCell {
         createAndAddingToolBarToKeyboard()
         //
         registerForKeyboardNotifications()
+        
+        // ? не понятно будет ли корректно работать
+        eventsStorage.getUpdatedDataToEventStorage()
+
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -35,23 +45,28 @@ class TextViewTableViewCell: UITableViewCell {
 // расширение для работы с клавиатурой
 extension TextViewTableViewCell {
     
-    // Настроим ToolBar над клавиатурой и кнопку Готово после нажатия на которую клавиатура будет скрыватьс
+    // Настроим ToolBar над клавиатурой и кнопку Готово после нажатия на которую клавиатура будет скрываться
     func createAndAddingToolBarToKeyboard() {
         // создадим Тулбар, позже расположим его над клавиатурой
         let toolBar = UIToolbar()
         //
         toolBar.sizeToFit()
+        
         // добавим на ТулБар кнопку Готово
         // создадим кнопку
         let doneButton = UIBarButtonItem(title: "Готово", style: .plain, target: self, action: #selector(doneAction))
         
+        // создадим на Тулбар кнопку Сохранить которая будет сохранять текст поздравления из
+        // в TextView в свойство (?)  в Event и сохранять в хранилище
+        let saveTextButton = UIBarButtonItem(title: "Сохранить", style: .plain, target: self, action: #selector(saveTextAction))
+        
         // создадим "поле-пробел" что бы заполнить им пространство слева на ТулБаре
         let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         
-        // подключим кнопку к тулБару и настроим положение кнопки Готово на Тулбаре - справа
-        toolBar.setItems([flexSpace, doneButton], animated: true)
+        // подключим все кнопки к тулБару и настроим положение на Тулбаре кнопок Сохранить - слева и Готово - справа
+        toolBar.setItems([saveTextButton, flexSpace, doneButton], animated: true)
         
-        // подключаем созданный ТулБар ко всем текстовым полям
+        // подключаем созданный ТулБар к TextView
         textView.inputAccessoryView = toolBar
     }
     
@@ -60,6 +75,18 @@ extension TextViewTableViewCell {
         // при нажатии на кнопку Готово на тулбаре скрывается клавиатура
         self.contentView.endEditing(true)
         
+        detailedEventViewController.tableView.resignFirstResponder()
+        
+    }
+    
+    // при нажатии на кнопку Сохранить текст будет сохраняться и  толщина шрифта будет меняться
+    @objc func saveTextAction(){
+        
+        // сохраняем текст поздравления в хранилище
+        eventsStorage.changeCongratulationInEvent(eventID: eventHolderAndEventID.1, congratulationText: textView.text)
+        
+        // при нажатии на кнопку Сохранить на тулбаре скрывается клавиатура
+        self.contentView.endEditing(true)
         detailedEventViewController.tableView.resignFirstResponder()
         
     }
@@ -85,6 +112,4 @@ extension TextViewTableViewCell {
     @objc func kbWillHide() {
         detailedEventViewController.tableView.contentOffset = CGPoint.zero
     }
-    
-    
 }
