@@ -27,7 +27,7 @@ protocol EventStorageProtocol {
     func changeIsActualStatusForCurrentEvent(event: EventProtocol)
     func getEventHolderFromStorageByEventHolderID(eventHolderID: String) -> EventHolder
     func getEventFromStorageByEventID(eventID: String) -> Event
-
+    func changeCongratulationInEvent(eventID: String, congratulationText: String)
 }
 
 class EventStorage: EventStorageProtocol {
@@ -84,6 +84,20 @@ class EventStorage: EventStorageProtocol {
         // и после этого обновляем состояние userDefaults с учетом нового элемента
         saveDataFromEventHolderArrayAsClassToUserDefaults()
         getDataFromUserDefaultsToEventHolderArrayAsClass()
+    }
+    
+    // изменение текста поздравления в событии с определенным EventID
+    func changeCongratulationInEvent(eventID: String, congratulationText: String ) {
+        // проходим по массиву EventHolder в хранилище
+        for eventHolder in eventHolderArrayAsClass.eventHolderArray {
+            for event in eventHolder.events {
+                if event.eventID == eventID {
+                    event.congratulation = congratulationText
+                    saveDataFromEventHolderArrayAsClassToUserDefaults()
+                    getDataFromUserDefaultsToEventHolderArrayAsClass()
+                }
+            }
+        }
     }
     
     // удаление EventHolder из хранилища
@@ -179,6 +193,7 @@ class EventStorage: EventStorageProtocol {
                 }
             }
         }
+
         return eventForReturn
     }
     

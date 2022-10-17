@@ -103,8 +103,10 @@ extension DetailedEventViewController: UITableViewDataSource, UITableViewDelegat
         if indexPath.section == 2 {
             let cellForTextView = tableView.dequeueReusableCell(withIdentifier: "CellForTextView") as! TextViewTableViewCell
             
-            // пока здесь укажу какой-то текст, в дальнейшем сюда будет подтягиваться текст поздравления из Event
-            cellForTextView.textView.text = "Здесь будет текст поздравления У вас будет 5 дней на выполнение практической работы. Отсчёт времени начнётся после нажатия кнопки. В этот момент вы увидите описание задания. Приступайте к практике, когда будете готовы. До нажатия кнопки дедлайн не сгорит. Если возникнут сложности, задайте вопрос в разделе “Вопросы по заданию” и получите ответ от экспертов и одногруппников. У вас будет 5 дней на выполнение практической работы. Отсчёт времени начнётся после нажатия кнопки. В этот момент вы увидите описание задания. Приступайте к практике, когда будете готовы. До нажатия кнопки дедлайн не сгорит. Если возникнут сложности, задайте вопрос в разделе “Вопросы по заданию” и получите ответ от экспертов и одногруппников."
+            // здесь передадим текст поздравления из Event из хранилища
+            cellForTextView.textView.text = eventsStorage.getEventFromStorageByEventID(eventID: eventHolderAndEventID.1).congratulation
+            // передадим в ячейку с TextView ID события
+            cellForTextView.eventHolderAndEventID = eventHolderAndEventID
             
             // передаю экземпляр самого контроллера DetailedEventViewController чтобы потом из ячейки сдигать его
             // tableView для отображения клавиатуры
