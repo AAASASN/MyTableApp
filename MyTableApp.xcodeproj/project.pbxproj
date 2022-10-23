@@ -42,7 +42,7 @@
 		1104807D28994F4600A0512B /* CustomDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDate.swift; sourceTree = "<group>"; };
 		110C26B128D36FD900C5DC2A /* AddEventButtonAsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventButtonAsTableViewCell.swift; sourceTree = "<group>"; };
 		114710AA28CB79070091C821 /* SexAndStatusTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SexAndStatusTableViewCell.swift; sourceTree = "<group>"; };
-		114A906328F8B64B002E8B39 /* TextViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TextViewTableViewCell.swift; path = MyTableApp/Controllers/DetailedEventViewController/TextViewTableViewCell.swift; sourceTree = "<group>"; };
+		114A906328F8B64B002E8B39 /* TextViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewTableViewCell.swift; sourceTree = "<group>"; };
 		114D264628780ED600F44967 /* MyTableApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyTableApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		114D264928780ED600F44967 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		114D264B28780ED600F44967 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -86,7 +86,6 @@
 		114D263D28780ED600F44967 = {
 			isa = PBXGroup;
 			children = (
-				114A906328F8B64B002E8B39 /* TextViewTableViewCell.swift */,
 				114D264828780ED600F44967 /* MyTableApp */,
 				114D264728780ED600F44967 /* Products */,
 			);
@@ -104,6 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				110C26B128D36FD900C5DC2A /* AddEventButtonAsTableViewCell.swift */,
+				114A906328F8B64B002E8B39 /* TextViewTableViewCell.swift */,
 				114D26632878132C00F44967 /* Model */,
 				11E640CC2886AA020018DBD1 /* Controllers */,
 				114D264928780ED600F44967 /* AppDelegate.swift */,

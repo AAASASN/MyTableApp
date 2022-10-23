@@ -407,7 +407,6 @@ extension AddEventHolderViewController {
         }
     }
     
-    
     // MARK: - настройка Navigation Bar
     func setupNavigationBar() {
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .compact)

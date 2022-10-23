@@ -7,12 +7,12 @@
 
 import UIKit
 
-class TextViewTableViewCell: UITableViewCell {
+class TextViewTableViewCell: UITableViewCell, UITextViewDelegate {
 
     @IBOutlet weak var textView: UITextView!
     
     // свойство для хранения экземпляра DetailedEventViewController что бы потом обращаться к нему при скрытии клавиатуры
-    var detailedEventViewController: DetailedEventViewController!
+    weak var detailedEventViewController: DetailedEventViewController!
     
     // var eventHolderAndEvent : (EventHolder, EventProtocol)!
     var eventHolderAndEventID: (String, String)!
@@ -20,26 +20,45 @@ class TextViewTableViewCell: UITableViewCell {
     // свойство для загрузки в него хранилища с данными
     var eventsStorage : EventStorageProtocol = EventStorage()
     
+    // пока не понятно отрабатывает ли
     deinit {
         removeKeyboardNotifications()
     }
 
-    
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        // назначим ячейку делегатом textView после этого будут работать методы
+        textView.delegate = self
+        
         // настроим тулбар
         createAndAddingToolBarToKeyboard()
-        //
+        
+        // вызываем метод который будет регистрировать наблюдателей
         registerForKeyboardNotifications()
         
         // ? не понятно будет ли корректно работать
         eventsStorage.getUpdatedDataToEventStorage()
-
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
+    
+}
+
+// добавим метод textViewDidBeginEditing
+extension TextViewTableViewCell {
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        // Начало, когда вы начинаете редактирование
+        print("сработал метод textViewDidBeginEditing")
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        print("сработал метод textViewDidEndEditing")
+    }
+
 }
 
 // расширение для работы с клавиатурой
@@ -74,42 +93,52 @@ extension TextViewTableViewCell {
     @objc func doneAction(){
         // при нажатии на кнопку Готово на тулбаре скрывается клавиатура
         self.contentView.endEditing(true)
-        
-        detailedEventViewController.tableView.resignFirstResponder()
-        
+        // удаляем все экзкмпляры UITapGestureRecognizer которые привязаны к tableView что бы нажания на
+        // detailedEventViewController.tableView не отслеживались
+        detailedEventViewController.tableView.gestureRecognizers?.forEach(detailedEventViewController.tableView.removeGestureRecognizer)
     }
     
-    // при нажатии на кнопку Сохранить текст будет сохраняться и  толщина шрифта будет меняться
+    // при нажатии на кнопку Сохранить текст будет сохраняться
     @objc func saveTextAction(){
-        
         // сохраняем текст поздравления в хранилище
         eventsStorage.changeCongratulationInEvent(eventID: eventHolderAndEventID.1, congratulationText: textView.text)
-        
-        // при нажатии на кнопку Сохранить на тулбаре скрывается клавиатура
+        // !!!!!! при нажатии на кнопку Сохранить на тулбаре скрывается клавиатура
         self.contentView.endEditing(true)
-        detailedEventViewController.tableView.resignFirstResponder()
-        
+        // удаляем все экзкмпляры UITapGestureRecognizer которые привязаны к tableView что бы нажания на detailedEventViewController.tableView не отслеживались
+        detailedEventViewController.tableView.gestureRecognizers?.forEach(detailedEventViewController.tableView.removeGestureRecognizer)
     }
-
     
-    // этот код позволяет сдвигать экран DetailedEventViewController вверх и обратно вниз при появлении и проподании клавиатуры
+    // MARK: код позволяет сдвигать экран DetailedEventViewController вверх и обратно вниз при появлении и проподании клавиатуры
+    // этот метод будет вызван в awakeFromNib(). Создаем и регистрируем наблюдателей которые...
     func registerForKeyboardNotifications() {
+        // ... будет реагировать на появление клавиатуры
         NotificationCenter.default.addObserver(self, selector: #selector(kbWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        // ... будет реагировать на изчезновение клавиатуры
         NotificationCenter.default.addObserver(self, selector: #selector(kbWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
+    // удаление наблюдателей когда они уже не нужны
     func removeKeyboardNotifications() {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
+    // функция вычисляет размер сдвига и обращась к tableView контороллера detailedEventViewController задает растояние сдвига contentOffset
     @objc func kbWillShow(_ notification: Notification) {
+        // запрашиваем параметры клавиатуры
         let userInfo = notification.userInfo
         let kbFrameSize = (userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
-        detailedEventViewController.tableView.contentOffset = CGPoint(x: 0, y: kbFrameSize.height)
+        // сдвигаем tableView на contentOffset
+        detailedEventViewController.tableView.contentOffset = CGPoint(x: 0, y: kbFrameSize.height - 80 )
+
+        // в тот момент конда появится клавиатура зарегистрируем нажатие UITapGestureRecognizer по detailedEventViewController.tableView в DetailedEventViewController
+        detailedEventViewController.hideKeyboard()
     }
-    
+    // функция обращась к tableView контороллера detailedEventViewController задает растояние сдвига contentOffset равное 0
     @objc func kbWillHide() {
-        detailedEventViewController.tableView.contentOffset = CGPoint.zero
+        detailedEventViewController.tableView.contentOffset = CGPoint(x: 0, y: 0) // CGPoint.zero
+        // удаляем все экзкмпляры UITapGestureRecognizer которые привязаны к tableView что бы нажания на detailedEventViewController.tableView не отслеживались
+        detailedEventViewController.view.gestureRecognizers?.forEach(detailedEventViewController.tableView.removeGestureRecognizer)
+        detailedEventViewController.tableView.gestureRecognizers?.forEach(detailedEventViewController.tableView.removeGestureRecognizer)
     }
 }
