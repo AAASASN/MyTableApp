@@ -3,6 +3,7 @@
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -302,7 +303,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="10" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="eK2-jE-U2E">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="10" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="eK2-jE-U2E">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CellForEventHolder" rowHeight="91" id="ivj-gd-iMu">
@@ -347,9 +348,9 @@
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="72"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Позвонить" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HKb-33-Mil">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Поздравить" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HKb-33-Mil">
                                                     <rect key="frame" x="0.0" y="0.0" width="343" height="72"/>
-                                                    <color key="backgroundColor" red="0.030500327374120385" green="0.88693212499999996" blue="0.022039283636161519" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    <color key="backgroundColor" name="AccentColor"/>
                                                     <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="20"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -391,6 +392,71 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wky-6s-VBn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2372" y="-24.7376311844078"/>
+        </scene>
+        <!--Congratulation View Controller-->
+        <scene sceneID="DI2-cN-xIP">
+            <objects>
+                <viewController restorationIdentifier="CongratulationViewControllerID" storyboardIdentifier="CongratulationViewControllerID" id="Sk2-GH-k6q" customClass="CongratulationViewController" customModule="MyTableApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="gew-qY-pqn">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lSg-tl-j3l">
+                                <rect key="frame" x="16" y="0.0" width="343" height="572"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="headTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="S8V-3S-yaq">
+                                        <rect key="frame" x="13" y="13" width="317" height="546"/>
+                                        <string key="text">
+Я как человек без раннего опыта в разработке, сам экономист по образованию, хотел бы поделиться и дать понять немножко человеку который только решил встать на этот путь, что ему стоит ожидать на собеседованиях и какие вопросы ему точно надо подтянуть или выучить вовсе. Что хотят услышать работодатели? Что вы должны знать? В интернете пишут много, но на деле человеческий фактор играет свою роль и вас ловят на простых вопросах к которым вы не были готовы.</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailingMargin" secondItem="S8V-3S-yaq" secondAttribute="trailing" constant="5" id="0UL-7L-L9L"/>
+                                    <constraint firstItem="S8V-3S-yaq" firstAttribute="leading" secondItem="lSg-tl-j3l" secondAttribute="leadingMargin" constant="5" id="EYI-rP-YI1"/>
+                                    <constraint firstItem="S8V-3S-yaq" firstAttribute="top" secondItem="lSg-tl-j3l" secondAttribute="top" constant="13" id="IhD-sQ-gXs"/>
+                                    <constraint firstAttribute="bottom" secondItem="S8V-3S-yaq" secondAttribute="bottom" constant="13" id="zIR-bT-4Bt"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lNo-h8-exI">
+                                <rect key="frame" x="16" y="587" width="343" height="60"/>
+                                <color key="backgroundColor" systemColor="linkColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="xiD-7t-5eh"/>
+                                </constraints>
+                                <color key="tintColor" systemColor="systemGroupedBackgroundColor"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="phone.circle" catalog="system" title=" Позвонить"/>
+                                <connections>
+                                    <action selector="callButtonTaped:" destination="Sk2-GH-k6q" eventType="touchUpInside" id="hZw-M7-why"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="DfE-o0-gHI"/>
+                        <color key="backgroundColor" systemColor="systemGray6Color"/>
+                        <constraints>
+                            <constraint firstItem="lSg-tl-j3l" firstAttribute="leading" secondItem="DfE-o0-gHI" secondAttribute="leading" constant="16" id="5hs-Q4-i77"/>
+                            <constraint firstItem="lNo-h8-exI" firstAttribute="trailing" secondItem="lSg-tl-j3l" secondAttribute="trailing" id="9Hh-i8-ALY"/>
+                            <constraint firstItem="lNo-h8-exI" firstAttribute="leading" secondItem="lSg-tl-j3l" secondAttribute="leading" id="9nY-Gh-9OQ"/>
+                            <constraint firstItem="DfE-o0-gHI" firstAttribute="trailing" secondItem="lSg-tl-j3l" secondAttribute="trailing" constant="16" id="JRq-iA-D6z"/>
+                            <constraint firstItem="lSg-tl-j3l" firstAttribute="top" secondItem="DfE-o0-gHI" secondAttribute="top" id="ZDm-3t-38A"/>
+                            <constraint firstItem="lNo-h8-exI" firstAttribute="top" secondItem="lSg-tl-j3l" secondAttribute="bottom" constant="15" id="ZZV-yE-cjM"/>
+                            <constraint firstAttribute="bottom" secondItem="lNo-h8-exI" secondAttribute="bottom" constant="20" symbolic="YES" id="oH2-WD-VPo"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="fMS-ms-dl1"/>
+                    <connections>
+                        <outlet property="callButton" destination="lNo-h8-exI" id="tdX-a5-ZWS"/>
+                        <outlet property="textLabel" destination="S8V-3S-yaq" id="T2Y-Oq-e3a"/>
+                        <outlet property="whiteView" destination="lSg-tl-j3l" id="x5K-jN-F2h"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6eL-66-1qa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3100" y="209.14542728635683"/>
         </scene>
         <!--Добавить событие-->
         <scene sceneID="Gp3-GX-bdJ">
@@ -574,14 +640,14 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="hEe-cj-pbh">
-                                        <rect key="frame" x="16" y="61.5" width="343" height="43"/>
+                                        <rect key="frame" x="16" y="61.5" width="343" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hEe-cj-pbh" id="foY-MV-52Z">
-                                            <rect key="frame" x="0.0" y="0.0" width="343" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="День рождения ребенка" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qTf-Ne-tEY">
-                                                    <rect key="frame" x="16" y="11" width="195" height="21"/>
+                                                    <rect key="frame" x="16" y="11" width="195" height="21.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -595,7 +661,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="NJE-bP-5gk">
-                                        <rect key="frame" x="16" y="104.5" width="343" height="43.5"/>
+                                        <rect key="frame" x="16" y="105" width="343" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="NJE-bP-5gk" id="3jK-pD-9Lw">
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="43.5"/>
@@ -612,7 +678,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="9IS-IH-0Zn">
-                                        <rect key="frame" x="16" y="148" width="343" height="43.5"/>
+                                        <rect key="frame" x="16" y="148.5" width="343" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9IS-IH-0Zn" id="YfY-Ot-lgf">
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="43.5"/>
@@ -629,7 +695,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="oui-pg-Edh">
-                                        <rect key="frame" x="16" y="191.5" width="343" height="43.5"/>
+                                        <rect key="frame" x="16" y="192" width="343" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="oui-pg-Edh" id="id4-eH-jqn">
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="43.5"/>
@@ -887,8 +953,15 @@
         </scene>
     </scenes>
     <resources>
+        <image name="phone.circle" catalog="system" width="128" height="121"/>
+        <namedColor name="AccentColor">
+            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="secondarySystemGroupedBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -898,6 +971,9 @@
         </systemColor>
         <systemColor name="systemGray3Color">
             <color red="0.7803921568627451" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGray6Color">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGrayColor">
             <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

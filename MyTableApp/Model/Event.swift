@@ -19,7 +19,16 @@ enum EventHolderStatus : String, Codable  {
     case bestFriend = "Лучший друг"
     case someFriend = "Просто знакомый"
     case none = "Статус не определен"
-    case colleague  = "Коллега"
+    case colleague = "Коллега"
+    case brother  = "Брат"
+    case sister  = "Сестра"
+    case mother  = "Мама"
+    case father  = "Отец"
+    case son  = "Сын"
+    case daughter = "Дочь"
+    case wife = "Жена"
+
+
 }
 
 enum EventType : String, CaseIterable, Codable {

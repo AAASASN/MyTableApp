@@ -12,8 +12,8 @@ class TextViewTableViewCell: UITableViewCell, UITextViewDelegate {
     @IBOutlet weak var textView: UITextView!
     
     // свойство для хранения экземпляра DetailedEventViewController что бы потом обращаться к нему при скрытии клавиатуры
-    weak var detailedEventViewController: DetailedEventViewController!
-    
+    var detailedEventViewController: DetailedEventViewController!
+        
     // var eventHolderAndEvent : (EventHolder, EventProtocol)!
     var eventHolderAndEventID: (String, String)!
     
@@ -102,6 +102,9 @@ extension TextViewTableViewCell {
     @objc func saveTextAction(){
         // сохраняем текст поздравления в хранилище
         eventsStorage.changeCongratulationInEvent(eventID: eventHolderAndEventID.1, congratulationText: textView.text)
+        // обновляем состояние хранилища
+        eventsStorage.getUpdatedDataToEventStorage()
+
         // !!!!!! при нажатии на кнопку Сохранить на тулбаре скрывается клавиатура
         self.contentView.endEditing(true)
         // удаляем все экзкмпляры UITapGestureRecognizer которые привязаны к tableView что бы нажания на detailedEventViewController.tableView не отслеживались
@@ -130,7 +133,6 @@ extension TextViewTableViewCell {
         let kbFrameSize = (userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         // сдвигаем tableView на contentOffset
         detailedEventViewController.tableView.contentOffset = CGPoint(x: 0, y: kbFrameSize.height - 80 )
-
         // в тот момент конда появится клавиатура зарегистрируем нажатие UITapGestureRecognizer по detailedEventViewController.tableView в DetailedEventViewController
         detailedEventViewController.hideKeyboard()
     }
