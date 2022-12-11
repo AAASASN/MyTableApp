@@ -23,6 +23,12 @@ class DetailedEventViewController: UIViewController {
     // var eventHolderAndEvent : (EventHolder, EventProtocol)!
     var eventHolderAndEventID: (String, String)!
 
+    // пока не понятно отрабатывает ли
+    deinit {
+        removeKeyboardNotifications()
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -42,6 +48,11 @@ class DetailedEventViewController: UIViewController {
         
         // настройка большого navigationItem.title в DetailedEventViewController
         self.navigationItem.largeTitleDisplayMode = .never
+        
+        
+        
+        // вызываем метод который будет регистрировать наблюдателей
+        registerForKeyboardNotifications()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -65,7 +76,9 @@ extension DetailedEventViewController: UITableViewDataSource, UITableViewDelegat
     // вызов ячеек
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cellForReturn = UITableViewCell()
-        // вызов стандартной ячейки
+        
+        // Ячейка первой секции
+        // Здесь можно наблюдать пример работы со страндартной ячейкой
         if indexPath.section == 0 {
             let standartCell = tableView.dequeueReusableCell(withIdentifier: "CellForEventHolder")!
             // настройка через стандарнтый конфигуратор UIListContentConfiguration
@@ -80,6 +93,8 @@ extension DetailedEventViewController: UITableViewDataSource, UITableViewDelegat
             standartCell.contentConfiguration = content
             cellForReturn = standartCell
         }
+        
+        // Ячейка второй сектции
         // создание ячейки на основе _xib
         if indexPath.section == 1 {
             let customCell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier") as! OneEventSomeHolderTableViewCell_xib
@@ -88,6 +103,7 @@ extension DetailedEventViewController: UITableViewDataSource, UITableViewDelegat
             cellForReturn = customCell
         }
         
+        // Ячейка третьей секции
         // создание ячейки для редактиапвание текста поздравления
         if indexPath.section == 2 {
             let cellForTextView = tableView.dequeueReusableCell(withIdentifier: "CellForTextView") as! TextViewTableViewCell
@@ -96,14 +112,16 @@ extension DetailedEventViewController: UITableViewDataSource, UITableViewDelegat
             cellForTextView.textView.text = eventsStorage.getEventFromStorageByEventID(eventID: eventHolderAndEventID.1).congratulation
             // передадим в ячейку с TextView ID события
             cellForTextView.eventHolderAndEventID = eventHolderAndEventID
-            // передаю экземпляр самого контроллера DetailedEventViewController чтобы потом из ячейки сдигать его
-            // tableView для отображения клавиатуры
-            // (ВОЗМОЖНО ЭТО НЕ БЕЗОПАСНО - РЕШЕНИЕ ТРЕБУЕТ ПРОВЕРКИ)
+            
+            // ??????????????
             cellForTextView.detailedEventViewController = self
+            
+            
             // присваиваем экземпляр для возврата
             cellForReturn = cellForTextView
         }
         
+        // Ячейка третьей секции
         // ячейка-кнопка для перехода на экран просмотра текста поздравления
         if indexPath.section == 3 {
             let buttonCell = tableView.dequeueReusableCell(withIdentifier: "AddEventButtonAsTableViewCellID") as! AddEventButtonAsTableViewCell
@@ -117,6 +135,8 @@ extension DetailedEventViewController: UITableViewDataSource, UITableViewDelegat
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 { return CGFloat(texViewCellHeight0) }
         if indexPath.section == 1 { return CGFloat(texViewCellHeight1) }
+        
+        // Высота ячейки с UITextView подстраивается под высоту экрана
         if indexPath.section == 2 {
             let cellDinamicHeigth = view.frame.height - CGFloat(texViewCellHeight2)
             return cellDinamicHeigth
@@ -124,21 +144,27 @@ extension DetailedEventViewController: UITableViewDataSource, UITableViewDelegat
         return CGFloat(texViewCellHeight3)
     }
     
-    
     // MARK: - вариант реализации перехода на экран AddEventHolderViewController при помощи didSelectRowAt
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // удаляем всех наблюдателей у tableView
-        tableView.gestureRecognizers?.forEach(tableView.removeGestureRecognizer)
+        
         // при нажатии на первую ячейку/секцию будет совершен переход на контороллер AddEventHolderViewController
         // и в дальнейшем он будет использоваться для просмотра событий юбиляра и редактирования его свойств(характеристик)
         if indexPath.section == 0 && indexPath.row == 0 {
+            
             // получаем вью контроллер, в который происходит переход
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let aboutEventHolderController = storyboard.instantiateViewController(withIdentifier: "AddEventHolderViewControllerID") as! AddEventHolderViewController
-            // настраиваем aboutEventHolderController перед вызовом - передадим экземпляр EventHolder и заполняем текстовые поля
-            aboutEventHolderController.prepareForReqestFromDetailedEventViewController(someEventHolderID: eventHolderAndEventID.0)
-            // переходим к следующему экрану
-            self.navigationController?.pushViewController(aboutEventHolderController, animated: true)
+            if let aboutEventHolderController = storyboard.instantiateViewController(withIdentifier: "AddEventHolderViewControllerID") as? AddEventHolderViewController {
+                
+                // настраиваем aboutEventHolderController перед вызовом - передадим экземпляр EventHolder и заполняем текстовые поля
+                aboutEventHolderController.prepareForReqestFromDetailedEventViewController(someEventHolderID: eventHolderAndEventID.0)
+                // переходим к следующему экрану
+                self.navigationController?.pushViewController(aboutEventHolderController, animated: true)
+                
+                
+            } else {
+                print("?????????")
+            }
+
         }
         
         // переход на экран просмотра текста поздравления
@@ -164,23 +190,68 @@ extension DetailedEventViewController {
     // активируем режим отслеживания нажатия на tableView
     func hideKeyboard() {
         //
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(DetailedEventViewController.dismissKeyboard))
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
         tableView.addGestureRecognizer(tap)
     }
 
     // скрываем клавиатуру с tableView и удаляем gestureRecognizers что бы tableView работал в обычном режиме
     @objc func dismissKeyboard() {
-        // удаляем все экзкмпляры UITapGestureRecognizer которые привязаны к tableView
-        tableView.gestureRecognizers?.forEach(tableView.removeGestureRecognizer)
+          
         // скрываем клавиатуру
         tableView.endEditing(true)
+        
+        // удаляем все экзкмпляры UITapGestureRecognizer которые привязаны к tableView
+        // tableView.gestureRecognizers?.forEach(tableView.removeGestureRecognizer)
+        
+    }
+    
+    // MARK: - код позволяет сдвигать экран DetailedEventViewController вверх и обратно вниз при появлении и проподании клавиатуры
+    
+    // этот метод будет вызван в viewDidLoad, он регистрирует наблюдателей которые...
+    func registerForKeyboardNotifications() {
+        
+        // ... будет реагировать на появление клавиатуры
+        NotificationCenter.default.addObserver(self, selector: #selector(kbWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        
+        // ... будет реагировать на перед началом изчезновения клавиатуры
+        NotificationCenter.default.addObserver(self, selector: #selector(kbWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        // ... будет реагировать после изчезновения клавиатуры
+        NotificationCenter.default.addObserver(self, selector: #selector(kbDidHide), name: UIResponder.keyboardDidHideNotification, object: nil)
+        
+    }
+    
+    // удаление наблюдателей когда они уже не нужны
+    func removeKeyboardNotifications() {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    // функция вычисляет размер сдвига и обращась к tableView задает растояние сдвига contentOffset
+    @objc func kbWillShow(_ notification: Notification) {
+        
+        // запрашиваем параметры клавиатуры
+        let userInfo = notification.userInfo
+        let kbFrameSize = (userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        
+        // сдвигаем tableView на contentOffset
+        tableView.contentOffset = CGPoint(x: 0, y: kbFrameSize.height - 80 )
+        
+        // в тот момент когда появилась клавиатура зарегистрируем нажатие UITapGestureRecognizer
+        hideKeyboard()
+    }
+    
+    // функция обращась к tableView задает растояние сдвига contentOffset равное 0
+    @objc func kbWillHide() {
+        tableView.contentOffset = CGPoint(x: 0, y: 0) // CGPoint.zero
+
+    }
+    
+    @objc func kbDidHide() {
+         // удаляем все экзкмпляры UITapGestureRecognizer которые привязаны к tableView
+         tableView.gestureRecognizers?.forEach(tableView.removeGestureRecognizer)
     }
     
 }
-
-
-//extension DetailedEventViewController {
-//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return UITableView.automaticDimension
-//    }
-//}

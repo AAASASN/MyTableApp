@@ -63,7 +63,11 @@ class PhoneNumberTextFieldTableViewCell: UITableViewCell {
         // установим первое значение на текущую дату
         datePicker.datePickerMode = .date
         // установим текущую дату максимальным значеним на datePicker
-        datePicker.maximumDate = .now
+        if #available(iOS 15, *) {
+            datePicker.maximumDate = .now
+        } else {
+            // Fallback on earlier versions
+        }
         // чтобы значения в textField менялись при прокручивании колесика datePicker "повесим событие" на datePicker
         datePicker.addTarget(self, action: #selector(dateChanged), for: .valueChanged)
         // настроим формат отображения даты в соответствии с языковыми настройками айфона пользователя

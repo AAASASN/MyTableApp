@@ -28,6 +28,7 @@ class EventHolder: Codable {
     var eventHolderStatus: EventHolderStatus
     var events = [Event]()
 
+    // инициализатор с автоматически генерируемым eventHolderID
     init(eventHolderFirstName : String,
          eventHolderLastName : String,
          eventHolderBirthdayDate : CustomDate,
@@ -36,6 +37,25 @@ class EventHolder: Codable {
          eventHolderStatus : EventHolderStatus,
          events : [Event] ) {
         self.eventHolderID = "EventHolderID_" + String(Int(Date().timeIntervalSince1970))
+        self.eventHolderFirstName = eventHolderFirstName
+        self.eventHolderLastName = eventHolderLastName
+        self.eventHolderBirthdayDate = eventHolderBirthdayDate
+        self.eventHolderPhoneNumber = eventHolderPhoneNumber
+        self.eventHolderSex = eventHolderSex
+        self.eventHolderStatus = eventHolderStatus
+        self.events = events
+    }
+
+    // инициализатор с eventHolderID который задаётся вручную
+    init(eventHolderFirstName : String,
+         eventHolderLastName : String,
+         eventHolderBirthdayDate : CustomDate,
+         eventHolderPhoneNumber : String,
+         eventHolderSex : EventHolderSex,
+         eventHolderStatus : EventHolderStatus,
+         events : [Event],
+         eventHolderID: String) {
+        self.eventHolderID = eventHolderID
         self.eventHolderFirstName = eventHolderFirstName
         self.eventHolderLastName = eventHolderLastName
         self.eventHolderBirthdayDate = eventHolderBirthdayDate

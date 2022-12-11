@@ -35,10 +35,10 @@ class OneEventSomeHolderTableViewCell_xib: UITableViewCell {
         // MARK: - конфигурация ячейки и лейблов
         
         //self.contentView.backgroundColor = UIColor.systemGray5
-        self.contentView.layer.cornerRadius = 20
+        self.contentView.layer.cornerRadius = 10
         self.contentView.layer.masksToBounds = true
         self.contentView.layer.borderColor = UIColor.systemGray4.cgColor
-        self.contentView.layer.borderWidth = 5
+        self.contentView.layer.borderWidth = 4
         
         eventTypeLabel.backgroundColor = UIColor(red: 0.83, green: 0.77, blue: 0.98, alpha: 0.61)
         eventTypeLabel.layer.cornerRadius = 15
