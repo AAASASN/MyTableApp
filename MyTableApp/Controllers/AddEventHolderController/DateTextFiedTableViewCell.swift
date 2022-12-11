@@ -7,6 +7,7 @@
 
 import UIKit
 
+@available(iOS 15, *)
 class DateTextFiedTableViewCell: UITableViewCell {
 
     @IBOutlet weak var textField: UITextField!
@@ -54,7 +55,7 @@ class DateTextFiedTableViewCell: UITableViewCell {
         self.contentView.endEditing(true)
     }
 
-    //настройка DatePicker, вызывается во viewDidLoad
+    // MARK: - настройка DatePicker, вызывается во viewDidLoad
     func datePickerSwttings() {
         // и назначим datePicker способом ввода в текстовое поле
         textField.inputView = datePicker

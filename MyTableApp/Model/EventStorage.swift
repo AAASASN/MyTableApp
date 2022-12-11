@@ -5,7 +5,10 @@
 //  Created by Александр Мараенко on 08.07.2022.
 //
 
+import UIKit
 import Foundation
+import Contacts
+import CoreData
 
 // класс как хранилище массива [EventHolder]
 class EventHolderArrayAsClass: Codable {
@@ -15,8 +18,9 @@ class EventHolderArrayAsClass: Codable {
 protocol EventStorageProtocol {
     
     var eventHolderArrayAsClass: EventHolderArrayAsClass { get set }
-
+    var eventHolderArrayGotFromContacts: [EventHolder] { get set }
     
+    func getEventHolderArrayFromPhoneContacts()
     func getUpdatedDataToEventStorage()
     func addEventHolderToEventSrorage(newEventHolder: EventHolder)
     func getEventHolderAndEventArray() -> [(EventHolder, EventProtocol)]
@@ -36,12 +40,17 @@ class EventStorage: EventStorageProtocol {
     enum enumForStoreKeys: String {
         case UDKey
     }
-
+    
     // его экземпляр
     var eventHolderArrayAsClass = EventHolderArrayAsClass()
-
+    
+    
     // сам userDefaults
     fileprivate var userDefaults = UserDefaults.standard
+    
+    
+    // временное хранилище для контактов выгруженых из телефонной книги Смартфона
+    var eventHolderArrayGotFromContacts = [EventHolder]()
     
     
     // MARK: - методы доступные из вне
@@ -53,16 +62,22 @@ class EventStorage: EventStorageProtocol {
     
     // добавляем элемент EventHolder в массив свойства eventHolderArrayAsClass.eventHolderArray
     func addEventHolderToEventSrorage(newEventHolder: EventHolder) {
-        
-        // выгружаем из UserDefaults данные в eventHolderArrayAsClass
-        // getDataFromUserDefaultsToEventHolderArrayAsClass()
-        
-        // добавляем EventHolder в массив eventHolderArrayAsClass.eventHolderArray
-        eventHolderArrayAsClass.eventHolderArray.append(newEventHolder)
-        // и обновляем состояние userDefaults с учетом нового элемента
+        // перед добавлением проверим есть ли уже в хранилище EventHolder с таким же id
+        var idCount = 0
+        for someEventHolder in eventHolderArrayAsClass.eventHolderArray {
+            if someEventHolder.eventHolderID == newEventHolder.eventHolderID {
+                idCount += 1
+            }
+        }
+        // если нет то добавляем
+        if idCount == 0 {
+            // добавляем EventHolder в массив eventHolderArrayAsClass.eventHolderArray
+            eventHolderArrayAsClass.eventHolderArray.append(newEventHolder)
+        }
+        // обновляем состояние userDefaults с учетом нового элемента
         saveDataFromEventHolderArrayAsClassToUserDefaults()
         getDataFromUserDefaultsToEventHolderArrayAsClass()
-
+        
     }
     
     // внесение изменений в EventHolder принятого в функцию
@@ -135,8 +150,8 @@ class EventStorage: EventStorageProtocol {
     
     // просто получить массив [EventHolder]
     func getEventHolderArrayFromEventStorage() -> [EventHolder] {
-//        // сначала обновим хранилище
-//        getDataFromUserDefaultsToEventHolderArrayAsClass()
+        //        // сначала обновим хранилище
+        //        getDataFromUserDefaultsToEventHolderArrayAsClass()
         return eventHolderArrayAsClass.eventHolderArray
     }
     
@@ -156,10 +171,10 @@ class EventStorage: EventStorageProtocol {
         return sortedTuplesArrayForReturn
     }
     
-    // добавляем дополнительное событие к уже существующему ventHolder
+    // добавляем дополнительное событие к уже существующему eventHolder
     func addEventToExistedHolder(addingEvent event: Event, existedHolder: EventHolder) {
-//        //предварительно обновим состояние eventHolderArrayAsClass из userDefaults
-//        getDataFromUserDefaultsToEventHolderArrayAsClass()
+        //        //предварительно обновим состояние eventHolderArrayAsClass из userDefaults
+        //        getDataFromUserDefaultsToEventHolderArrayAsClass()
         for index in 0..<eventHolderArrayAsClass.eventHolderArray.count {
             if eventHolderArrayAsClass.eventHolderArray[index].eventHolderFirstName == existedHolder.eventHolderFirstName && eventHolderArrayAsClass.eventHolderArray[index].eventHolderLastName == existedHolder.eventHolderLastName {
                 eventHolderArrayAsClass.eventHolderArray[index].events.append(event)
@@ -193,7 +208,7 @@ class EventStorage: EventStorageProtocol {
                 }
             }
         }
-
+        
         return eventForReturn
     }
     
@@ -231,43 +246,188 @@ class EventStorage: EventStorageProtocol {
                 // присвоим это значение self.eventHolderArrayAsClass
                 eventHolderArrayAsClass = newEventHolderArrayAsClass
             }
-        } else {
-//             иначе присвоим eventHolderArrayAsClass.eventHolderArray выдуманый  массив [EventHolder]
-//             или пустой массив
-            
-            let date_1 = "25.06.1984 23:59:59"
-            let date_2 = "05.06.2000 23:59:59"
-            let date_3 = "02.11.1998 23:59:59"
-
-            let date_25 = "31.12.2004 23:59:59"
-            let date_26 = "05.08.2019 23:59:59"
-            let date_27 = "17.04.2021 23:59:59"
-
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd.MM.yy HH:mm:ss"
-
-            let someEventHolderArray = [EventHolder(eventHolderFirstName: "Вася",
-                                                    eventHolderLastName: "Васин",
-                                                    eventHolderBirthdayDate: CustomDate(date: dateFormatter.date(from: date_1) ?? Date()),
-                                                    eventHolderPhoneNumber : "+79051234567",
-                                                    eventHolderSex: .male,
-                                                    eventHolderStatus: .bestFriend,
-                                                    events: [Event(eventDate: CustomDate(date: dateFormatter.date(from: date_1)!), eventType: .birthday,        eventDiscription: "описание", isActual: true),
-                                                             Event(eventDate: CustomDate(date: dateFormatter.date(from: date_2)!), eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
-                                                             Event(eventDate: CustomDate(date: dateFormatter.date(from: date_3)!), eventType: .wedding,         eventDiscription: "описание", isActual: true)]
-                                                   ),
-
-                                        EventHolder(eventHolderFirstName: "Алла",
-                                                    eventHolderLastName: "Пугачева",
-                                                    eventHolderBirthdayDate: CustomDate(date: dateFormatter.date(from: date_25)!),
-                                                    eventHolderPhoneNumber : "+79051234567",
-                                                    eventHolderSex: .female,
-                                                    eventHolderStatus: .none,
-                                                    events: [Event(eventDate: CustomDate(date: dateFormatter.date(from: date_26)!), eventType: .wedding,         eventDiscription: "описание", isActual: true),
-                                                             Event(eventDate: CustomDate(date: dateFormatter.date(from: date_27)!), eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
-                                                             Event(eventDate: CustomDate(date: dateFormatter.date(from: date_25)!), eventType: .birthday,        eventDiscription: "описание", isActual: true)]
-                                                   )]
-            eventHolderArrayAsClass.eventHolderArray = someEventHolderArray
-        }
+        } else { return }
+        
+        // иначе вызовем функцию getEventHolderArrayFromPhoneContacts() которая выгрузит из телефонной книги айфона контакты и вернет массив EventHolder
+        
+        //            //             иначе присвоим eventHolderArrayAsClass.eventHolderArray выдуманый  массив [EventHolder]
+        //            //             или пустой массив
+        //
+        //            let date_1 = "25.06.1984 23:59:59"
+        //            let date_2 = "05.06.2000 23:59:59"
+        //            let date_3 = "02.11.1998 23:59:59"
+        //
+        //            let date_25 = "31.12.2004 23:59:59"
+        //            let date_26 = "05.08.2019 23:59:59"
+        //            let date_27 = "17.04.2021 23:59:59"
+        //
+        //            let dateFormatter = DateFormatter()
+        //            dateFormatter.dateFormat = "dd.MM.yy HH:mm:ss"
+        //
+        //            let someEventHolderArray = [EventHolder(eventHolderFirstName: "Вася",
+        //                                                    eventHolderLastName: "Васин",
+        //                                                    eventHolderBirthdayDate: CustomDate(date: dateFormatter.date(from: date_1) ?? Date()),
+        //                                                    eventHolderPhoneNumber : "+79051234567",
+        //                                                    eventHolderSex: .male,
+        //                                                    eventHolderStatus: .bestFriend,
+        //                                                    events: [Event(eventDate: CustomDate(date: dateFormatter.date(from: date_1)!), eventType: .birthday,        eventDiscription: "описание", isActual: true),
+        //                                                             Event(eventDate: CustomDate(date: dateFormatter.date(from: date_2)!), eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
+        //                                                             Event(eventDate: CustomDate(date: dateFormatter.date(from: date_3)!), eventType: .wedding,         eventDiscription: "описание", isActual: true)]
+        //                                                   ),
+        //
+        //                                        EventHolder(eventHolderFirstName: "Алла",
+        //                                                    eventHolderLastName: "Пугачева",
+        //                                                    eventHolderBirthdayDate: CustomDate(date: dateFormatter.date(from: date_25)!),
+        //                                                    eventHolderPhoneNumber : "+79051234567",
+        //                                                    eventHolderSex: .female,
+        //                                                    eventHolderStatus: .none,
+        //                                                    events: [Event(eventDate: CustomDate(date: dateFormatter.date(from: date_26)!), eventType: .wedding,         eventDiscription: "описание", isActual: true),
+        //                                                             Event(eventDate: CustomDate(date: dateFormatter.date(from: date_27)!), eventType: .birthOfChildren, eventDiscription: "описание", isActual: true),
+        //                                                             Event(eventDate: CustomDate(date: dateFormatter.date(from: date_25)!), eventType: .birthday,        eventDiscription: "описание", isActual: true)]
+        //                                                   )]
+        
+        //            eventHolderArrayAsClass.eventHolderArray = getEventHolderArrayFromPhoneContacts()
+        //        }
     }
+    
+    
+    // MARK: - РАБОТА С КОНТАКТАМИ ТЕЛЕФОННОЙ КНИГИ
+    // функция получения контактов из памяти телефона
+    func getEventHolderArrayFromPhoneContacts() {
+        print("начало работы функции getEventHolderArrayFromPhoneContacts()")
+        
+        var eventHolderArrayForReturn: [EventHolder] = []
+        
+        // получаем доступ к хранилищу контактов в телефоне
+        let contactStore = CNContactStore()
+        
+        // создаем массив для хранения контактов которые выгрузим из хранилища contactStore
+        var contacts = [CNContact]()
+        
+        // Проверка доступа
+        
+        // создадим Объект типа CNEntityType (это энум), который описывает то к чему пользователь
+        // будет получать доступ, в общем-то это значение перечисления  - это всегда - .contacts
+        let dataType = CNEntityType.contacts
+        
+        //  проверим получен ли доступ к контантам телефона - получаем энум со статусом - есть доступ, нет доступа и еще несколько статусов
+        let authorizationStatus = CNContactStore.authorizationStatus(for: dataType)
+        
+        switch authorizationStatus {
+        case .authorized:
+            loadContacts()
+        case .denied, .notDetermined:
+            // запрашиваем разрешение если оно еще не запрашивалось или предыдущий запрос был отклонен
+            contactStore.requestAccess(for: .contacts) { access, accessError in
+                if access {
+                    loadContacts()
+                } else {
+                    print("Право доступа к контактам не предоставлено")
+                }
+            }
+        default:
+            print("Нет прав доступа к контактам")
+        }
+        
+        
+        // функция которая получает контакты из телефонной книги
+        func loadContacts() {
+            print("начало работы функции loadContacts()")
+            // если доступ есть то пробуем получить из CNContactStore контакты при помощи метода .enumerateContacts(with: usingBlock:)
+            
+            // для этого нужно передать в метод запрос в виде экземпляра класса CNContactFetchRequest в котором будeт указан формат данных
+            // для получения, поскольку нам не всегда нужны все данные хранящиеся в конкретном контакте
+            // и замыкание (CNContact, UnsafeMutablePointer<ObjCBool>) -> Void , которое уже и наполнит массив contacts контактами
+            
+            // создадим массив ключей которые будут соответствовать конткретным полям данных в запрашиваемом контакте
+            let keyToFetch = [CNContactIdentifierKey as CNKeyDescriptor,
+                              CNContactFamilyNameKey as CNKeyDescriptor,
+                              
+                              CNContactFormatter.descriptorForRequiredKeys(for: .fullName),
+                              CNContactImageDataKey as CNKeyDescriptor,
+                              CNContactBirthdayKey as CNKeyDescriptor,
+                              CNContactPhoneNumbersKey as CNKeyDescriptor]
+            
+            // экземпляр CNContactFetchRequest проинициализируем массивом экземпляров CNKeyDescriptor - keyToFetch
+            let request = CNContactFetchRequest(keysToFetch: keyToFetch)
+            
+            // поскольку метод .enumerateContacts(with: usingBlock:) может выбросить ошибку (исключение) нужно поместить его в блок do-catch
+            do {
+                try contactStore.enumerateContacts(with: request) { cnContact, error in
+                    
+                    // проверим пришедший в замыкание cnContact на то соответствуют ли его поля ключу нашего запроса
+                    // скорее всего ID в нем есть
+                    // if cnContact.isKeyAvailable(CNContactIdentifierKey) {
+                    // помещаем полученные контакты в массив контакты
+                    contacts.append(cnContact)
+                    //}
+                }
+            } catch {
+                print("Произошла ошибка при попытке получить данные контактв из телефонной книги")
+            }
+            
+            print("удалось выгрузить \(contacts.count) контактов")
+            
+            // далее распарсим contacts в [EventHolder]
+            
+            for someContact in contacts {
+                var events: [Event] = []
+                // если из контактов в качестве birthday придет нил то присвоим дату 01.01.01  (ничего умнее не придумал)
+                let someEvent = Event(eventDate: CustomDate(date: Calendar.current.date(from: someContact.birthday ?? DateComponents()) ?? CustomDate.getDefaultDate().date),
+                                      eventType: .birthday,
+                                      eventDiscription: "",
+                                      isActual: true,
+                                      eventID: "EventID_" + someContact.identifier)
+                events.append(someEvent)
+                
+                if !someContact.givenName.isEmpty && someContact.phoneNumbers.count > 0  {
+                    
+                    print("---------------------------------------------------------")
+                    print("identifier : " + someContact.identifier)
+                    print("givenName : " + someContact.givenName)
+                    print("familyName : " + someContact.familyName)
+                    print("phoneNumbers : " + String(someContact.phoneNumbers.count))
+                    print("---------------------------------------------------------")
+                    
+                    eventHolderArrayForReturn.append(EventHolder(eventHolderFirstName: someContact.givenName,
+                                                                 eventHolderLastName: someContact.familyName,
+                                                                 eventHolderBirthdayDate: CustomDate(date: Calendar.current.date(from: someContact.birthday ?? DateComponents()) ?? CustomDate.getDefaultDate().date),
+                                                                 eventHolderPhoneNumber: someContact.phoneNumbers.description , //
+                                                                 eventHolderSex: .none,
+                                                                 eventHolderStatus: .none,
+                                                                 events: events,
+                                                                 eventHolderID: someContact.identifier))
+                    
+                }
+            }
+            
+        }
+        
+        print(eventHolderArrayForReturn.count)
+        
+        // присваиваем полученный массив во временное хранилище
+        eventHolderArrayGotFromContacts =  eventHolderArrayForReturn
+        
+        // а затем сразу сохраняем его в UserDefaults
+        saveDataFromEventHolderArrayAsClassToUserDefaults()
+    }
+    
+    
+//    func getArrayOfContactsFromCNContact(from: CNContact) -> [String] {
+//        var arrayForReturn = [String]()
+//        //let description = from.phoneNumbers.description
+//
+//        for char in from.phoneNumbers[0]. {
+//            if let someString = char["Mobile"]  {
+//                arrayForReturn.append(someString)
+//                print(someString)
+//            }
+//        }
+//        return arrayForReturn
+//    }
+    
+    
 }
+
+
+

@@ -19,7 +19,16 @@ enum EventHolderStatus : String, Codable  {
     case bestFriend = "Лучший друг"
     case someFriend = "Просто знакомый"
     case none = "Статус не определен"
-    case colleague  = "Коллега"
+    case colleague = "Коллега"
+    case brother  = "Брат"
+    case sister  = "Сестра"
+    case mother  = "Мама"
+    case father  = "Отец"
+    case son  = "Сын"
+    case daughter = "Дочь"
+    case wife = "Жена"
+
+
 }
 
 enum EventType : String, CaseIterable, Codable {
@@ -47,6 +56,7 @@ class Event: EventProtocol, Codable {
     var isActual : Bool
     var congratulation: String = ""
     
+    // инициализатор в котором eventID генерится автоматически
     init(eventDate: CustomDate,  eventType: EventType, eventDiscription : String, isActual : Bool ) {
         eventID = "EventID_" + String(Int(Date().timeIntervalSince1970))
         self.eventDate = eventDate
@@ -54,6 +64,16 @@ class Event: EventProtocol, Codable {
         self.eventDiscription = eventDiscription
         self.isActual = isActual
     }
+    
+    // инициализатор в котором eventID нужно задавать
+    init(eventDate: CustomDate,  eventType: EventType, eventDiscription : String, isActual : Bool, eventID: String ) {
+        self.eventID  = eventID
+        self.eventDate = eventDate
+        self.eventType = eventType
+        self.eventDiscription = eventDiscription
+        self.isActual = isActual
+    }
 }
+
 
 

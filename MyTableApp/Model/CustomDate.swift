@@ -8,10 +8,12 @@
 import Foundation
 
 // Класс CustomDate это класс для описания дат включайющий в себя
-// свойство типа Date и вычисляемое свойство dateIntDayAndMonth : Int
-// в котором будет храниться число дней до дня рождения с учетом текещей даты
+// свойство типа Date, вычисляемое свойство dateAsString : String и
+// daysCountBeforeEvent : Int в котором будет храниться число дней до
+// дня рождения с учетом текещей даты
 
 class CustomDate: Codable {
+    
     /// собственно дата
     var date : Date
     
@@ -101,10 +103,19 @@ class CustomDate: Codable {
         return daysCountBeforeEventForReturn
     }
 
+    // функция будет возвращать дату 01.01.01
+    class func getDefaultDate() -> CustomDate {
+        // для корректного формата даты
+        let dateFormatter = DateFormatter()
+        // настроим локализацию - для отображения на русском языке
+        dateFormatter.locale = Locale(identifier: "ru_RU")
+        // настроим вид отображения даты в текстовомвиде
+        dateFormatter.dateFormat = "d MMMM yyyy"
+        return CustomDate(date: dateFormatter.date(from: "1 января 0001") ?? Date())
+    }
+    
     init(date: Date) {
         self.date = date
     }
 
 }
-
-

@@ -18,7 +18,14 @@ class ChangeEventHolderStatusTableViewController: UITableViewController {
     }
     
     // это будет датаСурс нашей таблицы
-    let tableContent = [ContentForCustomCell(status: .bestFriend, description: "Этот статус подойдет для близких друзей"),
+    let tableContent = [ContentForCustomCell(status: .wife, description: "Какай-то комментарий о жене"),
+                        ContentForCustomCell(status: .mother, description: "Какай-то комментарий о маме"),
+                        ContentForCustomCell(status: .father, description: "Какай-то комментарий о папе"),
+                        ContentForCustomCell(status: .brother, description: "Какай-то комментарий о брате"),
+                        ContentForCustomCell(status: .sister, description: "Какай-то комментарий о сестре"),
+                        ContentForCustomCell(status: .son, description: "Какай-то комментарий о сыне"),
+                        ContentForCustomCell(status: .daughter, description: "Какай-то комментарий о дочери"),
+                        ContentForCustomCell(status: .bestFriend, description: "Этот статус подойдет для близких друзей"),
                         ContentForCustomCell(status: .colleague, description: "Отлично подойдет для коллег и деловых партнеров"),
                         ContentForCustomCell(status: .schoolFriend, description: "Школьный друг или одногрупник по колледжу"),
                         ContentForCustomCell(status: .someFriend, description: "Можно выбрать для приятелей и соседей"),
@@ -50,7 +57,7 @@ class ChangeEventHolderStatusTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 5
+        return 12
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

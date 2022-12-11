@@ -7,39 +7,51 @@
 
 import UIKit
 
-class TextViewTableViewCell: UITableViewCell {
+class TextViewTableViewCell: UITableViewCell, UITextViewDelegate {
 
     @IBOutlet weak var textView: UITextView!
     
-    // свойство для хранения экземпляра DetailedEventViewController что бы потом обращаться к нему при скрытии клавиатуры
-    var detailedEventViewController: DetailedEventViewController!
-    
+    // свойство для хранения экземпляра DetailedEventViewController что бы потом при появлении или скрытии клавиатуры обращаться к нему для сдвига его tableView
+    weak var detailedEventViewController: DetailedEventViewController!
+        
     // var eventHolderAndEvent : (EventHolder, EventProtocol)!
     var eventHolderAndEventID: (String, String)!
     
     // свойство для загрузки в него хранилища с данными
     var eventsStorage : EventStorageProtocol = EventStorage()
     
-    deinit {
-        removeKeyboardNotifications()
-    }
-
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        // назначим ячейку делегатом textView после этого будут работать методы
+        textView.delegate = self
+        
         // настроим тулбар
         createAndAddingToolBarToKeyboard()
-        //
-        registerForKeyboardNotifications()
         
         // ? не понятно будет ли корректно работать
         eventsStorage.getUpdatedDataToEventStorage()
-
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
+    
+}
+
+// добавим метод textViewDidBeginEditing
+extension TextViewTableViewCell {
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        // Начало, когда вы начинаете редактирование
+        print("сработал метод textViewDidBeginEditing")
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        print("сработал метод textViewDidEndEditing")
+    }
+
 }
 
 // расширение для работы с клавиатурой
@@ -74,42 +86,18 @@ extension TextViewTableViewCell {
     @objc func doneAction(){
         // при нажатии на кнопку Готово на тулбаре скрывается клавиатура
         self.contentView.endEditing(true)
-        
-        detailedEventViewController.tableView.resignFirstResponder()
-        
     }
     
-    // при нажатии на кнопку Сохранить текст будет сохраняться и  толщина шрифта будет меняться
+    // при нажатии на кнопку Сохранить текст поздравления будет сохраняться в хранилище
     @objc func saveTextAction(){
         
         // сохраняем текст поздравления в хранилище
         eventsStorage.changeCongratulationInEvent(eventID: eventHolderAndEventID.1, congratulationText: textView.text)
-        
+        // обновляем состояние хранилища
+        eventsStorage.getUpdatedDataToEventStorage()
+
         // при нажатии на кнопку Сохранить на тулбаре скрывается клавиатура
         self.contentView.endEditing(true)
-        detailedEventViewController.tableView.resignFirstResponder()
-        
-    }
-
-    
-    // этот код позволяет сдвигать экран DetailedEventViewController вверх и обратно вниз при появлении и проподании клавиатуры
-    func registerForKeyboardNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(kbWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(kbWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    func removeKeyboardNotifications() {
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    @objc func kbWillShow(_ notification: Notification) {
-        let userInfo = notification.userInfo
-        let kbFrameSize = (userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
-        detailedEventViewController.tableView.contentOffset = CGPoint(x: 0, y: kbFrameSize.height)
-    }
-    
-    @objc func kbWillHide() {
-        detailedEventViewController.tableView.contentOffset = CGPoint.zero
-    }
 }

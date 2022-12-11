@@ -10,6 +10,9 @@ import Contacts
 
 class StartTableViewController: UITableViewController {
     
+    // это аутлет кнопки синхронизации контактов из телефонной книги
+    @IBOutlet weak var synchronizeItemOutlet: UIBarButtonItem!
+    
     // свойство для загрузки в него хранилища с данными
     var eventsStorage : EventStorageProtocol = EventStorage()
     
@@ -18,35 +21,65 @@ class StartTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        // настройка Навигейшен бар
-//        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        
+
+        // при загрузке viewDidLoad() как обычно выгружаем данные из UserDefaults
         eventsStorage.getUpdatedDataToEventStorage()
+    
+        // выгружаем данные об EventHolder-ах и их Event-ах из хранилища в локальный массив кортежей eventHolderAndEventArray
+        // который в текущем контроллере является датасурсом для таблицы.
         eventHolderAndEventArray = eventsStorage.getEventHolderAndEventArray()
         tableView.reloadData()
-        
-        // Здесь мы поработаем с контактами из памяти телефона
-        CNContactStore().requestAccess(for: .contacts) { (success, error ) in
-            
-        }
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
+        // обновляем хранилище
         eventsStorage.getUpdatedDataToEventStorage()
         eventHolderAndEventArray = eventsStorage.getEventHolderAndEventArray()
         tableView.reloadData()
-        
-        // просто проверка создания eventHolderID
-        if eventHolderAndEventArray.isEmpty {
-            print("eventHolderAndEventArray is empty")
-        } else {
-            for i in 0..<eventHolderAndEventArray.count {
-                print(eventHolderAndEventArray[i].0.eventHolderID)
-            }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        // после отображения экрана делаем проверку хранилища, если оно пустое значит
+        // это первый запуск приложения и нужно сделать запрос в телефонную книгу и запросить контакты
+        // в этот момент происходит запрос на доступ приложения к контактам телефона
+        if eventsStorage.eventHolderArrayAsClass.eventHolderArray.isEmpty {
+            // запрос на выгрузку и выгрузка контактов из телефонной книги
+            eventsStorage.getEventHolderArrayFromPhoneContacts()
         }
-        print(eventHolderAndEventArray)
+        tableView.reloadData()
+    }
+    
+    
+    // нажатие кнопки Синхронизации контактов
+    @IBAction func synchronizeItemPressed(_ sender: UIBarButtonItem) {
+        
+        // запрос на выгрузку и выгрузка контактов из телефонной книги
+        self.eventsStorage.getEventHolderArrayFromPhoneContacts()
+        
+        // делаем проверку - если в eventsStorage.eventHolderArrayGotFromContacts ничего
+        // не выгрузилось значит нет прав доступа к контактам (!!! возможен еще вариант что тел книга телефона пуста!!!!)
+        if self.eventsStorage.eventHolderArrayGotFromContacts.isEmpty {
+            // вызываеи Алерт с просьбой предоставить доступ через настройка телефона
+            self.showAlertMessage()
+        } else {
+            // если из телефонной книги всеже что то выгрузилось создаем новый конторллер
+            // передаем в него то что выгрузилось и вызываем его
+            self.eventsStorage.getEventHolderArrayFromPhoneContacts()
+            let contactsSynchronizeViewController = ContactsSynchronizeViewController()
+            contactsSynchronizeViewController.eventHolderArray = eventsStorage.eventHolderArrayGotFromContacts
+            
+            // замыкание которое будет передаваться на ContactsSynchronizeViewController вызываться и обновнлять данные на StartTableViewController
+            let updateClosuer: ()->Void = { [self] in
+                eventsStorage.getUpdatedDataToEventStorage()
+                eventHolderAndEventArray = self.eventsStorage.getEventHolderAndEventArray()
+                tableView.reloadData()
+            }
+            contactsSynchronizeViewController.updateClosuer = updateClosuer
+            
+            //self.navigationController?.pushViewController(contactsSynchronizeViewController, animated: true)
+            self.present(contactsSynchronizeViewController, animated: true )
+        }
     }
 }
 
@@ -64,8 +97,6 @@ class StartTableViewController: UITableViewController {
 
 extension StartTableViewController {
     
-    
-    
     // возвращаем количество секций
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -80,6 +111,8 @@ extension StartTableViewController {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "startControllerCellReuseIdentifier", for: indexPath) as! StartControllerCustomCell
 
+        
+        
         let tuple = eventHolderAndEventArray[indexPath.row]
         cell.nameLabel.text = tuple.0.eventHolderFirstName + " " + tuple.0.eventHolderLastName
 
@@ -94,6 +127,7 @@ extension StartTableViewController {
         return eventHolderAndEventArray.count
     }
     
+    // заголовок в секциях
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
             var valueForReturn = ""
@@ -112,58 +146,12 @@ extension StartTableViewController {
         // передадим свойству eventHolderAndEvent контроллера на который сейчас будем переходить экземрляр из свойства  eventHolderAndEventArray текущего контороллера
         //detailedEventViewController.eventHolderAndEvent = eventHolderAndEventArray[indexPath.row]
         
-        // передадим свойству eventHolderAndEventID контроллера на который сейчас будем переходить кортед ID-шников eventHolderID и eventID из свойства  eventHolderAndEventArray текущего контороллера соответствующего indexPath.row
+        // передадим свойству eventHolderAndEventID контроллера на который сейчас будем переходить кортеж ID-шников eventHolderID и eventID из свойства  eventHolderAndEventArray текущего контороллера соответствующего indexPath.row
         detailedEventViewController.eventHolderAndEventID = (eventHolderAndEventArray[indexPath.row].0.eventHolderID, eventHolderAndEventArray[indexPath.row].1.eventID)
 
         // переходим к следующему экрану
         self.navigationController?.pushViewController(detailedEventViewController, animated: true)
     }
-    
-//    // Вывод заголовка в секцию
-//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//
-//        let dictEventHoderStatusToEvents = eventDictionarySortedByEventHolderStatus
-//
-//        // печатаем dicForReturn
-//        for i in dictEventHoderStatusToEvents {
-//            print("ключ - \(i.key)")
-//            for r in i.value {
-//                print("\(String(describing: r.eventHolderLastName))")
-//            }
-//        }
-//
-//        var eventsHolderStsatusArray = [EventHolderStatus]()
-//        for i in dictEventHoderStatusToEvents {
-//            eventsHolderStsatusArray.append(i.key)
-//        }
-//        return eventsHolderStsatusArray[section].rawValue
-//    }
-    
-    
-    //    // Override to support conditional editing of the table view.
-    //    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-    //        // Return false if you do not want the specified item to be editable.
-    //        return true
-    //    }
-    
-    
-    // метод для редактирования ячеек в таблице, в данном случае будет реализована возможность удалять
-    // ячейку свайпом влево
-//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-//        if editingStyle == .delete {
-//            // Delete the row from the data source
-//            self.eventHolderAndEventArray.remove(at: indexPath.row)
-//
-//            // удаляем из хранилища eventsStorage экземпляр EventHolder соответствующий удаляемой ячейке
-//            eventsStorage.removeEventHolderFromEventSrorage(removedEventHolder: eventHolderAndEventArray[indexPath.row].0)
-//
-//            tableView.deleteRows(at: [indexPath], with: .none)
-//            tableView.reloadData()
-//        } else if editingStyle == .insert {
-//            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-//        }
-//
-//    }
     
     // метод для редактирования ячеек в таблице, в данном случае будет реализована возможность удалять
     // ячейку свайпом влево
@@ -187,7 +175,17 @@ extension StartTableViewController {
         // формируем экземпляр, описывающий доступные действия
         let actions = UISwipeActionsConfiguration(actions: [actionDelete] )
         return actions
-
     }
     
+}
+
+
+// алерт с уведомлением об отсутствии доступа
+extension StartTableViewController {
+    func showAlertMessage() {
+        let alertMessage = UIAlertController(title: "Упс, разрешите приложению доступ к контактам", message: "Настройки -> Конфиденциальность -> Контакты -> BirthdayApp ", preferredStyle: .alert)
+        let alertActionsOk = UIAlertAction(title: "OK", style: .default)
+        alertMessage.addAction(alertActionsOk)
+        self.present(alertMessage, animated: true)
+    }
 }
