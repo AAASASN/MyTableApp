@@ -50,7 +50,7 @@ class StartTableViewController: UITableViewController {
         tableView.reloadData()
     }
     
-    
+    // MARK: - synchronizeItemPressed
     // нажатие кнопки Синхронизации контактов
     @IBAction func synchronizeItemPressed(_ sender: UIBarButtonItem) {
         
@@ -70,7 +70,7 @@ class StartTableViewController: UITableViewController {
             contactsSynchronizeViewController.eventHolderArray = eventsStorage.eventHolderArrayGotFromContacts
             
             // замыкание которое будет передаваться на ContactsSynchronizeViewController вызываться и обновнлять данные на StartTableViewController
-            let updateClosuer: ()->Void = { [self] in
+            let updateClosuer: () -> Void = { [ self] in
                 eventsStorage.getUpdatedDataToEventStorage()
                 eventHolderAndEventArray = self.eventsStorage.getEventHolderAndEventArray()
                 tableView.reloadData()
@@ -97,11 +97,13 @@ class StartTableViewController: UITableViewController {
 
 extension StartTableViewController {
     
+    // MARK: - numberOfSections
     // возвращаем количество секций
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
+    // MARK: - cellForRowAt
     // возвращаем ячейку
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -122,6 +124,7 @@ extension StartTableViewController {
         return cell
     }
     
+    // MARK: - numberOfRowsInSection
     // Возвращаем количество строк в секции равное количеству элементов массива
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return eventHolderAndEventArray.count
@@ -136,7 +139,7 @@ extension StartTableViewController {
             return valueForReturn
         }
     
-    
+    // MARK: - didSelectRowAt
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         // получаем вью контроллер, в который происходит переход
@@ -180,7 +183,8 @@ extension StartTableViewController {
 }
 
 
-// алерт с уведомлением об отсутствии доступа
+// MARK: - Алерт
+// с уведомлением об отсутствии доступа
 extension StartTableViewController {
     func showAlertMessage() {
         let alertMessage = UIAlertController(title: "Упс, разрешите приложению доступ к контактам", message: "Настройки -> Конфиденциальность -> Контакты -> BirthdayApp ", preferredStyle: .alert)

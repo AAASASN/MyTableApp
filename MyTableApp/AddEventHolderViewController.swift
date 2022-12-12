@@ -244,9 +244,9 @@ class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITab
     }
 }
 
+
+// MARK: - Table view data source
 extension AddEventHolderViewController {
-    
-    // MARK: - Table view data source
     
     func numberOfSections(in tableView: UITableView) -> Int {
         if eventHolder != nil {
