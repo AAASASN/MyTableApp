@@ -28,9 +28,6 @@ class ContactsSynchronizeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-                
-        tableView.delegate = self
-        tableView.dataSource = self
         
         // настройка внешнего вида контроллера
         controllerSettings()
@@ -41,6 +38,8 @@ class ContactsSynchronizeViewController: UIViewController {
         // регистрируем ячейку для переиспользовании в таблице
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "DefaultCellId")
 
+        tableView.delegate = self
+        tableView.dataSource = self
     }
     
     // не работает???
@@ -65,7 +64,7 @@ extension ContactsSynchronizeViewController: UITableViewDelegate, UITableViewDat
         
         // настройка через стандарнтый конфигуратор UIListContentConfiguration
         var content = standartCell.defaultContentConfiguration()
-        content.image = UIImage(systemName: "star")
+        content.image = UIImage(systemName: "person.circle")
         content.text = dataSourceForTable[indexPath.row].0.eventHolderFirstName + " " + dataSourceForTable[indexPath.row].0.eventHolderLastName
         content.secondaryText = " "
         content.imageProperties.tintColor = .systemPurple

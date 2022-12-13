@@ -28,7 +28,7 @@ class DetailedEventViewController: UIViewController {
         removeKeyboardNotifications()
     }
     
-    
+    // MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -55,6 +55,7 @@ class DetailedEventViewController: UIViewController {
         registerForKeyboardNotifications()
     }
     
+    // MARK: - viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
         eventsStorage.getUpdatedDataToEventStorage()
         // tableView.isScrollEnabled = true
@@ -65,15 +66,17 @@ class DetailedEventViewController: UIViewController {
 
 extension DetailedEventViewController: UITableViewDataSource, UITableViewDelegate {
     
+    // MARK: - numberOfSections
     func numberOfSections(in tableView: UITableView) -> Int {
         4
     }
     
+    // MARK: - numberOfRowsInSection
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         1
     }
     
-    // вызов ячеек
+    // MARK: - cellForRowAt
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cellForReturn = UITableViewCell()
         
@@ -83,7 +86,7 @@ extension DetailedEventViewController: UITableViewDataSource, UITableViewDelegat
             let standartCell = tableView.dequeueReusableCell(withIdentifier: "CellForEventHolder")!
             // настройка через стандарнтый конфигуратор UIListContentConfiguration
             var content = standartCell.defaultContentConfiguration()
-            content.image = UIImage(systemName: "star")
+            content.image = UIImage(systemName: "person.circle")
             if eventHolderAndEventID != nil {
                 content.text = (eventsStorage.getEventHolderFromStorageByEventHolderID(eventHolderID: eventHolderAndEventID.0).eventHolderFirstName) + " " +
                 (eventsStorage.getEventHolderFromStorageByEventHolderID(eventHolderID: eventHolderAndEventID.0).eventHolderLastName)
@@ -131,7 +134,7 @@ extension DetailedEventViewController: UITableViewDataSource, UITableViewDelegat
         return cellForReturn
     }
     
-    // настройка высоты ячеек
+    // MARK: - heightForRowAt
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 { return CGFloat(texViewCellHeight0) }
         if indexPath.section == 1 { return CGFloat(texViewCellHeight1) }
@@ -144,7 +147,7 @@ extension DetailedEventViewController: UITableViewDataSource, UITableViewDelegat
         return CGFloat(texViewCellHeight3)
     }
     
-    // MARK: - вариант реализации перехода на экран AddEventHolderViewController при помощи didSelectRowAt
+    // MARK: - didSelectRowAt
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         // при нажатии на первую ячейку/секцию будет совершен переход на контороллер AddEventHolderViewController
@@ -183,6 +186,7 @@ extension DetailedEventViewController: UITableViewDataSource, UITableViewDelegat
     }
 }
 
+// MARK: - hide keyboard
 // это расширение возволяет скрыть клавиатуру при косании вне TextView или TextField.
 // Данное решение подходит для случая когда TextView или TextField расположены внутри ScrollView
 extension DetailedEventViewController {
@@ -212,7 +216,6 @@ extension DetailedEventViewController {
         
         // ... будет реагировать на появление клавиатуры
         NotificationCenter.default.addObserver(self, selector: #selector(kbWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        
         
         // ... будет реагировать на перед началом изчезновения клавиатуры
         NotificationCenter.default.addObserver(self, selector: #selector(kbWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)

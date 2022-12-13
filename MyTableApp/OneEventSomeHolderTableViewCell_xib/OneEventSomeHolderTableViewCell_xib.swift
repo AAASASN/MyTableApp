@@ -80,8 +80,11 @@ class OneEventSomeHolderTableViewCell_xib: UITableViewCell {
         }
         
         // MARK: - наполнение лейблов
-        eventDateLabel.text = "  " + (eventsStorage.getEventFromStorageByEventID(eventID: self.eventID)).eventDate.dateAsString
+        eventDateLabel.text = "  " +  formatDateWithoutYear(eventDate:  (eventsStorage.getEventFromStorageByEventID(eventID: self.eventID)).eventDate.dateAsString
+        )
+        
         dayCountLabel.text = String((eventsStorage.getEventFromStorageByEventID(eventID: self.eventID)).eventDate.daysCountBeforeEvent)
+        
         eventTypeLabel.text = "  " + (eventsStorage.getEventFromStorageByEventID(eventID: self.eventID)).eventType.rawValue
         descriptionLabel.text = "  " + (eventsStorage.getEventFromStorageByEventID(eventID: self.eventID)).eventDiscription
         if (eventsStorage.getEventFromStorageByEventID(eventID: self.eventID)).isActual {
@@ -120,6 +123,28 @@ class OneEventSomeHolderTableViewCell_xib: UITableViewCell {
         
         
         // Configure the view for the selected state
+    }
+    
+    // метод корректрно отображает событие в котором не задан год
+    func formatDateWithoutYear(eventDate : String) -> String {
+        let word = eventDate.reversed()
+        var charArray = ""
+        for char in word {
+            if char != " " {
+                charArray.append(char)
+            } else {
+                break
+            }
+        }
+        if charArray != "1000" {
+            return eventDate
+        } else {
+            let firstCharIndex = word.startIndex
+            let fourthCharIndex = word.index(firstCharIndex, offsetBy:4)
+            let lastCharIndex = word.index(firstCharIndex, offsetBy: word.count-1)
+            let newWord = word[fourthCharIndex...lastCharIndex]
+            return String(newWord.reversed())
+        }
     }
     
 }

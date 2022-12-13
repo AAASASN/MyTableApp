@@ -22,7 +22,7 @@ class StartTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // при загрузке viewDidLoad() как обычно выгружаем данные из UserDefaults
+        // при загрузке viewDidLoad() выгружаем данные из UserDefaults
         eventsStorage.getUpdatedDataToEventStorage()
     
         // выгружаем данные об EventHolder-ах и их Event-ах из хранилища в локальный массив кортежей eventHolderAndEventArray
@@ -83,17 +83,6 @@ class StartTableViewController: UITableViewController {
     }
 }
 
-// MARK: - extension
-/* в расширении переопределим четыре метода родительского класса UITableViewController
- 
-- numberOfSections        - обязательный метод протокола UITableViewDataSource, возвращает количество секций в таблице
-- cellForRowAt            - обязательный метод протокола UITableViewDataSource, возвращает переиспользуемую ячейку
-- numberOfRowsInSection   - обязательный метод протокола UITableViewDataSource, Возвращаем количество строк в секции равное количеству элементов массива
-- titleForHeaderInSection - НЕ обязательный метод протокола UITableViewDataSource, возврвщает заголовок в секцию
-*/
-
-// qqqqqqqqqqq
-
 
 extension StartTableViewController {
     
@@ -120,7 +109,30 @@ extension StartTableViewController {
 
         cell.dateLabel.text =  String(tuple.1.eventDate.daysCountBeforeEvent)
         
-        cell.eventTypeLabel.text = tuple.1.eventType.rawValue + " " + dateFormatter.string(from: tuple.1.eventDate.date)
+        // метод корректрно отображает событие в котором не задан год
+        func formatDateWithoutYear(eventDate : String) -> String {
+            let word = eventDate.reversed()
+            var charArray = ""
+            for char in word {
+                if char != " " {
+                    charArray.append(char)
+                } else {
+                    break
+                }
+            }
+            if charArray != "1000" {
+                return eventDate
+            } else {
+                let firstCharIndex = word.startIndex
+                let fourthCharIndex = word.index(firstCharIndex, offsetBy:4)
+                let lastCharIndex = word.index(firstCharIndex, offsetBy: word.count-1)
+                let newWord = word[fourthCharIndex...lastCharIndex]
+                return String(newWord.reversed())
+            }
+        }
+        
+        let eventDate = formatDateWithoutYear(eventDate: dateFormatter.string(from: tuple.1.eventDate.date))
+        cell.eventTypeLabel.text = tuple.1.eventType.rawValue + " " + eventDate
         return cell
     }
     
@@ -130,6 +142,7 @@ extension StartTableViewController {
         return eventHolderAndEventArray.count
     }
     
+    // MARK: - titleForHeaderInSection
     // заголовок в секциях
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
