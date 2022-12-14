@@ -104,6 +104,30 @@ class AddEventTableViewController: UITableViewController {
 
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0 && indexPath.row == 0 {
+            let selectEventTypeTableViewController = SelectEventTypeTableViewController()
+            // передача текущего статуса, при первом переходе статус всегда будет - .none
+            selectEventTypeTableViewController.selectedEventType = currentEventType
+            
+            // передача обработчика выбора статуса
+            // doAfterEventTypeSelected является свойством-замыканием у которого есть тело-замыкание( тело функции),
+            // передаем(присваеваем) ему это тело-реализацию функции, после этого в свойстве doAfterEventTypeSelected будет
+            // храниться реализация замыкания(функции), и когда в будущем к этому свойству doAfterEventTypeSelected будут обращаться
+            // функция будет выполняться
+            selectEventTypeTableViewController.doAfterEventTypeSelected = { [self] selectedEventType in
+                // изменяем статус пользователя в контроллере AddEventHolderTableViewController
+                self.currentEventType = selectedEventType
+                // обновляем метку с текущим типом в AddEventTableViewController
+                eventTypeLabel?.text = currentEventType.rawValue
+                
+                // таким образом мы выполнили операции в AddEventHolderTableViewController при помощи замыкания doAfterStatusSelected вызвав его
+                // вообще в другом контроллере
+        }
+            self.navigationController?.pushViewController(selectEventTypeTableViewController, animated: true)
+            print("push")
+    }
+    
 //    // MARK: - нажатие на кнопку сохранить (она же ячейка во второй секции)
 //    // при нажатии на ячейку во второй секции будет создаватся Event и передаваться на предыдущий экран
 //    // (AddEventHolderViewController) в массиве navigationController?.viewControllers.events, затем таблица предыдущего экрана обновляется
@@ -133,34 +157,34 @@ class AddEventTableViewController: UITableViewController {
     // MARK: - Navigation
     // при переходе с экрана AddEventTableViewController на SelectEventTypeTableViewController
     // при помощи сегвея с Id - "toSelectEventTypeTableViewControllerId" реализуем передачу данных
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if segue.identifier == "toSelectEventTypeTableViewControllerId" {
-            
-            // ссылка на контроллер назначения
-            let destination = segue.destination as! SelectEventTypeTableViewController
-            
-            // передача текущего статуса, при первом переходе статус всегда будет - .none
-            destination.selectedEventType = currentEventType
-            
-            // передача обработчика выбора статуса
-            // doAfterEventTypeSelected является свойством-замыканием у которого есть тело-замыкание( тело функции),
-            // передаем(присваеваем) ему это тело-реализацию функции, после этого в свойстве doAfterEventTypeSelected будет
-            // храниться реализация замыкания(функции), и когда в будущем к этому свойству doAfterEventTypeSelected будут обращаться
-            // функция будет выполняться
-            destination.doAfterEventTypeSelected = { [self] selectedEventType in
-                // изменяем статус пользователя в контроллере AddEventHolderTableViewController
-                self.currentEventType = selectedEventType
-                // обновляем метку с текущим типом в AddEventTableViewController
-                eventTypeLabel?.text = currentEventType.rawValue
-                
-                // таким образом мы выполнили операции в AddEventHolderTableViewController при помощи замыкания doAfterStatusSelected вызвав его
-                // вообще в другом контроллере
-                
-                // обновим таблицу для отображения кнопки "Сохранить" во второй секции
-                tableView.reloadData()
-            }
-        }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//
+//        if segue.identifier == "toSelectEventTypeTableViewControllerId" {
+//
+//            // ссылка на контроллер назначения
+//            let destination = segue.destination as! SelectEventTypeTableViewController
+//
+//            // передача текущего статуса, при первом переходе статус всегда будет - .none
+//            destination.selectedEventType = currentEventType
+//
+//            // передача обработчика выбора статуса
+//            // doAfterEventTypeSelected является свойством-замыканием у которого есть тело-замыкание( тело функции),
+//            // передаем(присваеваем) ему это тело-реализацию функции, после этого в свойстве doAfterEventTypeSelected будет
+//            // храниться реализация замыкания(функции), и когда в будущем к этому свойству doAfterEventTypeSelected будут обращаться
+//            // функция будет выполняться
+//            destination.doAfterEventTypeSelected = { [self] selectedEventType in
+//                // изменяем статус пользователя в контроллере AddEventHolderTableViewController
+//                self.currentEventType = selectedEventType
+//                // обновляем метку с текущим типом в AddEventTableViewController
+//                eventTypeLabel?.text = currentEventType.rawValue
+//
+//                // таким образом мы выполнили операции в AddEventHolderTableViewController при помощи замыкания doAfterStatusSelected вызвав его
+//                // вообще в другом контроллере
+//
+//                // обновим таблицу для отображения кнопки "Сохранить" во второй секции
+//                tableView.reloadData()
+//            }
+//        }
     }
     
     // MARK: - настройка DateDicker
