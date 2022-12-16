@@ -11,7 +11,7 @@ class FirstNameTextFieldTableViewCell: UITableViewCell {
 
     @IBOutlet weak var textField: UITextField!
     
-    var datePicker = UIDatePicker()
+    //var datePicker = UIDatePicker()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -54,37 +54,37 @@ class FirstNameTextFieldTableViewCell: UITableViewCell {
         self.contentView.endEditing(true)
     }
 
-    //настройка DatePicker, вызывается во viewDidLoad
-    func datePickerSwttings() {
-        // и назначим datePicker способом ввода в текстовое поле
-        textField.inputView = datePicker
-        // назначим стиль - колесики
-        datePicker.preferredDatePickerStyle = .wheels
-        // установим первое значение на текущую дату
-        datePicker.datePickerMode = .date
-        // установим текущую дату максимальным значеним на datePicker
-        datePicker.maximumDate = .now
-        // чтобы значения в textField менялись при прокручивании колесика datePicker "повесим событие" на datePicker
-        datePicker.addTarget(self, action: #selector(dateChanged), for: .valueChanged)
-        // настроим формат отображения даты в соответствии с языковыми настройками айфона пользователя
-        let localeID = Locale.preferredLanguages.first
-        datePicker.locale = Locale(identifier: localeID!)
-    }
+//    //настройка DatePicker, вызывается во viewDidLoad
+//    func datePickerSwttings() {
+//        // и назначим datePicker способом ввода в текстовое поле
+//        textField.inputView = datePicker
+//        // назначим стиль - колесики
+//        datePicker.preferredDatePickerStyle = .wheels
+//        // установим первое значение на текущую дату
+//        datePicker.datePickerMode = .date
+//        // установим текущую дату максимальным значеним на datePicker
+//        datePicker.maximumDate = .now
+//        // чтобы значения в textField менялись при прокручивании колесика datePicker "повесим событие" на datePicker
+//        datePicker.addTarget(self, action: #selector(dateChanged), for: .valueChanged)
+//        // настроим формат отображения даты в соответствии с языковыми настройками айфона пользователя
+//        let localeID = Locale.preferredLanguages.first
+//        datePicker.locale = Locale(identifier: localeID!)
+//    }
     
-    // при изменении значений на datePicker будет обновлять textField
-    @objc func dateChanged (){
-        getDateFromPicker()
-    }
+//    // при изменении значений на datePicker будет обновлять textField
+//    @objc func dateChanged (){
+//        getDateFromPicker()
+//    }
     
-    // Создадим функцию которая будет возвращать дату в нужном формате и передавать ее в текстовом виде в текстовое поле
-    func getDateFromPicker() {
-        // создадим экземпляр типа DateFormatter
-        let formater = DateFormatter()
-        // настроим локализацию - для отображения на русском языке
-        formater.locale = Locale(identifier: "ru_RU")
-        // настроим вид отображения даты в текстовом виде
-        formater.dateFormat = "d MMMM yyyy"
-        // передадим в текстовое поле dateField строку обработанное форматером принятое от datePicker
-        textField.text = formater.string(from: datePicker.date)
-    }
+//    // Создадим функцию которая будет возвращать дату в нужном формате и передавать ее в текстовом виде в текстовое поле
+//    func getDateFromPicker() {
+//        // создадим экземпляр типа DateFormatter
+//        let formater = DateFormatter()
+//        // настроим локализацию - для отображения на русском языке
+//        formater.locale = Locale(identifier: "ru_RU")
+//        // настроим вид отображения даты в текстовом виде
+//        formater.dateFormat = "d MMMM yyyy"
+//        // передадим в текстовое поле dateField строку обработанное форматером принятое от datePicker
+//        textField.text = formater.string(from: datePicker.date)
+//    }
 }

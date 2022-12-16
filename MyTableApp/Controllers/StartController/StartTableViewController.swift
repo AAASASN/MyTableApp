@@ -22,7 +22,7 @@ class StartTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // при загрузке viewDidLoad() как обычно выгружаем данные из UserDefaults
+        // при загрузке viewDidLoad() выгружаем данные из UserDefaults
         eventsStorage.getUpdatedDataToEventStorage()
     
         // выгружаем данные об EventHolder-ах и их Event-ах из хранилища в локальный массив кортежей eventHolderAndEventArray
@@ -50,7 +50,7 @@ class StartTableViewController: UITableViewController {
         tableView.reloadData()
     }
     
-    
+    // MARK: - synchronizeItemPressed
     // нажатие кнопки Синхронизации контактов
     @IBAction func synchronizeItemPressed(_ sender: UIBarButtonItem) {
         
@@ -70,7 +70,7 @@ class StartTableViewController: UITableViewController {
             contactsSynchronizeViewController.eventHolderArray = eventsStorage.eventHolderArrayGotFromContacts
             
             // замыкание которое будет передаваться на ContactsSynchronizeViewController вызываться и обновнлять данные на StartTableViewController
-            let updateClosuer: ()->Void = { [self] in
+            let updateClosuer: () -> Void = { [ self] in
                 eventsStorage.getUpdatedDataToEventStorage()
                 eventHolderAndEventArray = self.eventsStorage.getEventHolderAndEventArray()
                 tableView.reloadData()
@@ -83,25 +83,16 @@ class StartTableViewController: UITableViewController {
     }
 }
 
-// MARK: - extension
-/* в расширении переопределим четыре метода родительского класса UITableViewController
- 
-- numberOfSections        - обязательный метод протокола UITableViewDataSource, возвращает количество секций в таблице
-- cellForRowAt            - обязательный метод протокола UITableViewDataSource, возвращает переиспользуемую ячейку
-- numberOfRowsInSection   - обязательный метод протокола UITableViewDataSource, Возвращаем количество строк в секции равное количеству элементов массива
-- titleForHeaderInSection - НЕ обязательный метод протокола UITableViewDataSource, возврвщает заголовок в секцию
-*/
-
-// qqqqqqqqqqq
-
 
 extension StartTableViewController {
     
+    // MARK: - numberOfSections
     // возвращаем количество секций
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
+    // MARK: - cellForRowAt
     // возвращаем ячейку
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -118,15 +109,40 @@ extension StartTableViewController {
 
         cell.dateLabel.text =  String(tuple.1.eventDate.daysCountBeforeEvent)
         
-        cell.eventTypeLabel.text = tuple.1.eventType.rawValue + " " + dateFormatter.string(from: tuple.1.eventDate.date)
+        // метод корректрно отображает событие в котором не задан год
+        func formatDateWithoutYear(eventDate : String) -> String {
+            let word = eventDate.reversed()
+            var charArray = ""
+            for char in word {
+                if char != " " {
+                    charArray.append(char)
+                } else {
+                    break
+                }
+            }
+            if charArray != "1000" {
+                return eventDate
+            } else {
+                let firstCharIndex = word.startIndex
+                let fourthCharIndex = word.index(firstCharIndex, offsetBy:4)
+                let lastCharIndex = word.index(firstCharIndex, offsetBy: word.count-1)
+                let newWord = word[fourthCharIndex...lastCharIndex]
+                return String(newWord.reversed())
+            }
+        }
+        
+        let eventDate = formatDateWithoutYear(eventDate: dateFormatter.string(from: tuple.1.eventDate.date))
+        cell.eventTypeLabel.text = tuple.1.eventType.rawValue + " " + eventDate
         return cell
     }
     
+    // MARK: - numberOfRowsInSection
     // Возвращаем количество строк в секции равное количеству элементов массива
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return eventHolderAndEventArray.count
     }
     
+    // MARK: - titleForHeaderInSection
     // заголовок в секциях
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
@@ -136,7 +152,7 @@ extension StartTableViewController {
             return valueForReturn
         }
     
-    
+    // MARK: - didSelectRowAt
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         // получаем вью контроллер, в который происходит переход
@@ -180,7 +196,8 @@ extension StartTableViewController {
 }
 
 
-// алерт с уведомлением об отсутствии доступа
+// MARK: - Алерт
+// с уведомлением об отсутствии доступа
 extension StartTableViewController {
     func showAlertMessage() {
         let alertMessage = UIAlertController(title: "Упс, разрешите приложению доступ к контактам", message: "Настройки -> Конфиденциальность -> Контакты -> BirthdayApp ", preferredStyle: .alert)

@@ -7,8 +7,16 @@
 
 import UIKit
 
-class SelectEventTypeTableViewController: UITableViewController {
+class SelectEventTypeTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
+    var tableView: UITableView!
+    
+    var dataSourseArray = [EventType.birthday,
+                           EventType.birthOfChildren,
+                           EventType.wedding,
+                           EventType.housewarming,
+                           EventType.none]
+    
     // замыкание для передачи информации о выбраном поле на предыдущий экран в иерархии Навигейшен контроллера
     var doAfterEventTypeSelected : ((EventType) -> Void)?
     
@@ -16,45 +24,52 @@ class SelectEventTypeTableViewController: UITableViewController {
     var selectedEventType : EventType = .none
    
     
+    // MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        tableView = UITableView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.maxX, height: self.view.bounds.maxY), style: .insetGrouped)
+        tableView.isScrollEnabled = false
+        self.view.addSubview(tableView)
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        
     }
 
     // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 5
     }
     
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+        cell.textLabel?.text = dataSourseArray[indexPath.row].rawValue
+        cell.selectionStyle = .none
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "Выберите тип события"
     }
     
-    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        return "в будущем варианты возможно будут расширены..."
+    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        return "в будущем варианты возможно будут расширены"
     }
 
     
     // действия при нажатии на ячейку
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let section = indexPath.section
         let numberOfRows = tableView.numberOfRows(inSection: section)
 
-        // пройдемся циклом по всем  ячейкам секции для того что бы убрать галку .checkmark
-        // там где не нужно и поставить там где нужно
+        // пройдемся циклом по всем  ячейкам секции для того что бы убрать
+        // галку .checkmark там где не нужно и поставить там где нужно
         for row in 0..<numberOfRows {
             if let cell = tableView.cellForRow(at: NSIndexPath(row: row, section: section) as IndexPath) {
                 cell.accessoryType = .none
@@ -81,7 +96,7 @@ class SelectEventTypeTableViewController: UITableViewController {
         }
         
         // вызов обработчика - передаем в замыкание doAfterSexSelected значение типа
-        // selectedSex в зависимости от .row нажатой ячейки
+        // selectedEventType в зависимости от .row нажатой ячейки
         doAfterEventTypeSelected?(selectedEventType)
         
         // переход к предыдущему экрану осуществляется средствами  UINavigationController котовый при помощи метода popViewController() и
@@ -95,7 +110,7 @@ class SelectEventTypeTableViewController: UITableViewController {
     // перед отображением проверяем значение в selectedEventType - это пол переданый
     // с предыдущего экрана при переходе по сигвею и устанавливаем галочку .checkmark
     // в соответствующую ячейку
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let eventTypeEnumContentArray = EventType.allCases //[EventType.birthday, .birthOfChildren, .housewarming, .wedding, .none]
         for _ in eventTypeEnumContentArray {
             if eventTypeEnumContentArray[indexPath.row] == selectedEventType {
