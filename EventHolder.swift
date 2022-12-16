@@ -6,16 +6,18 @@
 //
 
 import Foundation
+import UIKit
 
 protocol EventHolderProtocol: Codable {
-    var eventHolderID : String { get set }
-    var eventHolderFirstName : String { get set }
-    var eventHolderLastName : String { get set }
-    var eventHolderBirthdayDate : CustomDate { get set }
-    var eventHolderPhoneNumber : String { get set }
-    var eventHolderSex : EventHolderSex { get set }
-    var eventHolderStatus : EventHolderStatus { get set }
-    var events : [EventProtocol] { get set }
+    var eventHolderID: String { get set }
+    var eventHolderFirstName: String { get set }
+    var eventHolderLastName: String { get set }
+    var eventHolderBirthdayDate: CustomDate { get set }
+    var eventHolderPhoneNumber: String { get set }
+    var eventHolderSex: EventHolderSex { get set }
+    var eventHolderStatus: EventHolderStatus { get set }
+    var events: [EventProtocol] { get set }
+    //var eventHolderImage: EventHolderImage { get set }
 }
 
 class EventHolder: Codable {
@@ -27,8 +29,9 @@ class EventHolder: Codable {
     var eventHolderSex: EventHolderSex
     var eventHolderStatus: EventHolderStatus
     var events = [Event]()
+    //var eventHolderImage: EventHolderImage
 
-    // инициализатор с автоматически генерируемым eventHolderID
+    // инициализатор с автоматически генерируемым eventHolderID eventHolderImage
     init(eventHolderFirstName : String,
          eventHolderLastName : String,
          eventHolderBirthdayDate : CustomDate,
@@ -44,6 +47,8 @@ class EventHolder: Codable {
         self.eventHolderSex = eventHolderSex
         self.eventHolderStatus = eventHolderStatus
         self.events = events
+        //self.eventHolderImage = UIImage(systemName: "person.circle")
+        
     }
 
     // инициализатор с eventHolderID который задаётся вручную

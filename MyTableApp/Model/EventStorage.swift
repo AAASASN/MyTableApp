@@ -44,7 +44,6 @@ class EventStorage: EventStorageProtocol {
     // его экземпляр
     var eventHolderArrayAsClass = EventHolderArrayAsClass()
     
-    
     // сам userDefaults
     fileprivate var userDefaults = UserDefaults.standard
     
@@ -315,6 +314,14 @@ class EventStorage: EventStorageProtocol {
         
         switch authorizationStatus {
         case .authorized:
+            
+            
+//            // метод loadContacts() может сильно нагрузить UI поэтому вызовем его в отдельном потоке ????????????
+//            let queue = DispatchQueue.global(qos: .utility)
+//            queue.async{
+//
+//            }
+            
             loadContacts()
         case .denied, .notDetermined:
             // запрашиваем разрешение если оно еще не запрашивалось или предыдущий запрос был отклонен
@@ -350,7 +357,7 @@ class EventStorage: EventStorageProtocol {
             
             // экземпляр CNContactFetchRequest проинициализируем массивом экземпляров CNKeyDescriptor - keyToFetch
             let request = CNContactFetchRequest(keysToFetch: keyToFetch)
-            
+
             // поскольку метод .enumerateContacts(with: usingBlock:) может выбросить ошибку (исключение) нужно поместить его в блок do-catch
             do {
                 try contactStore.enumerateContacts(with: request) { cnContact, error in

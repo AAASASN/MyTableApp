@@ -11,10 +11,16 @@ class ContactsSynchronizeViewController: UIViewController {
        
     // данные об EventHolder-ах переданные с предыдущего контроллера
     var eventHolderArray = [EventHolder]()
+    
     // датасурс на остнове которого будет отображаться табличка и проставляться галочки
     var dataSourceForTable = [(EventHolder, Bool)]()
+    
     // табличка
+    // расположим tableView
     var tableView: UITableView!
+
+
+    
     // переменная в которую при инициализации контроллера ContactsSynchronizeViewController из контроллера
     // StartTableViewController будет передано замыкание которое при вызове будет запрашивать данные из
     // хрпанилища и обновлять табличку в StartTableViewController
@@ -22,12 +28,18 @@ class ContactsSynchronizeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // настройка внешнего вида контроллера
         controllerSettings()
-        print("на контроллер ContactsSynchronizeViewController передано \(dataSourceForTable.count) контактов")
         
         // преобразуем принятый при инициализации массив в массив котрежей для использования в качестве датасурс
         dataSourceForTable = getDataSourceForTableLikeTuple(eventHoldersArray: eventHolderArray)
+        
+        // регистрируем ячейку для переиспользовании в таблице
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "DefaultCellId")
+
+        tableView.delegate = self
+        tableView.dataSource = self
     }
     
     // не работает???
@@ -46,26 +58,35 @@ extension ContactsSynchronizeViewController: UITableViewDelegate, UITableViewDat
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         // используем стандартную ячейку
-        let standartCell = UITableViewCell()
+        let standartCell = tableView.dequeueReusableCell(withIdentifier: "DefaultCellId", for: indexPath)
+        
         // настройка через стандарнтый конфигуратор UIListContentConfiguration
         var content = standartCell.defaultContentConfiguration()
-        content.image = UIImage(systemName: "star")
+        content.image = UIImage(systemName: "person.circle")
         content.text = dataSourceForTable[indexPath.row].0.eventHolderFirstName + " " + dataSourceForTable[indexPath.row].0.eventHolderLastName
         content.secondaryText = " "
         content.imageProperties.tintColor = .systemPurple
+        
         // при первичном формировании таблички проставим дату дня рождения - дата "1 января 0001" означает отсутствие даты
         if dataSourceForTable[indexPath.row].0.eventHolderBirthdayDate.dateAsString != "1 января 0001"  {
             content.secondaryText = dataSourceForTable[indexPath.row].0.eventHolderBirthdayDate.dateAsString
         }
+        
         // при первичном формировании таблички проставим галочки только тем ячейкам в которых есть нормальная дата (true)
         if dataSourceForTable[indexPath.row].1 {
             standartCell.accessoryType = .checkmark
+        } else {
+            // что бы исключить проставление галки там где не нужно при переиспользовании ячеек
+            standartCell.accessoryType = .none
         }
-        standartCell.contentConfiguration = content
+        
+        standartCell.contentConfiguration = content 
         return standartCell
     }
     
+    // MARK: - didSelectRowAt
     // нажатие на ячейку проставляет или отжимает галочку и сохраняет ее в датасурс
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let standartCell = tableView.cellForRow(at: indexPath)
@@ -86,11 +107,9 @@ extension ContactsSynchronizeViewController: UITableViewDelegate, UITableViewDat
 extension ContactsSynchronizeViewController {
     
     
+    // MARK: - controllerSettings()
     // метод для настройки отображения контроллера
     func controllerSettings() {
-        
-        //view.backgroundColor = UIColor.white
-        
         
         // создадим бар в верхней части контроллера
         let topCustomBar = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.maxX, height: 50))
@@ -120,13 +139,8 @@ extension ContactsSynchronizeViewController {
         saveButton.setTitleColor(UIColor.systemGray, for: UIControl.State.highlighted)
         topCustomBar.addSubview(saveButton)
         
-        // расположим tableView
-        tableView = UITableView(frame: CGRect(x: 0, y: 50, width: self.view.bounds.maxX, height: self.view.bounds.maxY))
-
+        tableView = UITableView(frame: CGRect(x: 0, y: 50, width: self.view.bounds.maxX, height: self.view.bounds.maxY), style: .insetGrouped)
         
-        tableView.delegate = self
-        tableView.dataSource = self
-          
         view.addSubview(topCustomBar)
         view.addSubview(tableView)
     }
@@ -134,6 +148,7 @@ extension ContactsSynchronizeViewController {
 
 extension ContactsSynchronizeViewController {
     
+    // MARK: - saveButtonAction()
     // здесь сохраним выделенные контакты
     func saveButtonAction()  {
         // создадим экземпляр хранилища
@@ -154,6 +169,7 @@ extension ContactsSynchronizeViewController {
 
 extension ContactsSynchronizeViewController {
     
+    // MARK: - getDataSourceForTableLikeTuple
     // вазвращаем массив кортежей который который будем использовать в качестве датасурс, он поможет проставлять галочки в ячейках
     func getDataSourceForTableLikeTuple(eventHoldersArray: [EventHolder]) -> [(EventHolder, Bool)] {
         var valueForReturn = [(EventHolder, Bool)]()
@@ -167,6 +183,7 @@ extension ContactsSynchronizeViewController {
         return valueForReturn
     }
     
+    // MARK: - getEventHolderArrayForStorageFromArrayOfTuples
     // этот метод напротив переводит массив кортежей в массив EventHolder помещая в него только те у которых была проставлена галочка
     func getEventHolderArrayForStorageFromArrayOfTuples(eventHoldersArray: [(EventHolder, Bool)] ) -> [EventHolder] {
         var valueForReturn = [EventHolder]()
@@ -176,7 +193,6 @@ extension ContactsSynchronizeViewController {
         }
         return valueForReturn
     }
-        
     
 }
 
