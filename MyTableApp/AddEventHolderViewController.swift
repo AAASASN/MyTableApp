@@ -61,7 +61,7 @@ class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITab
             // заполним текстовые поля в соответствии с принятыми данными о EventHolder
             firstNameTextFieldCell.textField.text = eventHolder.eventHolderFirstName
             lastNameTextFieldCell.textField.text = eventHolder.eventHolderLastName
-            dateTextFieldCell.textField.text = formatDateWithoutYear(eventDate: eventHolder.eventHolderBirthdayDate.dateAsString)  
+            dateTextFieldCell.textField.text = formatDateWithoutYear(eventDate: eventHolder.eventHolderBirthdayDate.dateAsString)
             phoneNumberTextFieldCell.textField.text = eventHolder.eventHolderPhoneNumber
             
             // настроим кнопку "Сохранить" с "Сохранить" на "Изменить"
@@ -397,12 +397,11 @@ extension AddEventHolderViewController {
             // при нажатии на кнопку "Добавить событие"
             if indexPath.section == eventHolder.events.count + 1 {
                 // получаем вью контроллер, в который происходит переход
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let addEventTableViewController = storyboard.instantiateViewController(withIdentifier: "AddEventTableViewControllerID") as! AddEventTableViewController
+                let addEventViewController = AddEventViewController()
                 // передадим свойству currentEventsHolder контроллера на который сейчас будем переходить экземрляр из свойства  eventsHolder текущего контороллера
-                addEventTableViewController.currentEventsHolder = eventHolder
+                addEventViewController.currentEventsHolder = eventHolder
                 // переходим к следующему экрану
-                self.navigationController?.pushViewController(addEventTableViewController, animated: true)
+                self.navigationController?.pushViewController(addEventViewController, animated: true)
             }
         }
     }

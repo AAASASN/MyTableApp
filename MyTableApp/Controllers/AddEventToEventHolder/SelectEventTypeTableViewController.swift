@@ -29,6 +29,7 @@ class SelectEventTypeTableViewController: UIViewController, UITableViewDataSourc
         super.viewDidLoad()
         
         tableView = UITableView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.maxX, height: self.view.bounds.maxY), style: .insetGrouped)
+        tableView.isScrollEnabled = false
         self.view.addSubview(tableView)
         
         tableView.delegate = self
@@ -48,6 +49,7 @@ class SelectEventTypeTableViewController: UIViewController, UITableViewDataSourc
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         cell.textLabel?.text = dataSourseArray[indexPath.row].rawValue
+        cell.selectionStyle = .none
         return cell
     }
     
