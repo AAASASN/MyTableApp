@@ -199,7 +199,7 @@ class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITab
                                                                  eventType: .birthday,
                                                                  eventDiscription: "просто др",
                                                                  isActual: true)]
-                                                  )
+                )
                 // теперь присваиваем наше tempEventHolder в постоянное свойство класса eventHolder
                 eventHolder = tempEventHolder
                 
@@ -339,9 +339,7 @@ extension AddEventHolderViewController {
         if saveButtonOutlet.title == "Сохранить" {
             // при нажатии на пятую ячейку - выбор пола
             if indexPath.section == 0 && indexPath.row == 4 {
-                // получаем вью контроллер, в который происходит переход
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//                let changeEventHolderSexTableViewController = storyboard.instantiateViewController(withIdentifier: "ChangeEventHolderSexTableViewControlleriD") as! ChangeEventHolderSexTableViewController
+                
                 
                 let changeEventHolderSexTableViewController = ChangeEventHolderSexTableViewController()
                 
@@ -368,9 +366,11 @@ extension AddEventHolderViewController {
             }
             // если нажата ячейка 6 - выбор статуса
             if indexPath.section == 0 && indexPath.row == 5 {
+                
                 // получаем вью контроллер, в который происходит переход
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let changeEventHolderStatusTableViewController = storyboard.instantiateViewController(withIdentifier: "ChangeEventHolderStatusTableViewControllerId") as! ChangeEventHolderStatusTableViewController
+                //let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                
+                let changeEventHolderStatusTableViewController = ChangeEventHolderStatusTableViewController()
                 
                 // передача текущего статуса, при первом переходе статус всегда будет - .none
                 changeEventHolderStatusTableViewController.selectedStatus = currentEventHolderStatus

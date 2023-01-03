@@ -43,6 +43,9 @@ class AddEventViewController: UIViewController, UITableViewDelegate, UITableView
     // MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        self.navigationController?.navigationBar.backgroundColor = .systemGray6
+        self.navigationItem.title = "Добавить событие"
         
         view.backgroundColor = .systemGray4
         

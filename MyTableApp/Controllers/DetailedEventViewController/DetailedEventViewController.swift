@@ -44,11 +44,13 @@ class DetailedEventViewController: UIViewController {
 
         
         // настройка navigationItem.title в DetailedEventViewController
+        
         self.navigationItem.title = eventsStorage.getEventHolderFromStorageByEventHolderID(eventHolderID: eventHolderAndEventID.0).eventHolderFirstName + " " + eventsStorage.getEventHolderFromStorageByEventHolderID(eventHolderID: eventHolderAndEventID.0).eventHolderLastName
         
-        // настройка большого navigationItem.title в DetailedEventViewController
-        self.navigationItem.largeTitleDisplayMode = .never
+        self.navigationItem.title = eventsStorage.getEventFromStorageByEventID(eventID: eventHolderAndEventID.1).eventType.rawValue
         
+        // настройка большого navigationItem.title в DetailedEventViewController
+        // self.navigationItem.largeTitleDisplayMode = .never
         
         
         // вызываем метод который будет регистрировать наблюдателей

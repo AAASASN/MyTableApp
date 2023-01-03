@@ -26,7 +26,6 @@
 		11538CB328CF8FE200B69B2D /* DateTextFiedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11538CB228CF8FE200B69B2D /* DateTextFiedTableViewCell.swift */; };
 		11538CB528CF900E00B69B2D /* PhoneNumberTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11538CB428CF900E00B69B2D /* PhoneNumberTextFieldTableViewCell.swift */; };
 		11547FC328941C06001BBBCB /* ChangeEventHolderStatusTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11547FC228941C06001BBBCB /* ChangeEventHolderStatusTableViewController.swift */; };
-		11547FC5289425EC001BBBCB /* ChangeEventHolderStatusCustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11547FC4289425EC001BBBCB /* ChangeEventHolderStatusCustomTableViewCell.swift */; };
 		1191FEC828D8D3F200656B2B /* DetailedEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191FEC728D8D3F200656B2B /* DetailedEventViewController.swift */; };
 		1191FEEE28DAFBE400656B2B /* OneEventSomeHolderTableViewCell_xib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191FEEC28DAFBE400656B2B /* OneEventSomeHolderTableViewCell_xib.swift */; };
 		1191FEEF28DAFBE400656B2B /* OneEventSomeHolderTableViewCell_xib.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1191FEED28DAFBE400656B2B /* OneEventSomeHolderTableViewCell_xib.xib */; };
@@ -63,7 +62,6 @@
 		11538CB228CF8FE200B69B2D /* DateTextFiedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTextFiedTableViewCell.swift; sourceTree = "<group>"; };
 		11538CB428CF900E00B69B2D /* PhoneNumberTextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberTextFieldTableViewCell.swift; sourceTree = "<group>"; };
 		11547FC228941C06001BBBCB /* ChangeEventHolderStatusTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeEventHolderStatusTableViewController.swift; sourceTree = "<group>"; };
-		11547FC4289425EC001BBBCB /* ChangeEventHolderStatusCustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeEventHolderStatusCustomTableViewCell.swift; sourceTree = "<group>"; };
 		1169C98729573981000AAD8A /* MyTableApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MyTableApp.entitlements; sourceTree = "<group>"; };
 		1191FEC728D8D3F200656B2B /* DetailedEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedEventViewController.swift; sourceTree = "<group>"; };
 		1191FEEC28DAFBE400656B2B /* OneEventSomeHolderTableViewCell_xib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneEventSomeHolderTableViewCell_xib.swift; sourceTree = "<group>"; };
@@ -167,7 +165,6 @@
 			isa = PBXGroup;
 			children = (
 				11547FC228941C06001BBBCB /* ChangeEventHolderStatusTableViewController.swift */,
-				11547FC4289425EC001BBBCB /* ChangeEventHolderStatusCustomTableViewCell.swift */,
 			);
 			path = ChangeEventHolderStatusTableViewController;
 			sourceTree = "<group>";
@@ -318,7 +315,6 @@
 				1104807E28994F4600A0512B /* CustomDate.swift in Sources */,
 				11538CAF28CF8F5000B69B2D /* FirstNameTextFieldTableViewCell.swift in Sources */,
 				11F3A6952896A63000EABCE0 /* ChangeEventHolderSexTableViewController.swift in Sources */,
-				11547FC5289425EC001BBBCB /* ChangeEventHolderStatusCustomTableViewCell.swift in Sources */,
 				1121AEA32906A13100B05769 /* CongratulationViewController.swift in Sources */,
 				114A906428F8B64B002E8B39 /* TextViewTableViewCell.swift in Sources */,
 				11BF060E294F2736006B6CC0 /* Extensions.swift in Sources */,
