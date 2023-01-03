@@ -341,7 +341,10 @@ extension AddEventHolderViewController {
             if indexPath.section == 0 && indexPath.row == 4 {
                 // получаем вью контроллер, в который происходит переход
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let changeEventHolderSexTableViewController = storyboard.instantiateViewController(withIdentifier: "ChangeEventHolderSexTableViewControlleriD") as! ChangeEventHolderSexTableViewController
+//                let changeEventHolderSexTableViewController = storyboard.instantiateViewController(withIdentifier: "ChangeEventHolderSexTableViewControlleriD") as! ChangeEventHolderSexTableViewController
+                
+                let changeEventHolderSexTableViewController = ChangeEventHolderSexTableViewController()
+                
                 
                 // передача текущего статуса, при первом переходе статус всегда будет - .none
                 changeEventHolderSexTableViewController.selectedSex = currentEventHolderSex

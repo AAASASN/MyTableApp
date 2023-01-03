@@ -6,9 +6,6 @@
 //
 
 
-// Экран реализован при помощи UITableViewController с использованием статических ячеек
-
-
 import UIKit
 
 class ChangeEventHolderSexTableViewController: UITableViewController {
@@ -19,26 +16,28 @@ class ChangeEventHolderSexTableViewController: UITableViewController {
     // в этой переменной будет храниться текущий пол
     var selectedSex : EventHolderSex = .none
     
+    let dataSourseForTable = [(EventHolderSex.male, "мужской пол"),
+                              (EventHolderSex.female, "женский пол"),
+                              (EventHolderSex.third, "на случай если кто-то еще не определился"),
+                              (EventHolderSex.none, "выбор по умолчанию")]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        tableView = UITableView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height), style: .insetGrouped)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        tableView.endEditing(true)
     }
     
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
+        1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 4
-        
+        dataSourseForTable.count
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -47,6 +46,23 @@ class ChangeEventHolderSexTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         return "в будущем варианты возможно будут расширены..."
+    }
+    
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+        var cellConfig = cell.defaultContentConfiguration()
+        cellConfig.text = dataSourseForTable[indexPath.row].0.rawValue
+        cellConfig.secondaryText = dataSourseForTable[indexPath.row].1
+        cellConfig.secondaryTextProperties.font = .systemFont(ofSize: 14)
+        cellConfig.secondaryTextProperties.color = .systemGray2
+        cell.selectionStyle = .none
+        cell.contentConfiguration = cellConfig
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        60
     }
 
     // действия при нажатии на ячейку
