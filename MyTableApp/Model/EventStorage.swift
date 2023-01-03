@@ -5,7 +5,7 @@
 //  Created by Александр Мараенко on 08.07.2022.
 //
 
-import UIKit
+
 import Foundation
 import Contacts
 import CoreData

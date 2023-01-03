@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SelectEventTypeTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class SelectEventTypeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     var tableView: UITableView!
     
