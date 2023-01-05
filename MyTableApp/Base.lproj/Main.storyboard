@@ -87,23 +87,9 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Birthday App" leftItemsSupplementBackButton="YES" largeTitleDisplayMode="always" id="x6f-AG-9Bw">
                         <barButtonItem key="backBarButtonItem" title="Назад" id="zQe-p3-G5l"/>
-                        <rightBarButtonItems>
-                            <barButtonItem systemItem="add" id="DmJ-Xv-QUw">
-                                <connections>
-                                    <segue destination="tI8-LN-aQy" kind="show" id="yzk-PK-HJ6"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem title="Synchronize" image="arrow.triangle.2.circlepath" catalog="system" id="ZhA-2p-39S">
-                                <connections>
-                                    <action selector="synchronizeItemPressed:" destination="61P-PM-i9I" id="IUV-fN-oCQ"/>
-                                </connections>
-                            </barButtonItem>
-                        </rightBarButtonItems>
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="nf7-Bd-ea1"/>
                     </navigationItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <connections>
-                        <outlet property="synchronizeItemOutlet" destination="ZhA-2p-39S" id="hfy-9C-imc"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zwi-UG-d4x" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -112,7 +98,7 @@
         <!--Добавить юбиляра-->
         <scene sceneID="vHz-kv-Od1">
             <objects>
-                <viewController storyboardIdentifier="AddEventHolderViewControllerID" id="tI8-LN-aQy" customClass="AddEventHolderViewController" customModule="MyTableApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddEventHolderViewControllerID" id="tI8-LN-aQy" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mGr-gu-JnK">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -121,13 +107,13 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FirstNameTextFieldTableViewCellID" rowHeight="43" id="N9Z-uK-VFY" customClass="FirstNameTextFieldTableViewCell" customModule="MyTableApp" customModuleProvider="target">
-                                        <rect key="frame" x="16" y="38" width="343" height="43"/>
+                                        <rect key="frame" x="16" y="55.5" width="343" height="43"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="N9Z-uK-VFY" id="Rxa-2E-vAK">
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" placeholder="Какой-то плейсхолдер" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="LTC-5J-pAI">
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="LTC-5J-pAI">
                                                     <rect key="frame" x="16" y="0.0" width="321" height="43"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
@@ -146,13 +132,13 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LastNameTextFieldTableViewCellID" rowHeight="43" id="vSd-6i-X0d" customClass="LastNameTextFieldTableViewCell" customModule="MyTableApp" customModuleProvider="target">
-                                        <rect key="frame" x="16" y="81" width="343" height="43"/>
+                                        <rect key="frame" x="16" y="98.5" width="343" height="43"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vSd-6i-X0d" id="rLW-oF-ZYP">
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" placeholder="Какой-то плейсхолдер" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="udz-Xh-XNA">
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="udz-Xh-XNA">
                                                     <rect key="frame" x="16" y="0.0" width="321" height="43"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
@@ -171,13 +157,13 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DateTextFiedTableViewCellID" rowHeight="43" id="kgL-At-2oZ" customClass="DateTextFiedTableViewCell" customModule="MyTableApp" customModuleProvider="target">
-                                        <rect key="frame" x="16" y="124" width="343" height="43"/>
+                                        <rect key="frame" x="16" y="141.5" width="343" height="43"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kgL-At-2oZ" id="IfU-U6-DBw">
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" placeholder="Какой-то плейсхолдер" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="kOW-xj-91U">
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="kOW-xj-91U">
                                                     <rect key="frame" x="16" y="0.0" width="321" height="43"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
@@ -196,13 +182,13 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PhoneNumberTextFieldTableViewCellID" rowHeight="43" id="slw-Mv-OuN" customClass="PhoneNumberTextFieldTableViewCell" customModule="MyTableApp" customModuleProvider="target">
-                                        <rect key="frame" x="16" y="167" width="343" height="43"/>
+                                        <rect key="frame" x="16" y="184.5" width="343" height="43"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="slw-Mv-OuN" id="NTc-ei-MaY">
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" placeholder="Какой-то плейсхолдер" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="kOL-Dv-TGS">
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="kOL-Dv-TGS">
                                                     <rect key="frame" x="16" y="0.0" width="321" height="43"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
@@ -221,7 +207,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SexAndStatusTableViewCelliD" rowHeight="43" id="hC1-sU-qU0" customClass="SexAndStatusTableViewCell" customModule="MyTableApp" customModuleProvider="target">
-                                        <rect key="frame" x="16" y="210" width="343" height="43"/>
+                                        <rect key="frame" x="16" y="227.5" width="343" height="43"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hC1-sU-qU0" id="eTW-jr-Exe">
                                             <rect key="frame" x="0.0" y="0.0" width="316.5" height="43"/>
@@ -251,13 +237,9 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
-                                        <connections>
-                                            <outlet property="selectResultLabel" destination="khl-jd-5Ko" id="mQ8-xd-07H"/>
-                                            <outlet property="sexOrStatusLabel" destination="feI-uH-1yr" id="PdI-wU-CnJ"/>
-                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="blue" indentationWidth="10" reuseIdentifier="AddEventButtonAsTableViewCellID" rowHeight="72" id="gJw-65-GC3" customClass="AddEventButtonAsTableViewCell" customModule="MyTableApp" customModuleProvider="target">
-                                        <rect key="frame" x="16" y="253" width="343" height="72"/>
+                                        <rect key="frame" x="16" y="270.5" width="343" height="72"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="gJw-65-GC3" id="dtz-Vu-yWY">
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="72"/>
@@ -294,17 +276,9 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Добавить юбиляра" leftItemsSupplementBackButton="YES" largeTitleDisplayMode="always" id="Xzm-Jx-Epo">
-                        <barButtonItem key="rightBarButtonItem" title="Сохранить" id="CrO-ae-ajz">
-                            <connections>
-                                <action selector="saveEventHolderButton:" destination="tI8-LN-aQy" id="Gqt-aD-fB4"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Сохранить" id="CrO-ae-ajz"/>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
-                    <connections>
-                        <outlet property="firstTableView" destination="73s-JR-ttp" id="dhG-rw-IE9"/>
-                        <outlet property="saveButtonOutlet" destination="CrO-ae-ajz" id="yDJ-se-pRQ"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FJL-u9-br3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -497,7 +471,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="arrow.triangle.2.circlepath" catalog="system" width="128" height="104"/>
         <image name="phone.circle" catalog="system" width="128" height="123"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

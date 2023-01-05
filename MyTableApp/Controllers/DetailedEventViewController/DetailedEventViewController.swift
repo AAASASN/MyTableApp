@@ -28,9 +28,12 @@ class DetailedEventViewController: UIViewController {
         removeKeyboardNotifications()
     }
     
+    
+    
     // MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
+        
 
         tableView.delegate = self
         tableView.dataSource = self
@@ -156,20 +159,16 @@ extension DetailedEventViewController: UITableViewDataSource, UITableViewDelegat
         // и в дальнейшем он будет использоваться для просмотра событий юбиляра и редактирования его свойств(характеристик)
         if indexPath.section == 0 && indexPath.row == 0 {
             
-            // получаем вью контроллер, в который происходит переход
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            if let aboutEventHolderController = storyboard.instantiateViewController(withIdentifier: "AddEventHolderViewControllerID") as? AddEventHolderViewController {
-                
-                // настраиваем aboutEventHolderController перед вызовом - передадим экземпляр EventHolder и заполняем текстовые поля
-                aboutEventHolderController.prepareForReqestFromDetailedEventViewController(someEventHolderID: eventHolderAndEventID.0)
-                // переходим к следующему экрану
-                self.navigationController?.pushViewController(aboutEventHolderController, animated: true)
-                
-                
-            } else {
-                print("?????????")
-            }
-
+            let aboutEventHolderController = AddEventHolderViewController()
+            
+            // настраиваем aboutEventHolderController перед вызовом - передадим экземпляр EventHolder и заполняем текстовые поля
+            aboutEventHolderController.prepareForReqestFromDetailedEventViewController(someEventHolderID: eventHolderAndEventID.0)
+            // переходим к следующему экрану
+            self.navigationController?.pushViewController(aboutEventHolderController, animated: true)
+            
+            
+            
+            
         }
         
         // переход на экран просмотра текста поздравления
@@ -260,3 +259,5 @@ extension DetailedEventViewController {
     }
     
 }
+
+

@@ -21,7 +21,7 @@
 		114D2660287811F800F44967 /* StartControllerCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114D265F287811F800F44967 /* StartControllerCustomCell.swift */; };
 		114D26622878132600F44967 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114D26612878132600F44967 /* Event.swift */; };
 		114D26652878160A00F44967 /* EventStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114D26642878160A00F44967 /* EventStorage.swift */; };
-		11538CAF28CF8F5000B69B2D /* FirstNameTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11538CAE28CF8F5000B69B2D /* FirstNameTextFieldTableViewCell.swift */; };
+		11538CAF28CF8F5000B69B2D /* TextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11538CAE28CF8F5000B69B2D /* TextFieldTableViewCell.swift */; };
 		11538CB128CF8FB300B69B2D /* LastNameTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11538CB028CF8FB300B69B2D /* LastNameTextFieldTableViewCell.swift */; };
 		11538CB328CF8FE200B69B2D /* DateTextFiedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11538CB228CF8FE200B69B2D /* DateTextFiedTableViewCell.swift */; };
 		11538CB528CF900E00B69B2D /* PhoneNumberTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11538CB428CF900E00B69B2D /* PhoneNumberTextFieldTableViewCell.swift */; };
@@ -57,7 +57,7 @@
 		114D265F287811F800F44967 /* StartControllerCustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartControllerCustomCell.swift; sourceTree = "<group>"; };
 		114D26612878132600F44967 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		114D26642878160A00F44967 /* EventStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventStorage.swift; sourceTree = "<group>"; };
-		11538CAE28CF8F5000B69B2D /* FirstNameTextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstNameTextFieldTableViewCell.swift; sourceTree = "<group>"; };
+		11538CAE28CF8F5000B69B2D /* TextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldTableViewCell.swift; sourceTree = "<group>"; };
 		11538CB028CF8FB300B69B2D /* LastNameTextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastNameTextFieldTableViewCell.swift; sourceTree = "<group>"; };
 		11538CB228CF8FE200B69B2D /* DateTextFiedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTextFiedTableViewCell.swift; sourceTree = "<group>"; };
 		11538CB428CF900E00B69B2D /* PhoneNumberTextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberTextFieldTableViewCell.swift; sourceTree = "<group>"; };
@@ -169,6 +169,19 @@
 			path = ChangeEventHolderStatusTableViewController;
 			sourceTree = "<group>";
 		};
+		11A8858829649A7C00535E68 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				11538CAE28CF8F5000B69B2D /* TextFieldTableViewCell.swift */,
+				11538CB028CF8FB300B69B2D /* LastNameTextFieldTableViewCell.swift */,
+				11538CB228CF8FE200B69B2D /* DateTextFiedTableViewCell.swift */,
+				11538CB428CF900E00B69B2D /* PhoneNumberTextFieldTableViewCell.swift */,
+				114710AA28CB79070091C821 /* SexAndStatusTableViewCell.swift */,
+				110C26B128D36FD900C5DC2A /* AddEventButtonAsTableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		11BF060C294F26C9006B6CC0 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -206,12 +219,7 @@
 			isa = PBXGroup;
 			children = (
 				11C2A2E428D62E0F003515F1 /* AddEventHolderViewController.swift */,
-				11538CAE28CF8F5000B69B2D /* FirstNameTextFieldTableViewCell.swift */,
-				11538CB028CF8FB300B69B2D /* LastNameTextFieldTableViewCell.swift */,
-				11538CB228CF8FE200B69B2D /* DateTextFiedTableViewCell.swift */,
-				11538CB428CF900E00B69B2D /* PhoneNumberTextFieldTableViewCell.swift */,
-				114710AA28CB79070091C821 /* SexAndStatusTableViewCell.swift */,
-				110C26B128D36FD900C5DC2A /* AddEventButtonAsTableViewCell.swift */,
+				11A8858829649A7C00535E68 /* Cells */,
 				1182AF42293FC31700688586 /* ChangeEventHolderSexTableViewController */,
 				1191FEF228DB15D500656B2B /* ChangeEventHolderStatusTableViewController */,
 			);
@@ -313,7 +321,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1104807E28994F4600A0512B /* CustomDate.swift in Sources */,
-				11538CAF28CF8F5000B69B2D /* FirstNameTextFieldTableViewCell.swift in Sources */,
+				11538CAF28CF8F5000B69B2D /* TextFieldTableViewCell.swift in Sources */,
 				11F3A6952896A63000EABCE0 /* ChangeEventHolderSexTableViewController.swift in Sources */,
 				1121AEA32906A13100B05769 /* CongratulationViewController.swift in Sources */,
 				114A906428F8B64B002E8B39 /* TextViewTableViewCell.swift in Sources */,

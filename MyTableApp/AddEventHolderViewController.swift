@@ -9,13 +9,15 @@ import UIKit
 
 class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    @IBOutlet weak var firstTableView: UITableView!
-    @IBOutlet weak var saveButtonOutlet: UIBarButtonItem!
+    var tableView: UITableView!
+    var saveButtonItem: UIBarButtonItem!
     
-    var firstNameTextFieldCell = FirstNameTextFieldTableViewCell()
-    var lastNameTextFieldCell = LastNameTextFieldTableViewCell()
-    var dateTextFieldCell = DateTextFiedTableViewCell()
-    var phoneNumberTextFieldCell = PhoneNumberTextFieldTableViewCell()
+    var firstNameTextFieldCell: TextFieldTableViewCell!
+    var lastNameTextFieldCell: TextFieldTableViewCell!
+    var dateTextFieldCell: TextFieldTableViewCell!
+    var phoneNumberTextFieldCell: TextFieldTableViewCell!
+    var sexCell:  SexAndStatusTableViewCell!
+    var statusCell: SexAndStatusTableViewCell!
     
     // свойство для загрузки в него хранилища с данными
     var eventsStorage : EventStorageProtocol = EventStorage()
@@ -29,65 +31,35 @@ class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITab
     // переменная для хранения текущего пола Юбиляра
     var currentEventHolderSex: EventHolderSex = .none
     
-    // создадим экземпляр UIDatePicker, далее в методе viewDidLoad
-    // назначим его как способ ввода в текстовое поле addEventHolderBirthdayDateTextField
-    var datePicker = UIDatePicker()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // указаваем что класс AddEventHolderViewController будет является датасорсом и делегатом для таблицы firstTableView
-        firstTableView.delegate = self
-        firstTableView.dataSource = self
+        tableViewSettings()
+        saveButtonItemSettings()
+        createCells()
+        setupNavigationBar()
+        cellContentSettings()
+        
+        // указаваем что класс AddEventHolderViewController будет является датасорсом и делегатом для таблицы tableView
+        tableView.delegate = self
+        tableView.dataSource = self
         
         // регистрируем Nib ячейку
         let cellNib = UINib(nibName: "OneEventSomeHolderTableViewCell_xib", bundle: nil)
-        firstTableView.register(cellNib, forCellReuseIdentifier: "reuseIdentifier")
-        
-        firstNameTextFieldCell = firstTableView.dequeueReusableCell(withIdentifier: "FirstNameTextFieldTableViewCellID") as! FirstNameTextFieldTableViewCell
-        lastNameTextFieldCell = firstTableView.dequeueReusableCell(withIdentifier: "LastNameTextFieldTableViewCellID") as! LastNameTextFieldTableViewCell
-        dateTextFieldCell = firstTableView.dequeueReusableCell(withIdentifier: "DateTextFiedTableViewCellID") as! DateTextFiedTableViewCell
-        phoneNumberTextFieldCell = firstTableView.dequeueReusableCell(withIdentifier: "PhoneNumberTextFieldTableViewCellID") as! PhoneNumberTextFieldTableViewCell
+        tableView.register(cellNib, forCellReuseIdentifier: "reuseIdentifier")
         
         
         // получим актуальный список [EventHolder] в хранилище eventsStorage
         eventsStorage.getUpdatedDataToEventStorage()
         
-        // Настроим Навигейщен Бар
-        setupNavigationBar()
-        
-        if eventHolder != nil {
-            // заполним текстовые поля в соответствии с принятыми данными о EventHolder
-            firstNameTextFieldCell.textField.text = eventHolder.eventHolderFirstName
-            lastNameTextFieldCell.textField.text = eventHolder.eventHolderLastName
-            dateTextFieldCell.textField.text = formatDateWithoutYear(eventDate: eventHolder.eventHolderBirthdayDate.dateAsString)
-            phoneNumberTextFieldCell.textField.text = eventHolder.eventHolderPhoneNumber
-            
-            // настроим кнопку "Сохранить" с "Сохранить" на "Изменить"
-            saveButtonOutlet.title = "Изменить"
-            // деактивируем ее до тех пор пока все поля не будут заполнены
-            saveButtonOutlet.isEnabled = true
-            
-            // запрещаем редактировать все textField
-            firstNameTextFieldCell.textField.isEnabled.toggle()
-            lastNameTextFieldCell.textField.isEnabled.toggle()
-            dateTextFieldCell.textField.isEnabled.toggle()
-            phoneNumberTextFieldCell.textField.isEnabled.toggle()
-            
-        } else {
-            // настроим кнопку "Сохранить"
-            saveButtonOutlet.title = "Сохранить"
-            // деактивируем ее до тех пор пока все поля не будут заполнены
-            saveButtonOutlet.isEnabled = false
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         // получим актуальный список [EventHolder] в хранилище eventsStorage
         eventsStorage.getUpdatedDataToEventStorage()
-        
-        firstTableView.reloadData()
+        tableView.reloadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -96,7 +68,9 @@ class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        
     }
+    
     
     // MARK: - подготовка экрана при вызове с DetailedEventViewController
     // в этом случае контроллер AddEventHolderViewController будет использоваться уже не для добавления EventHolder а для просмотра и изменения уже существующего EventHolder
@@ -114,45 +88,19 @@ class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITab
         
     }
     
-    
-    // MARK: - Кнопка сохранить
-    @IBAction func saveEventHolderButton(_ sender: UIBarButtonItem) {
-        // по нажатию на кнопку сохранить проверяем заполнены ли поля Пол и Статус
-        // и рекомендуем заполнить вызывая UIAlertController
-        if saveButtonOutlet.title == "Сохранить" {
-            if currentEventHolderStatus == .none && currentEventHolderSex == .none {
-                let alertSexAndStatus = UIAlertController(title: "Внимание!", message: "Вы оставили поля Пол и Статус без изменений, рекомендуем их заполнить", preferredStyle: .alert)
-                presentAlert(alertController: alertSexAndStatus)
-            }
-            if currentEventHolderStatus == .none && currentEventHolderSex != .none {
-                let alertSexAndStatus = UIAlertController(title: "Внимание!", message: "Вы оставили поле Статус без изменений, рекомендуем его заполнить", preferredStyle: .alert)
-                presentAlert(alertController: alertSexAndStatus)
-            }
-            if currentEventHolderStatus != .none && currentEventHolderSex == .none {
-                let alertSexAndStatus = UIAlertController(title: "Внимание!", message: "Вы оставили поле Пол без изменений, рекомендуем его заполнить", preferredStyle: .alert)
-                presentAlert(alertController: alertSexAndStatus)
-            }
-            if currentEventHolderStatus != .none && currentEventHolderSex != .none {
-                savingOrEditEventHolderAndCreateBirthdayEvent()
-            }
-        } else {
-            if saveButtonOutlet.title == "Изменить" {
-                savingOrEditEventHolderAndCreateBirthdayEvent()
-            }
-        }
-    }
-    
+
+    // MARK: - presentAlert
     // функция будет принимать UIAlertController, создавать два UIAlertAction
     // и отображать их
     func presentAlert(alertController: UIAlertController) {
         let alertActionCancel = UIAlertAction(title: "Дополнить", style: .default, handler: {_ in
             // скрываем клавиатуру
-            self.firstTableView.endEditing(true)
+            self.tableView.endEditing(true)
         })
         let alertActionSave = UIAlertAction(title: "Все равно сохранить", style: .cancel, handler: {_ in
             self.savingOrEditEventHolderAndCreateBirthdayEvent()
             // скрываем клавиатуру
-            self.firstTableView.endEditing(true)
+            self.tableView.endEditing(true)
         })
         alertController.addAction(alertActionCancel)
         alertController.addAction(alertActionSave)
@@ -160,14 +108,18 @@ class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITab
         self.present(alertController, animated: true, completion: nil)
     }
     
+    
+    // MARK: - savingOrEditEventHolderAndCreateBirthdayEvent
     // функция либо разрешает либо запрещает редактировать поля в зависимости от статуса
     // кнопки saveButtonOutlet - Сохранить или Изменить
     // а так же создает Юбиляра с событие Birthday по умолчанию и сохраняет его
     // в массив events[]
     func savingOrEditEventHolderAndCreateBirthdayEvent(){
-        if saveButtonOutlet.title == "Сохранить" {
+        
+        if saveButtonItem.title == "Сохранить" {
+            
             // меняем название кнопки saveButtonOutlet с "Сохранить" на "Изменить"
-            self.saveButtonOutlet.title = "Изменить"
+            self.saveButtonItem.title = "Изменить"
             
             // запрещаем редактировать все textField
             firstNameTextFieldCell.textField.isEnabled.toggle()
@@ -176,7 +128,7 @@ class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITab
             phoneNumberTextFieldCell.textField.isEnabled.toggle()
             
             // скрываем клавиатуру
-            self.firstTableView.endEditing(true)
+            self.tableView.endEditing(true)
             
             // для корректного формата даты
             let dateFormatter = DateFormatter()
@@ -209,7 +161,7 @@ class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITab
                 // получим актуальный список [EventHolder] в хранилище eventsStorage
                 eventsStorage.getUpdatedDataToEventStorage()
                 
-                firstTableView.reloadData()
+                tableView.reloadData()
                 
             } else {
                 // иначе мы можем внести изменения в свойства уже созданного eventHolder а затем сохранить/или пересохранить его в хранилище
@@ -224,12 +176,12 @@ class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITab
                 eventsStorage.addChangesOfEventHolderToEventStorage(changedEventHolder: eventHolder)
                 
                 print(eventHolder.events.count)
-                firstTableView.reloadData()
+                tableView.reloadData()
             }
         } else {
-            if saveButtonOutlet.title == "Изменить" {
+            if saveButtonItem.title == "Изменить" {
                 // меняем название кнопки saveButtonOutlet с "Изменить" на "Сохранить"
-                self.saveButtonOutlet.title = "Сохранить"
+                self.saveButtonItem.title = "Сохранить"
                 // разрешаем редактировать всех textField
                 
                 firstNameTextFieldCell.textField.isEnabled.toggle()
@@ -237,7 +189,7 @@ class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITab
                 dateTextFieldCell.textField.isEnabled.toggle()
                 phoneNumberTextFieldCell.textField.isEnabled.toggle()
                 // скрываем клавиатуру
-                self.firstTableView.endEditing(true)
+                self.tableView.endEditing(true)
             }
         }
         print(eventHolder.events.count)
@@ -268,38 +220,31 @@ extension AddEventHolderViewController {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // возвращаемое значение
         var varForReturn = UITableViewCell()
-        // ячейка для выбора пола
-        let sexAndStatusCell = firstTableView.dequeueReusableCell(withIdentifier: "SexAndStatusTableViewCelliD") as! SexAndStatusTableViewCell
+        
         // ячейка для для отображения нового события
-        let eventCell = firstTableView.dequeueReusableCell(withIdentifier: "reuseIdentifier") as! OneEventSomeHolderTableViewCell_xib
+        let eventCell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier") as! OneEventSomeHolderTableViewCell_xib
         
         if indexPath.section == 0 {
             switch indexPath.row {
             case 0:
-                firstNameTextFieldCell.textField.placeholder = "Имя"
                 return firstNameTextFieldCell
             case 1:
-                lastNameTextFieldCell.textField.placeholder = "Фамилия"
                 return lastNameTextFieldCell
             case 2:
-                dateTextFieldCell.textField.placeholder = "Дата рождения"
-                dateTextFieldCell.datePickerSwttings()
                 return dateTextFieldCell
             case 3:
-                phoneNumberTextFieldCell.textField.placeholder = "Номер телефона"
-                phoneNumberTextFieldCell.textField.keyboardType = UIKeyboardType.phonePad
                 return phoneNumberTextFieldCell
             case 4:
-                sexAndStatusCell.sexOrStatusLabel.text = "Пол"
-                sexAndStatusCell.selectResultLabel.text = currentEventHolderSex.rawValue
-                return sexAndStatusCell
+                sexCell.selectResultLabel.text = currentEventHolderSex.rawValue
+                return sexCell
             case 5:
-                sexAndStatusCell.sexOrStatusLabel.text = "Статус"
-                sexAndStatusCell.selectResultLabel.text = currentEventHolderStatus.rawValue
-                return sexAndStatusCell
+                statusCell.selectResultLabel.text = currentEventHolderStatus.rawValue
+                return statusCell
             default:
                 break
+
             }
+            
         } else {
             for i in 1..<eventHolder.events.count + 1 {
                 if indexPath.section == i {
@@ -313,7 +258,7 @@ extension AddEventHolderViewController {
         if indexPath.section == eventHolder.events.count + 1 {
             if eventHolder != nil {
                 if indexPath.row == 0 {
-                    let cellAsButton = firstTableView.dequeueReusableCell(withIdentifier: "AddEventButtonAsTableViewCellID", for: indexPath) as! AddEventButtonAsTableViewCell
+                    let cellAsButton = tableView.dequeueReusableCell(withIdentifier: "AddEventButtonAsTableViewCellID", for: indexPath) as! AddEventButtonAsTableViewCell
                     varForReturn = cellAsButton
                 }
             }
@@ -335,14 +280,13 @@ extension AddEventHolderViewController {
     
     // при нажатии на ячейку
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         // если активна кнопка "Сохранить"
-        if saveButtonOutlet.title == "Сохранить" {
+        if saveButtonItem.title == "Сохранить" {
             // при нажатии на пятую ячейку - выбор пола
             if indexPath.section == 0 && indexPath.row == 4 {
                 
-                
                 let changeEventHolderSexTableViewController = ChangeEventHolderSexTableViewController()
-                
                 
                 // передача текущего статуса, при первом переходе статус всегда будет - .none
                 changeEventHolderSexTableViewController.selectedSex = currentEventHolderSex
@@ -355,20 +299,18 @@ extension AddEventHolderViewController {
                 changeEventHolderSexTableViewController.doAfterSexSelected = {[self] selectedSex in
                     // изменяем статус пользователя в контроллере AddEventHolderViewController
                     self.currentEventHolderSex = selectedSex
-                    let cell = firstTableView.cellForRow(at: IndexPath(row: 4, section: 0)) as! SexAndStatusTableViewCell
+                    let cell = tableView.cellForRow(at: IndexPath(row: 4, section: 0)) as! SexAndStatusTableViewCell
                     cell.selectResultLabel.text = currentEventHolderSex.rawValue
-                    //firstTableView.reloadData()
                 }
+                
                 // таким образом мы выполнили операции в AddEventHolderViewController при помощи замыкания doAfterSexSelected вызвав его
                 // вообще в другом контроллере
                 // переходим к следующему экрану
                 self.navigationController?.pushViewController(changeEventHolderSexTableViewController, animated: true)
             }
+            
             // если нажата ячейка 6 - выбор статуса
             if indexPath.section == 0 && indexPath.row == 5 {
-                
-                // получаем вью контроллер, в который происходит переход
-                //let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 
                 let changeEventHolderStatusTableViewController = ChangeEventHolderStatusTableViewController()
                 
@@ -384,7 +326,7 @@ extension AddEventHolderViewController {
                     // изменяем статус пользователя в контроллере AddEventHolderViewController
                     self.currentEventHolderStatus = selectedStatus
                     // получаем ссылку на конкретную ячейку по IndexPath
-                    let cell = firstTableView.cellForRow(at: IndexPath(row: 5, section: 0)) as! SexAndStatusTableViewCell
+                    let cell = tableView.cellForRow(at: IndexPath(row: 5, section: 0)) as! SexAndStatusTableViewCell
                     cell.selectResultLabel.text = currentEventHolderStatus.rawValue
                     //firstTableView.reloadData()
                 }
@@ -409,13 +351,21 @@ extension AddEventHolderViewController {
         }
     }
     
+    
     // MARK: - настройка Navigation Bar
     func setupNavigationBar() {
+        
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .compact)
         navigationController?.navigationBar.prefersLargeTitles = true
     }
     
-    // MARK: - TextFields Observer
+}
+
+
+
+// MARK: - TextFields Observer
+extension AddEventHolderViewController {
+    
     func fieldsObserver() {
         // в этом фрагменте кода проходим по массиву текстовых полей и запускаем для каждого из них
         // наблюдателя .addTarget
@@ -427,8 +377,7 @@ extension AddEventHolderViewController {
             if textField?.isEditing == false{
                 // метод addTarget унаследованный от UIControl позволяет выполнять функцию в селекторе #selector() при выполнения условия for: .editingChanged
                 textField!.addTarget(self, action: #selector(editingChanged(_:)), for: .editingChanged)
-                //textField.addTarget(self, action: #selector(editingBegan(_:)), for: .editingDidBegin)
-                //textField!.addTarget(self, action: #selector(editingEnded(_:)), for: .editingDidEnd)
+                
             }
         }
     }
@@ -436,36 +385,127 @@ extension AddEventHolderViewController {
     // функция проверяет что все поля заполнены и активирует кнопку "Сохранить", если же кнопка была активна
     // и какое либо поле очистили кнопка деактивируется
     @objc func editingChanged(_ textField: UITextField) {
-        if saveButtonOutlet.isEnabled == false {
+        
+        if saveButtonItem.isEnabled == false {
             if !firstNameTextFieldCell.textField.text!.isEmpty && !lastNameTextFieldCell.textField.text!.isEmpty && !dateTextFieldCell.textField.text!.isEmpty && !phoneNumberTextFieldCell.textField.text!.isEmpty {
-                saveButtonOutlet.isEnabled.toggle()
+                saveButtonItem.isEnabled.toggle()
             }
         }
-        if saveButtonOutlet.isEnabled == true {
+        
+        if saveButtonItem.isEnabled == true {
+            
             if firstNameTextFieldCell.textField.text!.isEmpty || lastNameTextFieldCell.textField.text!.isEmpty || dateTextFieldCell.textField.text!.isEmpty || phoneNumberTextFieldCell.textField.text!.isEmpty {
-                saveButtonOutlet.isEnabled.toggle()
+                saveButtonItem.isEnabled.toggle()
                 
             }
         }
+    }
+    
+}
+
+
+// MARK: - tableViewSettings
+extension AddEventHolderViewController {
+    
+    func tableViewSettings()  {
+        tableView = {
+            let tableView = UITableView(frame: .zero, style: .insetGrouped)
+            tableView.translatesAutoresizingMaskIntoConstraints = false
+            
+            view.addSubview(tableView)
+            NSLayoutConstraint.activate([tableView.topAnchor.constraint(equalTo: view.topAnchor),
+                                         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                                         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                                         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+                                        ])
+            return tableView
+        }()
+    }
+}
+
+
+// MARK: - cellContentSettings
+extension AddEventHolderViewController {
+    
+    func cellContentSettings() {
+        if eventHolder != nil {
+            // заполним текстовые поля в соответствии с принятыми данными о EventHolder
+            firstNameTextFieldCell.textField.text = eventHolder.eventHolderFirstName
+            lastNameTextFieldCell.textField.text = eventHolder.eventHolderLastName
+            dateTextFieldCell.textField.text = formatDateWithoutYear(eventDate: eventHolder.eventHolderBirthdayDate.dateAsString)
+            phoneNumberTextFieldCell.textField.text = eventHolder.eventHolderPhoneNumber
+            
+            // настроим кнопку "Сохранить" с "Сохранить" на "Изменить"
+            saveButtonItem.title = "Изменить"
+            // деактивируем ее до тех пор пока все поля не будут заполнены
+            saveButtonItem.isEnabled = true
+            
+            // запрещаем редактировать все textField
+            firstNameTextFieldCell.textField.isEnabled.toggle()
+            lastNameTextFieldCell.textField.isEnabled.toggle()
+            dateTextFieldCell.textField.isEnabled.toggle()
+            phoneNumberTextFieldCell.textField.isEnabled.toggle()
+            
+        } else {
+            
+            // настроим кнопку "Сохранить"
+            saveButtonItem.title = "Сохранить"
+            // деактивируем ее до тех пор пока все поля не будут заполнены
+            saveButtonItem.isEnabled = false
+        }
+    }
+}
+
+
+// MARK: - createCells
+extension AddEventHolderViewController {
+    
+    func createCells()  {
+        firstNameTextFieldCell = TextFieldTableViewCell(style: .default, reuseIdentifier: nil , textFieldType: .firstNameTextField)
+        lastNameTextFieldCell = TextFieldTableViewCell(style: .default, reuseIdentifier: nil , textFieldType: .lastNameTextField)
+        dateTextFieldCell = TextFieldTableViewCell(style: .default, reuseIdentifier: nil , textFieldType: .dateTextField)
+        phoneNumberTextFieldCell = TextFieldTableViewCell(style: .default, reuseIdentifier: nil, textFieldType: .phoneTextField)
+        sexCell =  SexAndStatusTableViewCell(style: .default, reuseIdentifier: nil, cellType: .sex)
+        statusCell = SexAndStatusTableViewCell(style: .default, reuseIdentifier: nil, cellType: .status)
+    }
+}
+
+
+// MARK: - saveButtonItemSettings
+extension AddEventHolderViewController {
+    
+    func saveButtonItemSettings()  {
         
-        //    //////////////////////////////////////////////////////////////////////
-        //
-        //      ЕЩЕ ВАРИАНТЫ
-        //
-        //    @objc func editingBegan(_ textField: UITextField) {
-        //        //пользователь попал в поле, но еще ничего не ввел
-        //    }
-        //
-        //    @objc func editingChanged(_ textField: UITextField) {
-        //        //текст изменился
-        //    }
-        //
-        //    @objc func editingEnded(_ textField: UITextField) {
-        //        //ввод окончен, к примеру нажали "return" на клавиатуре
-        //    }
-        //    /////////////////////////////////////////////////////////////////////
+        saveButtonItem = UIBarButtonItem(title: "Сохранить", style: .done, target: self, action: #selector(saveButtonItemAction))
+        navigationItem.rightBarButtonItem = saveButtonItem
         
     }
     
-    
+    @objc
+    func saveButtonItemAction() {
+        // по нажатию на кнопку сохранить проверяем заполнены ли поля Пол и Статус
+        // и рекомендуем заполнить вызывая UIAlertController
+        if saveButtonItem.title == "Сохранить" {
+            if currentEventHolderStatus == .none && currentEventHolderSex == .none {
+                let alertSexAndStatus = UIAlertController(title: "Внимание!", message: "Вы оставили поля Пол и Статус без изменений, рекомендуем их заполнить", preferredStyle: .alert)
+                presentAlert(alertController: alertSexAndStatus)
+            }
+            if currentEventHolderStatus == .none && currentEventHolderSex != .none {
+                let alertSexAndStatus = UIAlertController(title: "Внимание!", message: "Вы оставили поле Статус без изменений, рекомендуем его заполнить", preferredStyle: .alert)
+                presentAlert(alertController: alertSexAndStatus)
+            }
+            if currentEventHolderStatus != .none && currentEventHolderSex == .none {
+                let alertSexAndStatus = UIAlertController(title: "Внимание!", message: "Вы оставили поле Пол без изменений, рекомендуем его заполнить", preferredStyle: .alert)
+                presentAlert(alertController: alertSexAndStatus)
+            }
+            if currentEventHolderStatus != .none && currentEventHolderSex != .none {
+                savingOrEditEventHolderAndCreateBirthdayEvent()
+            }
+        } else {
+            if saveButtonItem.title == "Изменить" {
+                savingOrEditEventHolderAndCreateBirthdayEvent()
+            }
+        }
+    }
 }
+
