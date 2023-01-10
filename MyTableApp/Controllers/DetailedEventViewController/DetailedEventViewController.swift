@@ -34,7 +34,6 @@ class DetailedEventViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
         tableView.delegate = self
         tableView.dataSource = self
 
@@ -51,10 +50,6 @@ class DetailedEventViewController: UIViewController {
         self.navigationItem.title = eventsStorage.getEventHolderFromStorageByEventHolderID(eventHolderID: eventHolderAndEventID.0).eventHolderFirstName + " " + eventsStorage.getEventHolderFromStorageByEventHolderID(eventHolderID: eventHolderAndEventID.0).eventHolderLastName
         
         self.navigationItem.title = eventsStorage.getEventFromStorageByEventID(eventID: eventHolderAndEventID.1).eventType.rawValue
-        
-        // настройка большого navigationItem.title в DetailedEventViewController
-        // self.navigationItem.largeTitleDisplayMode = .never
-        
         
         // вызываем метод который будет регистрировать наблюдателей
         registerForKeyboardNotifications()
@@ -132,8 +127,9 @@ extension DetailedEventViewController: UITableViewDataSource, UITableViewDelegat
         // Ячейка третьей секции
         // ячейка-кнопка для перехода на экран просмотра текста поздравления
         if indexPath.section == 3 {
-            let buttonCell = tableView.dequeueReusableCell(withIdentifier: "AddEventButtonAsTableViewCellID") as! AddEventButtonAsTableViewCell
+            let buttonCell =  AddEventButtonAsTableViewCell(style: .default, reuseIdentifier: nil)
             // насторойка ячейки
+            buttonCell.buttonLabel.text = "Поздравить"
             cellForReturn = buttonCell
         }
         return cellForReturn
@@ -146,7 +142,7 @@ extension DetailedEventViewController: UITableViewDataSource, UITableViewDelegat
         
         // Высота ячейки с UITextView подстраивается под высоту экрана
         if indexPath.section == 2 {
-            let cellDinamicHeigth = view.frame.height - CGFloat(texViewCellHeight2)
+            let cellDinamicHeigth = view.frame.height - CGFloat(texViewCellHeight2) - 20
             return cellDinamicHeigth
         }
         return CGFloat(texViewCellHeight3)

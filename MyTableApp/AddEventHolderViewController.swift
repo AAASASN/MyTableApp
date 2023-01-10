@@ -32,7 +32,7 @@ class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITab
     var currentEventHolderSex: EventHolderSex = .none
     
     
-    
+    // MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -49,6 +49,7 @@ class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITab
         // регистрируем Nib ячейку
         let cellNib = UINib(nibName: "OneEventSomeHolderTableViewCell_xib", bundle: nil)
         tableView.register(cellNib, forCellReuseIdentifier: "reuseIdentifier")
+        
         
         
         // получим актуальный список [EventHolder] в хранилище eventsStorage
@@ -104,7 +105,6 @@ class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITab
         })
         alertController.addAction(alertActionCancel)
         alertController.addAction(alertActionSave)
-        // ///
         self.present(alertController, animated: true, completion: nil)
     }
     
@@ -187,7 +187,6 @@ class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITab
                 self.tableView.endEditing(true)
             }
         }
-        // print(eventHolder.events.count)
     }
 }
 
@@ -195,6 +194,8 @@ class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITab
 // MARK: - Table view data source
 extension AddEventHolderViewController {
     
+    
+    // MARK: - numberOfSections
     func numberOfSections(in tableView: UITableView) -> Int {
         if eventHolder != nil {
             return 2 + eventHolder.events.count
@@ -202,6 +203,7 @@ extension AddEventHolderViewController {
         return 1
     }
     
+    // MARK: - numberOfRowsInSection
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var forReturn = 0
         if section == 0 {
@@ -212,6 +214,8 @@ extension AddEventHolderViewController {
         return forReturn
     }
     
+    
+    // MARK: - cellForRowAt
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // возвращаемое значение
         var varForReturn = UITableViewCell()
@@ -253,7 +257,8 @@ extension AddEventHolderViewController {
         if indexPath.section == eventHolder.events.count + 1 {
             if eventHolder != nil {
                 if indexPath.row == 0 {
-                    let cellAsButton = tableView.dequeueReusableCell(withIdentifier: "AddEventButtonAsTableViewCellID", for: indexPath) as! AddEventButtonAsTableViewCell
+                    let cellAsButton = AddEventButtonAsTableViewCell(style: .default, reuseIdentifier: nil)
+                    cellAsButton.buttonLabel.text = "Добавить событие"
                     varForReturn = cellAsButton
                 }
             }
@@ -261,16 +266,17 @@ extension AddEventHolderViewController {
         return varForReturn
     }
     
-    
+    // MARK: - heightForRowAt
     // настройка высоты ячеек в данамической таблице
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        var varForReturn = 0
         if indexPath.section == 0 {return 43.5}
         if indexPath.section > 0 && indexPath.section <= eventHolder.events.count  {return 200}
-        if indexPath.section == 2 + eventHolder.events.count {return 60}
+        if indexPath.section == 1 + eventHolder.events.count {varForReturn = 60}
         if indexPath.section == 0 && indexPath.row == 3 {return 50}
         if indexPath.section == 0 && indexPath.row == 4 {return 50}
         if indexPath.section == 0 && indexPath.row == 5 {return 50}
-        return 50
+        return CGFloat(varForReturn)
     }
     
     // при нажатии на ячейку
