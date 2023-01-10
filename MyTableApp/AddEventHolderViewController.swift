@@ -112,7 +112,7 @@ class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITab
     // MARK: - savingOrEditEventHolderAndCreateBirthdayEvent
     // функция либо разрешает либо запрещает редактировать поля в зависимости от статуса
     // кнопки saveButtonOutlet - Сохранить или Изменить
-    // а так же создает Юбиляра с событие Birthday по умолчанию и сохраняет его
+    // а так же создает Юбиляра с событием Birthday по умолчанию и сохраняет его
     // в массив events[]
     func savingOrEditEventHolderAndCreateBirthdayEvent(){
         
@@ -129,25 +129,18 @@ class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITab
             
             // скрываем клавиатуру
             self.tableView.endEditing(true)
-            
-            // для корректного формата даты
-            let dateFormatter = DateFormatter()
-            // настроим локализацию - для отображения на русском языке
-            dateFormatter.locale = Locale(identifier: "ru_RU")
-            // настроим вид отображения даты в текстовом виде
-            dateFormatter.dateFormat = "d MMMM yyyy"
-            
-            // проверяем свойство eventHolder, если  оно равно nil то и eventHolder по сути еще не создавался и не сохранялся, тогда создаем новый экземпляр tempEventHolder: EventHolder, потом мы присвоим его eventHolder
+
+            // проверяем свойство eventHolder, если  оно равно nil то eventHolder еще не создавался и не сохранялся, тогда создаем новый экземпляр tempEventHolder: EventHolder, потом мы присвоим его eventHolder
             if eventHolder  == nil  {
                 // создаем новый экземпляр tempEventHolder: EventHolder, потом мы присвоим его eventHolder
                 let tempEventHolder = EventHolder(eventHolderFirstName: firstNameTextFieldCell.textField.text ?? "error",
                                                   eventHolderLastName: lastNameTextFieldCell.textField.text ?? "error",
-                                                  eventHolderBirthdayDate: CustomDate(date: dateFormatter.date(from: dateTextFieldCell.textField.text ?? "11 августа 2011") ?? Date()),
+                                                  eventHolderBirthdayDate: CustomDate(date: dateFormaterCreator().date(from: dateTextFieldCell.textField.text ?? "11 августа 2011") ?? Date()),
                                                   eventHolderPhoneNumber: phoneNumberTextFieldCell.textField.text ?? "error",
                                                   eventHolderSex: currentEventHolderSex,
                                                   eventHolderStatus: currentEventHolderStatus,
                                                   // добавляем сам ДР
-                                                  events: [Event(eventDate: CustomDate(date: dateFormatter.date(from: dateTextFieldCell.textField.text ?? "11 августа 2011") ?? Date()),
+                                                  events: [Event(eventDate: CustomDate(date: dateFormaterCreator().date(from: dateTextFieldCell.textField.text ?? "11 августа 2011") ?? Date()),
                                                                  eventType: .birthday,
                                                                  eventDiscription: "просто др",
                                                                  isActual: true)]
@@ -163,11 +156,11 @@ class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITab
                 
                 tableView.reloadData()
                 
-            } else {
-                // иначе мы можем внести изменения в свойства уже созданного eventHolder а затем сохранить/или пересохранить его в хранилище
+            } else { // если свойство eventHolder не равно nil
+                // и если eventHolder уже создан мы можем внести изменения в его свойства, а затем сохранить/или пересохранить его в хранилище
                 eventHolder.eventHolderFirstName = firstNameTextFieldCell.textField.text ?? "error"
                 eventHolder.eventHolderLastName = lastNameTextFieldCell.textField.text ?? "error"
-                eventHolder.eventHolderBirthdayDate = CustomDate(date: dateFormatter.date(from: dateTextFieldCell.textField.text ?? "11 августа 2011") ?? Date())
+                eventHolder.eventHolderBirthdayDate = CustomDate(date: dateFormaterCreator().date(from: dateTextFieldCell.textField.text ?? "11 августа 2011") ?? Date())
                 eventHolder.eventHolderPhoneNumber = phoneNumberTextFieldCell.textField.text ?? "error"
                 eventHolder.eventHolderSex = currentEventHolderSex
                 eventHolder.eventHolderStatus = currentEventHolderStatus
@@ -175,10 +168,12 @@ class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITab
                 // внесем изменения в хранилище eventsStorage с учетом внесенных изменений в свойство eventHolder текущего контроллера
                 eventsStorage.addChangesOfEventHolderToEventStorage(changedEventHolder: eventHolder)
                 
-                print(eventHolder.events.count)
+                // print(eventHolder.events.count)
                 tableView.reloadData()
             }
         } else {
+            
+            // иначе если кнопка имеем статус "Изменить"
             if saveButtonItem.title == "Изменить" {
                 // меняем название кнопки saveButtonOutlet с "Изменить" на "Сохранить"
                 self.saveButtonItem.title = "Сохранить"
@@ -192,7 +187,7 @@ class AddEventHolderViewController: UIViewController, UITableViewDelegate, UITab
                 self.tableView.endEditing(true)
             }
         }
-        print(eventHolder.events.count)
+        // print(eventHolder.events.count)
     }
 }
 
@@ -484,19 +479,16 @@ extension AddEventHolderViewController {
     @objc
     func saveButtonItemAction() {
         // по нажатию на кнопку сохранить проверяем заполнены ли поля Пол и Статус
-        // и рекомендуем заполнить вызывая UIAlertController
+        // и рекомендуем заполнить вызывая AlertController
         if saveButtonItem.title == "Сохранить" {
             if currentEventHolderStatus == .none && currentEventHolderSex == .none {
-                let alertSexAndStatus = UIAlertController(title: "Внимание!", message: "Вы оставили поля Пол и Статус без изменений, рекомендуем их заполнить", preferredStyle: .alert)
-                presentAlert(alertController: alertSexAndStatus)
+                presentAlertFunc()
             }
             if currentEventHolderStatus == .none && currentEventHolderSex != .none {
-                let alertSexAndStatus = UIAlertController(title: "Внимание!", message: "Вы оставили поле Статус без изменений, рекомендуем его заполнить", preferredStyle: .alert)
-                presentAlert(alertController: alertSexAndStatus)
+                presentAlertFunc()
             }
             if currentEventHolderStatus != .none && currentEventHolderSex == .none {
-                let alertSexAndStatus = UIAlertController(title: "Внимание!", message: "Вы оставили поле Пол без изменений, рекомендуем его заполнить", preferredStyle: .alert)
-                presentAlert(alertController: alertSexAndStatus)
+                presentAlertFunc()
             }
             if currentEventHolderStatus != .none && currentEventHolderSex != .none {
                 savingOrEditEventHolderAndCreateBirthdayEvent()
@@ -509,3 +501,23 @@ extension AddEventHolderViewController {
     }
 }
 
+// MARK: - dateFormaterCreator
+extension AddEventHolderViewController {
+    func dateFormaterCreator() -> DateFormatter {
+        // для корректного формата даты
+        let dateFormatter = DateFormatter()
+        // настроим локализацию - для отображения на русском языке
+        dateFormatter.locale = Locale(identifier: "ru_RU")
+        // настроим вид отображения даты в текстовом виде
+        dateFormatter.dateFormat = "d MMMM yyyy"
+        return dateFormatter
+    }
+}
+
+// MARK: - presentAlertFunc
+extension AddEventHolderViewController {
+    func presentAlertFunc(){
+        let alertSexAndStatus = UIAlertController(title: "Внимание!", message: "Вы оставили поля Пол и Статус без изменений, рекомендуем их заполнить", preferredStyle: .alert)
+        presentAlert(alertController: alertSexAndStatus)
+    }
+}
