@@ -1,5 +1,5 @@
 //
-//  LastNameTextFieldTableViewCell.swift
+//  TextFieldTableViewCell.swift
 //  MyTableApp
 //
 //  Created by Александр Мараенко on 12.09.2022.
@@ -7,29 +7,47 @@
 
 import UIKit
 
-class LastNameTextFieldTableViewCell: UITableViewCell {
-
-    @IBOutlet weak var textField: UITextField!
+class TextFieldTableViewCell: UITableViewCell {
     
+    enum TextFieldType {
+        case firstNameTextField
+        case lastNameTextField
+        case dateTextField
+        case phoneTextField
+    }
+
     var datePicker = UIDatePicker()
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-        
-        //
+    var textField: UITextField!
     
+    init(style: UITableViewCell.CellStyle, reuseIdentifier: String?, textFieldType: TextFieldType) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        textFieldSettings()
+        self.separatorInset = .init(top: 0, left: 20, bottom: 0, right: 20)
+        self.selectionStyle = .none
+        
+        switch textFieldType {
+        case .firstNameTextField:
+            textField.placeholder = "Имя"
+        case .lastNameTextField:
+            textField.placeholder = "Фамилия"
+        case .dateTextField:
+            textField.placeholder = "Дата рождения"
+            datePickerSettings()
+        case .phoneTextField:
+            textField.placeholder = "Номер телефона"
+            textField.keyboardType = UIKeyboardType.phonePad
+        }
+        
         // настроим тулбар
         createAndAddingToolBarToKeyboard()
-        
     }
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        // Configure the view for the selected state
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
-
     func createAndAddingToolBarToKeyboard() {
         // создадим Тулбар, позже расположим его над клавиатурой
         let toolBar = UIToolbar()
@@ -55,7 +73,7 @@ class LastNameTextFieldTableViewCell: UITableViewCell {
     }
 
     //настройка DatePicker, вызывается во viewDidLoad
-    func datePickerSwttings() {
+    func datePickerSettings() {
         // и назначим datePicker способом ввода в текстовое поле
         textField.inputView = datePicker
         // назначим стиль - колесики
@@ -87,5 +105,21 @@ class LastNameTextFieldTableViewCell: UITableViewCell {
         // передадим в текстовое поле dateField строку обработанное форматером принятое от datePicker
         textField.text = formater.string(from: datePicker.date)
     }
+}
 
+extension TextFieldTableViewCell {
+    func textFieldSettings()  {
+        
+        textField = {
+            let textField = UITextField(frame: .zero)
+            contentView.addSubview(textField)
+            textField.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([textField.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
+                                         textField.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 0),
+                                         textField.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
+                                         textField.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: 0)
+                                        ])
+            return textField
+        }()
+    }
 }
