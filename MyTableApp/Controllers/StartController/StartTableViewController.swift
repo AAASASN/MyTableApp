@@ -111,8 +111,7 @@ extension StartTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         // получаем вью контроллер, в который происходит переход
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let detailedEventViewController = storyboard.instantiateViewController(withIdentifier: "DetailedEventViewControllerID") as! DetailedEventViewController
+        let detailedEventViewController = DetailedEventViewController()
         
         // передадим свойству eventHolderAndEvent контроллера на который сейчас будем переходить экземрляр из свойства  eventHolderAndEventArray текущего контороллера
         //detailedEventViewController.eventHolderAndEvent = eventHolderAndEventArray[indexPath.row]
@@ -229,6 +228,7 @@ extension StartTableViewController {
     
     @objc func goToAddEventHolderViewController() {
         let addEventHolderViewController = AddEventHolderViewController()
+        addEventHolderViewController.navigationItem.title = "Добавить Юбиляра"
         navigationController?.pushViewController(addEventHolderViewController, animated: true)
     }
 }
