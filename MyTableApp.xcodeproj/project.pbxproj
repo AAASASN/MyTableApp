@@ -21,19 +21,17 @@
 		114D2660287811F800F44967 /* StartControllerCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114D265F287811F800F44967 /* StartControllerCustomCell.swift */; };
 		114D26622878132600F44967 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114D26612878132600F44967 /* Event.swift */; };
 		114D26652878160A00F44967 /* EventStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114D26642878160A00F44967 /* EventStorage.swift */; };
-		11538CAF28CF8F5000B69B2D /* FirstNameTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11538CAE28CF8F5000B69B2D /* FirstNameTextFieldTableViewCell.swift */; };
+		11538CAF28CF8F5000B69B2D /* TextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11538CAE28CF8F5000B69B2D /* TextFieldTableViewCell.swift */; };
 		11538CB128CF8FB300B69B2D /* LastNameTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11538CB028CF8FB300B69B2D /* LastNameTextFieldTableViewCell.swift */; };
 		11538CB328CF8FE200B69B2D /* DateTextFiedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11538CB228CF8FE200B69B2D /* DateTextFiedTableViewCell.swift */; };
 		11538CB528CF900E00B69B2D /* PhoneNumberTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11538CB428CF900E00B69B2D /* PhoneNumberTextFieldTableViewCell.swift */; };
 		11547FC328941C06001BBBCB /* ChangeEventHolderStatusTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11547FC228941C06001BBBCB /* ChangeEventHolderStatusTableViewController.swift */; };
-		11547FC5289425EC001BBBCB /* ChangeEventHolderStatusCustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11547FC4289425EC001BBBCB /* ChangeEventHolderStatusCustomTableViewCell.swift */; };
 		1191FEC828D8D3F200656B2B /* DetailedEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191FEC728D8D3F200656B2B /* DetailedEventViewController.swift */; };
 		1191FEEE28DAFBE400656B2B /* OneEventSomeHolderTableViewCell_xib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191FEEC28DAFBE400656B2B /* OneEventSomeHolderTableViewCell_xib.swift */; };
 		1191FEEF28DAFBE400656B2B /* OneEventSomeHolderTableViewCell_xib.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1191FEED28DAFBE400656B2B /* OneEventSomeHolderTableViewCell_xib.xib */; };
-		11BF060B294B991B006B6CC0 /* TextViewForDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BF060A294B991B006B6CC0 /* TextViewForDescriptionTableViewCell.swift */; };
+		11BF060E294F2736006B6CC0 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BF060D294F2736006B6CC0 /* Extensions.swift */; };
 		11C2A2E528D62E0F003515F1 /* AddEventHolderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C2A2E428D62E0F003515F1 /* AddEventHolderViewController.swift */; };
 		11D2AB2428C0ABC5002F3748 /* OneEventSomeHolderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D2AB2328C0ABC5002F3748 /* OneEventSomeHolderTableViewCell.swift */; };
-		11D2AB2628C0AC43002F3748 /* AddEventButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D2AB2528C0AC43002F3748 /* AddEventButtonTableViewCell.swift */; };
 		11D5C499292A8C600073DB91 /* ContactsSynchronizeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D5C498292A8C600073DB91 /* ContactsSynchronizeViewController.swift */; };
 		11E640C1288171270018DBD1 /* EventHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E640C0288171270018DBD1 /* EventHolder.swift */; };
 		11F3A6952896A63000EABCE0 /* ChangeEventHolderSexTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F3A6942896A63000EABCE0 /* ChangeEventHolderSexTableViewController.swift */; };
@@ -58,20 +56,19 @@
 		114D265F287811F800F44967 /* StartControllerCustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartControllerCustomCell.swift; sourceTree = "<group>"; };
 		114D26612878132600F44967 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		114D26642878160A00F44967 /* EventStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventStorage.swift; sourceTree = "<group>"; };
-		11538CAE28CF8F5000B69B2D /* FirstNameTextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstNameTextFieldTableViewCell.swift; sourceTree = "<group>"; };
+		11538CAE28CF8F5000B69B2D /* TextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldTableViewCell.swift; sourceTree = "<group>"; };
 		11538CB028CF8FB300B69B2D /* LastNameTextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastNameTextFieldTableViewCell.swift; sourceTree = "<group>"; };
 		11538CB228CF8FE200B69B2D /* DateTextFiedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTextFiedTableViewCell.swift; sourceTree = "<group>"; };
 		11538CB428CF900E00B69B2D /* PhoneNumberTextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberTextFieldTableViewCell.swift; sourceTree = "<group>"; };
 		11547FC228941C06001BBBCB /* ChangeEventHolderStatusTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeEventHolderStatusTableViewController.swift; sourceTree = "<group>"; };
-		11547FC4289425EC001BBBCB /* ChangeEventHolderStatusCustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeEventHolderStatusCustomTableViewCell.swift; sourceTree = "<group>"; };
+		1169C98729573981000AAD8A /* MyTableApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MyTableApp.entitlements; sourceTree = "<group>"; };
 		1191FEC728D8D3F200656B2B /* DetailedEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedEventViewController.swift; sourceTree = "<group>"; };
 		1191FEEC28DAFBE400656B2B /* OneEventSomeHolderTableViewCell_xib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneEventSomeHolderTableViewCell_xib.swift; sourceTree = "<group>"; };
 		1191FEED28DAFBE400656B2B /* OneEventSomeHolderTableViewCell_xib.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OneEventSomeHolderTableViewCell_xib.xib; sourceTree = "<group>"; };
-		11BF060A294B991B006B6CC0 /* TextViewForDescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewForDescriptionTableViewCell.swift; sourceTree = "<group>"; };
+		11BF060D294F2736006B6CC0 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		11C2A2E428D62E0F003515F1 /* AddEventHolderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddEventHolderViewController.swift; path = MyTableApp/AddEventHolderViewController.swift; sourceTree = SOURCE_ROOT; };
 		11D2AB2328C0ABC5002F3748 /* OneEventSomeHolderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneEventSomeHolderTableViewCell.swift; sourceTree = "<group>"; };
-		11D2AB2528C0AC43002F3748 /* AddEventButtonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventButtonTableViewCell.swift; sourceTree = "<group>"; };
-		11D5C498292A8C600073DB91 /* ContactsSynchronizeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContactsSynchronizeViewController.swift; path = Controllers/ContactsSynchronizeViewController/ContactsSynchronizeViewController.swift; sourceTree = "<group>"; };
+		11D5C498292A8C600073DB91 /* ContactsSynchronizeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsSynchronizeViewController.swift; sourceTree = "<group>"; };
 		11E640C0288171270018DBD1 /* EventHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventHolder.swift; sourceTree = SOURCE_ROOT; };
 		11F3A6942896A63000EABCE0 /* ChangeEventHolderSexTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeEventHolderSexTableViewController.swift; sourceTree = "<group>"; };
 		11F88EA328BB847C000E1E59 /* AddEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventViewController.swift; sourceTree = "<group>"; };
@@ -108,16 +105,17 @@
 		114D264828780ED600F44967 /* MyTableApp */ = {
 			isa = PBXGroup;
 			children = (
+				1169C98729573981000AAD8A /* MyTableApp.entitlements */,
 				114D264928780ED600F44967 /* AppDelegate.swift */,
 				114D264B28780ED600F44967 /* SceneDelegate.swift */,
 				114D26632878132C00F44967 /* Model */,
 				11E640CC2886AA020018DBD1 /* Controllers */,
-				11D5C498292A8C600073DB91 /* ContactsSynchronizeViewController.swift */,
 				1191FEF128DAFE0A00656B2B /* OneEventSomeHolderTableViewCell_xib */,
 				114D264F28780ED600F44967 /* Main.storyboard */,
 				114D265228780ED800F44967 /* Assets.xcassets */,
 				114D265428780ED800F44967 /* LaunchScreen.storyboard */,
 				114D265728780ED800F44967 /* Info.plist */,
+				11BF060C294F26C9006B6CC0 /* Extensions */,
 			);
 			path = MyTableApp;
 			sourceTree = "<group>";
@@ -145,7 +143,6 @@
 			isa = PBXGroup;
 			children = (
 				1191FEC728D8D3F200656B2B /* DetailedEventViewController.swift */,
-				11D2AB2528C0AC43002F3748 /* AddEventButtonTableViewCell.swift */,
 				114A906328F8B64B002E8B39 /* TextViewTableViewCell.swift */,
 			);
 			path = DetailedEventViewController;
@@ -165,9 +162,37 @@
 			isa = PBXGroup;
 			children = (
 				11547FC228941C06001BBBCB /* ChangeEventHolderStatusTableViewController.swift */,
-				11547FC4289425EC001BBBCB /* ChangeEventHolderStatusCustomTableViewCell.swift */,
 			);
 			path = ChangeEventHolderStatusTableViewController;
+			sourceTree = "<group>";
+		};
+		11A8858829649A7C00535E68 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				11538CAE28CF8F5000B69B2D /* TextFieldTableViewCell.swift */,
+				11538CB028CF8FB300B69B2D /* LastNameTextFieldTableViewCell.swift */,
+				11538CB228CF8FE200B69B2D /* DateTextFiedTableViewCell.swift */,
+				11538CB428CF900E00B69B2D /* PhoneNumberTextFieldTableViewCell.swift */,
+				114710AA28CB79070091C821 /* SexAndStatusTableViewCell.swift */,
+				110C26B128D36FD900C5DC2A /* AddEventButtonAsTableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		11BF060C294F26C9006B6CC0 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				11BF060D294F2736006B6CC0 /* Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		11BF060F294F2823006B6CC0 /* ContactsSynchronizeController */ = {
+			isa = PBXGroup;
+			children = (
+				11D5C498292A8C600073DB91 /* ContactsSynchronizeViewController.swift */,
+			);
+			path = ContactsSynchronizeController;
 			sourceTree = "<group>";
 		};
 		11D5C45E292688A20073DB91 /* CongratulationViewController */ = {
@@ -191,12 +216,7 @@
 			isa = PBXGroup;
 			children = (
 				11C2A2E428D62E0F003515F1 /* AddEventHolderViewController.swift */,
-				11538CAE28CF8F5000B69B2D /* FirstNameTextFieldTableViewCell.swift */,
-				11538CB028CF8FB300B69B2D /* LastNameTextFieldTableViewCell.swift */,
-				11538CB228CF8FE200B69B2D /* DateTextFiedTableViewCell.swift */,
-				11538CB428CF900E00B69B2D /* PhoneNumberTextFieldTableViewCell.swift */,
-				114710AA28CB79070091C821 /* SexAndStatusTableViewCell.swift */,
-				110C26B128D36FD900C5DC2A /* AddEventButtonAsTableViewCell.swift */,
+				11A8858829649A7C00535E68 /* Cells */,
 				1182AF42293FC31700688586 /* ChangeEventHolderSexTableViewController */,
 				1191FEF228DB15D500656B2B /* ChangeEventHolderStatusTableViewController */,
 			);
@@ -206,6 +226,7 @@
 		11E640CC2886AA020018DBD1 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				11BF060F294F2823006B6CC0 /* ContactsSynchronizeController */,
 				11E640C22885B5400018DBD1 /* StartController */,
 				11E640C32885B5790018DBD1 /* AddEventHolderController */,
 				1191FEE928DA383200656B2B /* DetailedEventViewController */,
@@ -220,7 +241,6 @@
 			children = (
 				11F88EA328BB847C000E1E59 /* AddEventViewController.swift */,
 				11F88EA728BB964C000E1E59 /* SelectEventTypeTableViewController.swift */,
-				11BF060A294B991B006B6CC0 /* TextViewForDescriptionTableViewCell.swift */,
 			);
 			path = AddEventToEventHolder;
 			sourceTree = "<group>";
@@ -298,18 +318,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				1104807E28994F4600A0512B /* CustomDate.swift in Sources */,
-				11538CAF28CF8F5000B69B2D /* FirstNameTextFieldTableViewCell.swift in Sources */,
+				11538CAF28CF8F5000B69B2D /* TextFieldTableViewCell.swift in Sources */,
 				11F3A6952896A63000EABCE0 /* ChangeEventHolderSexTableViewController.swift in Sources */,
-				11547FC5289425EC001BBBCB /* ChangeEventHolderStatusCustomTableViewCell.swift in Sources */,
 				1121AEA32906A13100B05769 /* CongratulationViewController.swift in Sources */,
-				11BF060B294B991B006B6CC0 /* TextViewForDescriptionTableViewCell.swift in Sources */,
 				114A906428F8B64B002E8B39 /* TextViewTableViewCell.swift in Sources */,
+				11BF060E294F2736006B6CC0 /* Extensions.swift in Sources */,
 				11D5C499292A8C600073DB91 /* ContactsSynchronizeViewController.swift in Sources */,
 				114D26652878160A00F44967 /* EventStorage.swift in Sources */,
 				11547FC328941C06001BBBCB /* ChangeEventHolderStatusTableViewController.swift in Sources */,
 				114D26622878132600F44967 /* Event.swift in Sources */,
 				1191FEC828D8D3F200656B2B /* DetailedEventViewController.swift in Sources */,
-				11D2AB2628C0AC43002F3748 /* AddEventButtonTableViewCell.swift in Sources */,
 				11538CB528CF900E00B69B2D /* PhoneNumberTextFieldTableViewCell.swift in Sources */,
 				11E640C1288171270018DBD1 /* EventHolder.swift in Sources */,
 				114710AB28CB79070091C821 /* SexAndStatusTableViewCell.swift in Sources */,
@@ -469,6 +487,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MyTableApp/MyTableApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 47GST27FJ9;
@@ -480,7 +499,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -499,6 +518,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MyTableApp/MyTableApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 47GST27FJ9;
@@ -510,7 +530,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

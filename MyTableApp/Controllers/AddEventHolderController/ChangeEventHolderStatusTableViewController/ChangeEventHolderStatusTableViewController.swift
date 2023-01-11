@@ -10,27 +10,27 @@
 import UIKit
 
 class ChangeEventHolderStatusTableViewController: UITableViewController {
-
+    
     // создадим константу для наполнения ячеек в таблице
     struct ContentForCustomCell {
         let status : EventHolderStatus
         let description : String
     }
     
-    // это будет датаСурс нашей таблицы
-    let tableContent = [ContentForCustomCell(status: .wife, description: "Какай-то комментарий о жене"),
-                        ContentForCustomCell(status: .mother, description: "Какай-то комментарий о маме"),
-                        ContentForCustomCell(status: .father, description: "Какай-то комментарий о папе"),
-                        ContentForCustomCell(status: .brother, description: "Какай-то комментарий о брате"),
-                        ContentForCustomCell(status: .sister, description: "Какай-то комментарий о сестре"),
-                        ContentForCustomCell(status: .son, description: "Какай-то комментарий о сыне"),
-                        ContentForCustomCell(status: .daughter, description: "Какай-то комментарий о дочери"),
-                        ContentForCustomCell(status: .bestFriend, description: "Этот статус подойдет для близких друзей"),
-                        ContentForCustomCell(status: .colleague, description: "Отлично подойдет для коллег и деловых партнеров"),
-                        ContentForCustomCell(status: .schoolFriend, description: "Школьный друг или одногрупник по колледжу"),
-                        ContentForCustomCell(status: .someFriend, description: "Можно выбрать для приятелей и соседей"),
-                        ContentForCustomCell(status: MyTableApp.EventHolderStatus.none, description: "Выбирайте этот статус если не можете определиться со статусом этого контакта"),]
-    
+    // это будет датаСурс таблицы
+    let dataSourseForTable = [(EventHolderStatus.wife, "Какой-то комментарий о жене"),
+                              (.mother, "Какой-то комментарий о маме" ),
+                              (.father, "Какой-то комментарий о папе"),
+                              (.brother, "Какой-то комментарий о брате"),
+                              (.sister, "Какой-то комментарий о сестре"),
+                              (.son, "Какой-то комментарий о сыне"),
+                              (.daughter, "Какой-то комментарий о дочери"),
+                              (.bestFriend, "Этот статус подойдет для близких друзей"),
+                              (.colleague, "Отлично подойдет для коллег и деловых партнеров"),
+                              (.schoolFriend, "Школьный друг или одногрупник по колледжу"),
+                              (.someFriend, "Можно выбрать для приятелей и соседей"),
+                              (.none, "Выбирайте этот статус если не можете определиться со статусом этого контакта")]
+        
     // в этой переменной будет храниться текущий статус
     var selectedStatus : EventHolderStatus = .none
     
@@ -41,59 +41,47 @@ class ChangeEventHolderStatusTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        self.navigationItem.title = "Статус"
+        
+        
+        tableView = UITableView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height), style: .insetGrouped)
     }
-
+    
     // MARK: - Table view data source
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 12
+        return dataSourseForTable.count
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        // создаем экземпляр ячейки из кастомного типа ChangeEventHolderStatusCustomTableViewCell
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ChangeEventHolderStatusCustomTableViewCellId") as! ChangeEventHolderStatusCustomTableViewCell
-        
-        // создаем экземпляр для хранения возможных вариантов наполнения ячейки и присваиваем ему именно то наполнение
-        // которое нам нужно для конкретной ячейки с индексом indexPath.row
-        let stringForEventHolderStatus : ContentForCustomCell = tableContent[indexPath.row]
-        
-        // наполняем лейблы ячейки данными
-        cell.statusNameLabel.text = stringForEventHolderStatus.status.rawValue
-        cell.statusDescriptionLabel.text = stringForEventHolderStatus.description
-        
-        // присваем в свойство .accessoryType значение свойства .checkmark  если self.selectedStatus равен статусу этой ячейки
-        // self.selectedStatus при первом обращении всегда равно .none
-        
-        if selectedStatus == stringForEventHolderStatus.status {
-            cell.accessoryType = .checkmark
-        } else {
-            cell.accessoryType = .none
-        }
-
+        let cell = UITableViewCell()
+        var cellConfig = cell.defaultContentConfiguration()
+        cellConfig.text = dataSourseForTable[indexPath.row].0.rawValue
+        cellConfig.secondaryText = dataSourseForTable[indexPath.row].1
+        cellConfig.secondaryTextProperties.font = .systemFont(ofSize: 14)
+        cellConfig.secondaryTextProperties.color = .systemGray2
+        cell.selectionStyle = .none
+        cell.contentConfiguration = cellConfig
+        if selectedStatus == dataSourseForTable[indexPath.row].0 { cell.accessoryType = .checkmark }
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        60
+    }
+    
+    // действия при нажатии на ячейку
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        // создаем переменную для хранения статуса соответствующего нажатой ячейке
-        let selectedStatus = tableContent[indexPath.row].status
         
         let section = indexPath.section
         let numberOfRows = tableView.numberOfRows(inSection: section)
         
-        // пройдемся циктом по всем  ячейкам секции для того что бы убрать галку .checkmark
+        // пройдемся циклом по всем  ячейкам секции для того что бы убрать галку .checkmark
+        // там где не нужно
         for row in 0..<numberOfRows {
             if let cell = tableView.cellForRow(at: NSIndexPath(row: row, section: section) as IndexPath) {
                 cell.accessoryType = .none
@@ -102,64 +90,20 @@ class ChangeEventHolderStatusTableViewController: UITableViewController {
         
         // ставим галку в нажатой ячейке
         if let cell = tableView.cellForRow(at: indexPath){
+            selectedStatus = dataSourseForTable[indexPath.row].0
             cell.accessoryType = .checkmark
         }
-
-        // вызов обработчика - передаем в замыкание doAfterStatusSelected значение типа
-        // EventHolderStatus в зависимости от .row нажатой ячейки
+        
+        // вызов обработчика - передаем в замыкание doAfterSexSelected значение типа
+        // selectedSex в зависимости от .row нажатой ячейки
         doAfterStatusSelected?(selectedStatus)
         
-        // переход к предыдущему экрану осуществляется средствами  UINavigationController котовый при помощи метода popViewController()
+        // переход к предыдущему экрану осуществляется средствами  UINavigationController котовый при помощи метода popViewController() и
         // возвращает последний UIViewController(или UITableViewController) в массиве контроллеров хранящихся в в самОм навигейшен контороллере
-        // им и является UITableViewController из предыдушего экрана
+        // им и является UITableViewController из предыдушего экрана ( .navigationController это свойство текущего UIViewController(или UITableViewController)
+        // которыое по сути является делегатом UINavigationController в UIViewController(или UITableViewController))
         navigationController?.popViewController(animated: true)
     }
-
-
     
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
 }

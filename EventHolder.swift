@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import UIKit
+
 
 protocol EventHolderProtocol: Codable {
     var eventHolderID: String { get set }
