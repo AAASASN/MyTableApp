@@ -271,7 +271,7 @@ extension AddEventHolderViewController {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         var varForReturn = 0
         if indexPath.section == 0 {return 43.5}
-        if indexPath.section > 0 && indexPath.section <= eventHolder.events.count  {return 200}
+        if indexPath.section > 0 && indexPath.section <= eventHolder.events.count  {return 165}
         if indexPath.section == 1 + eventHolder.events.count {varForReturn = 60}
         if indexPath.section == 0 && indexPath.row == 3 {return 50}
         if indexPath.section == 0 && indexPath.row == 4 {return 50}

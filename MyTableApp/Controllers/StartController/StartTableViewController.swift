@@ -10,13 +10,10 @@ import Contacts
 
 class StartTableViewController: UITableViewController {
     
-    
     var addButtonItem: UIBarButtonItem!
     // кнопка синхронизации контактов из телефонной книги
     var synchronizeButtonItem: UIBarButtonItem!
-    
-    
-    
+        
     // свойство для загрузки в него хранилища с данными
     var eventsStorage : EventStorageProtocol = EventStorage()
     
@@ -26,7 +23,9 @@ class StartTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        buttonItemSettings()
+        // navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .compact)
+        
+        navigationBarAndButtonItemSettings()
         
         // при загрузке viewDidLoad() выгружаем данные из UserDefaults
         eventsStorage.getUpdatedDataToEventStorage()
@@ -75,21 +74,18 @@ extension StartTableViewController {
         dateFormatter.locale = Locale(identifier: "ru_RU")
         dateFormatter.dateFormat = "d MMMM yyyy"
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "startControllerCellReuseIdentifier", for: indexPath) as! StartControllerCustomCell
-        
-        
-        
+        let cell = StartControllerCustomCell()
+
         let tuple = eventHolderAndEventArray[indexPath.row]
         cell.nameLabel.text = tuple.0.eventHolderFirstName + " " + tuple.0.eventHolderLastName
         
         cell.dateLabel.text =  String(tuple.1.eventDate.daysCountBeforeEvent)
-        
-        
-        
+
         let eventDate = formatDateWithoutYear(eventDate: dateFormatter.string(from: tuple.1.eventDate.date))
         cell.eventTypeLabel.text = tuple.1.eventType.rawValue + " " + eventDate
         return cell
     }
+    
     
     // MARK: - numberOfRowsInSection
     // Возвращаем количество строк в секции равное количеству элементов массива
@@ -165,33 +161,31 @@ extension StartTableViewController {
 // MARK: - Кнопка добавить
 extension StartTableViewController {
     
-    func buttonItemSettings() {
+    func navigationBarAndButtonItemSettings() {
+        
+        navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationItem.title = "BirthApp"
         
         addButtonItem = {
-            let addButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(goToAddEventHolderViewController))
+            let addButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
+                                                target: self,
+                                                action: #selector(goToAddEventHolderViewController)
+            )
             return addButtonItem
         }()
         
         synchronizeButtonItem = {
-            
-            //            let synchronizeButtonItem = UIBarButtonItem(image: UIImage(named: "arrow.triangle.2.circlepath.circle.fill"),
-            //                                    landscapeImagePhone: UIImage(named: "arrow.triangle.2.circlepath.circle.fill"),
-            //                                    style: .done,
-            //                                    target: self,
-            //                                    action: #selector(synchronizeItemPressed))
-            
-            //            let synchronizeButtonItem = UIBarButtonItem(image: UIImage(named: "cropped-DD0A1A3D-6D73-49E5-AC79-D6988F4426B9"),
-            //                                                        style: .done,
-            //                                                        target: self,
-            //                                                        action: #selector(synchronizeItemPressed))
-            
-            let synchronizeButtonItem = UIBarButtonItem(title: "Синхр.", style: .done, target: self, action: #selector(synchronizeItemPressed))
-            
+            let synchronizeButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.up.arrow.down.circle" ),
+                                                        style: .done,
+                                                        target: self,
+                                                        action:  #selector(synchronizeItemPressed)
+            )
             return synchronizeButtonItem
         }()
 
-        navigationItem.rightBarButtonItems?.append(addButtonItem)
-        navigationItem.rightBarButtonItems?.append(synchronizeButtonItem)
+        let rightBarButtonItemsArray = [addButtonItem, synchronizeButtonItem]
+        self.navigationItem.rightBarButtonItems = rightBarButtonItemsArray as? [UIBarButtonItem]
+        
     }
     
     // нажатие кнопки Синхронизации контактов

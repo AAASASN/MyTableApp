@@ -47,6 +47,7 @@ class CongratulationViewController: UIViewController {
         
         textLabel = {
             let textLabel = UILabel(frame: .zero)
+            textLabel.numberOfLines = 0
             // textLabel.backgroundColor = .systemGray2
             textLabel.translatesAutoresizingMaskIntoConstraints = false
             return textLabel

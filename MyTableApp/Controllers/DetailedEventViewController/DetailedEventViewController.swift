@@ -16,7 +16,7 @@ class DetailedEventViewController: UIViewController {
 
     // переменные для работы с шириной ячеек
      var texViewCellHeight0 = 60
-     var texViewCellHeight1 = 200
+     var texViewCellHeight1 = 165
      // var texViewCellHeight2 = 470
      var texViewCellHeight3 = 60
     
@@ -44,8 +44,6 @@ class DetailedEventViewController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
-
-        
         
         // зарегистрируем Nib ячейки
         let cellNib = UINib(nibName: "OneEventSomeHolderTableViewCell_xib", bundle: nil)
