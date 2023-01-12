@@ -203,10 +203,12 @@ extension DetailedEventViewController: UITableViewDataSource, UITableViewDelegat
             
             // обновляем состояние хранилища переде передачей из него текста поздравления
             eventsStorage.getUpdatedDataToEventStorage()
+                        
+            let congratulationViewController = CongratulationViewController()
             
-            // получаем вью контроллер, в который происходит переход
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let congratulationViewController = storyboard.instantiateViewController(withIdentifier: "CongratulationViewControllerID") as! CongratulationViewController
+//            // получаем вью контроллер, в который происходит переход
+//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//            let congratulationViewController = storyboard.instantiateViewController(withIdentifier: "CongratulationViewControllerID") as! CongratulationViewController
             
             // передаем текст поздравления
             congratulationViewController.congratulationText = eventsStorage.getEventFromStorageByEventID(eventID: eventHolderAndEventID.1).congratulation
