@@ -16,8 +16,7 @@ class DetailedEventViewController: UIViewController {
 
     // переменные для работы с шириной ячеек
      var texViewCellHeight0 = 60
-     var texViewCellHeight1 = 200
-     // var texViewCellHeight2 = 470
+     var texViewCellHeight1 = 120
      var texViewCellHeight3 = 60
     
     // свойство для загрузки в него хранилища с данными
@@ -44,8 +43,6 @@ class DetailedEventViewController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
-
-        
         
         // зарегистрируем Nib ячейки
         let cellNib = UINib(nibName: "OneEventSomeHolderTableViewCell_xib", bundle: nil)
@@ -203,10 +200,12 @@ extension DetailedEventViewController: UITableViewDataSource, UITableViewDelegat
             
             // обновляем состояние хранилища переде передачей из него текста поздравления
             eventsStorage.getUpdatedDataToEventStorage()
+                        
+            let congratulationViewController = CongratulationViewController()
             
-            // получаем вью контроллер, в который происходит переход
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let congratulationViewController = storyboard.instantiateViewController(withIdentifier: "CongratulationViewControllerID") as! CongratulationViewController
+//            // получаем вью контроллер, в который происходит переход
+//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//            let congratulationViewController = storyboard.instantiateViewController(withIdentifier: "CongratulationViewControllerID") as! CongratulationViewController
             
             // передаем текст поздравления
             congratulationViewController.congratulationText = eventsStorage.getEventFromStorageByEventID(eventID: eventHolderAndEventID.1).congratulation

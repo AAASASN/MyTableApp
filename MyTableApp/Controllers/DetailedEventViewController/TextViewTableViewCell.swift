@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TextViewTableViewCell: UITableViewCell, UITextViewDelegate {
+class TextViewTableViewCell: UITableViewCell {
 
     weak var textView: UITextView!
     
@@ -54,9 +54,6 @@ extension TextViewTableViewCell {
             
         textView.font = UIFont.systemFont(ofSize: 16)
         
-        // назначим ячейку делегатом textView после этого будут работать методы
-        textView.delegate = self
-        
         // настроим тулбар
         createAndAddingToolBarToKeyboard()
         
@@ -66,19 +63,8 @@ extension TextViewTableViewCell {
     }
 }
 
-//// добавим метод textViewDidBeginEditing
-//extension TextViewTableViewCell {
-//
-//    func textViewDidBeginEditing(_ textView: UITextView) {
-//        // Начало, когда вы начинаете редактирование
-//        print("сработал метод textViewDidBeginEditing")
-//    }
-//
-//    func textViewDidEndEditing(_ textView: UITextView) {
-//        print("сработал метод textViewDidEndEditing")
-//    }
-//
-//}
+
+
 
 //MARK: - расширение для работы с тулбаром клавиатуры
 extension TextViewTableViewCell {
