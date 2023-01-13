@@ -4,7 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -12,7 +11,8 @@
         <!--Birthday App-->
         <scene sceneID="Nso-w4-knP">
             <objects>
-                <tableViewController id="61P-PM-i9I" customClass="StartTableViewController" customModule="MyTableApp" sceneMemberID="viewController">
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zwi-UG-d4x" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tableViewController id="61P-PM-i9I" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="30" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="Hoo-PW-kj1">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -90,74 +90,8 @@
                     </navigationItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="zwi-UG-d4x" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1522" y="-164"/>
-        </scene>
-        <!--Congratulation View Controller-->
-        <scene sceneID="DI2-cN-xIP">
-            <objects>
-                <viewController restorationIdentifier="CongratulationViewControllerID" storyboardIdentifier="CongratulationViewControllerID" id="Sk2-GH-k6q" customClass="CongratulationViewController" customModule="MyTableApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="gew-qY-pqn">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lSg-tl-j3l">
-                                <rect key="frame" x="16" y="0.0" width="343" height="572"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="headTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="S8V-3S-yaq">
-                                        <rect key="frame" x="13" y="13" width="317" height="546"/>
-                                        <string key="text">
-Я как человек без раннего опыта в разработке, сам экономист по образованию, хотел бы поделиться и дать понять немножко человеку который только решил встать на этот путь, что ему стоит ожидать на собеседованиях и какие вопросы ему точно надо подтянуть или выучить вовсе. Что хотят услышать работодатели? Что вы должны знать? В интернете пишут много, но на деле человеческий фактор играет свою роль и вас ловят на простых вопросах к которым вы не были готовы.</string>
-                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="trailingMargin" secondItem="S8V-3S-yaq" secondAttribute="trailing" constant="5" id="0UL-7L-L9L"/>
-                                    <constraint firstItem="S8V-3S-yaq" firstAttribute="leading" secondItem="lSg-tl-j3l" secondAttribute="leadingMargin" constant="5" id="EYI-rP-YI1"/>
-                                    <constraint firstItem="S8V-3S-yaq" firstAttribute="top" secondItem="lSg-tl-j3l" secondAttribute="top" constant="13" id="IhD-sQ-gXs"/>
-                                    <constraint firstAttribute="bottom" secondItem="S8V-3S-yaq" secondAttribute="bottom" constant="13" id="zIR-bT-4Bt"/>
-                                </constraints>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lNo-h8-exI">
-                                <rect key="frame" x="16" y="587" width="343" height="60"/>
-                                <color key="backgroundColor" systemColor="linkColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="xiD-7t-5eh"/>
-                                </constraints>
-                                <color key="tintColor" systemColor="systemGroupedBackgroundColor"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" image="phone.circle" catalog="system" title=" Позвонить"/>
-                                <connections>
-                                    <action selector="callButtonTaped:" destination="Sk2-GH-k6q" eventType="touchUpInside" id="hZw-M7-why"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="DfE-o0-gHI"/>
-                        <color key="backgroundColor" systemColor="systemGray6Color"/>
-                        <constraints>
-                            <constraint firstItem="lSg-tl-j3l" firstAttribute="leading" secondItem="DfE-o0-gHI" secondAttribute="leading" constant="16" id="5hs-Q4-i77"/>
-                            <constraint firstItem="lNo-h8-exI" firstAttribute="trailing" secondItem="lSg-tl-j3l" secondAttribute="trailing" id="9Hh-i8-ALY"/>
-                            <constraint firstItem="lNo-h8-exI" firstAttribute="leading" secondItem="lSg-tl-j3l" secondAttribute="leading" id="9nY-Gh-9OQ"/>
-                            <constraint firstItem="DfE-o0-gHI" firstAttribute="trailing" secondItem="lSg-tl-j3l" secondAttribute="trailing" constant="16" id="JRq-iA-D6z"/>
-                            <constraint firstItem="lSg-tl-j3l" firstAttribute="top" secondItem="DfE-o0-gHI" secondAttribute="top" id="ZDm-3t-38A"/>
-                            <constraint firstItem="lNo-h8-exI" firstAttribute="top" secondItem="lSg-tl-j3l" secondAttribute="bottom" constant="15" id="ZZV-yE-cjM"/>
-                            <constraint firstAttribute="bottom" secondItem="lNo-h8-exI" secondAttribute="bottom" constant="20" symbolic="YES" id="oH2-WD-VPo"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="fMS-ms-dl1"/>
-                    <connections>
-                        <outlet property="callButton" destination="lNo-h8-exI" id="tdX-a5-ZWS"/>
-                        <outlet property="textLabel" destination="S8V-3S-yaq" id="T2Y-Oq-e3a"/>
-                        <outlet property="whiteView" destination="lSg-tl-j3l" id="x5K-jN-F2h"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="6eL-66-1qa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3100" y="209.14542728635683"/>
         </scene>
         <!--Birthday App-->
         <scene sceneID="gDX-Sr-2Cm">
@@ -183,10 +117,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="phone.circle" catalog="system" width="128" height="123"/>
-        <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="secondarySystemGroupedBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
@@ -195,12 +125,6 @@
         </systemColor>
         <systemColor name="systemGray3Color">
             <color red="0.7803921568627451" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemGray6Color">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemGroupedBackgroundColor">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
