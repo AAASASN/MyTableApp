@@ -16,8 +16,7 @@ class DetailedEventViewController: UIViewController {
 
     // переменные для работы с шириной ячеек
      var texViewCellHeight0 = 60
-     var texViewCellHeight1 = 165
-     // var texViewCellHeight2 = 470
+     var texViewCellHeight1 = 120
      var texViewCellHeight3 = 60
     
     // свойство для загрузки в него хранилища с данными

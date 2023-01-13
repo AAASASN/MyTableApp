@@ -9,6 +9,7 @@ import UIKit
 
 class StartControllerCustomCell: UITableViewCell {
 
+    var eventHolderPhoto: UIImageView!
     var nameLabel: UILabel!
     var eventTypeLabel: UILabel!
     var dateLabel: UILabel!
@@ -29,13 +30,19 @@ class StartControllerCustomCell: UITableViewCell {
         
         self.accessoryType = .disclosureIndicator
         
+        eventHolderPhoto = UIImageView(image: UIImage(systemName: "person.crop.circle"))
+        eventHolderPhoto.translatesAutoresizingMaskIntoConstraints = false
+        //eventHolderPhoto.backgroundColor = .brown
+        eventHolderPhoto.layer.cornerRadius = eventHolderPhoto.bounds.height/1.5
+        
+        
         nameLabel = UILabel(frame: .zero)
-        nameLabel.font = .systemFont(ofSize: 25)
+        nameLabel.font = .systemFont(ofSize: 20)
         nameLabel.textColor = .darkGray
         
         eventTypeLabel = UILabel(frame: .zero)
-        eventTypeLabel.font = .systemFont(ofSize: 12)
-        eventTypeLabel.textColor = .systemGray2
+        eventTypeLabel.font = .systemFont(ofSize: 9)
+        eventTypeLabel.textColor = .systemGray
 
         dateLabel = UILabel(frame: .zero)
         dateLabel.font = .systemFont(ofSize: 17)
@@ -55,6 +62,8 @@ class StartControllerCustomCell: UITableViewCell {
         secondStackView = UIStackView()
         secondStackView.translatesAutoresizingMaskIntoConstraints = false
         secondStackView.axis = .horizontal
+        secondStackView.spacing = 10
+        secondStackView.addArrangedSubview(eventHolderPhoto)
         secondStackView.addArrangedSubview(firstStackView)
         secondStackView.addArrangedSubview(dateLabel)
         
@@ -64,6 +73,8 @@ class StartControllerCustomCell: UITableViewCell {
                                      secondStackView.topAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.topAnchor, constant: 11),
                                      secondStackView.trailingAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.trailingAnchor, constant: -16),
                                      secondStackView.bottomAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.bottomAnchor, constant: -11),
+                                     eventHolderPhoto.heightAnchor.constraint(equalTo: eventHolderPhoto.widthAnchor),
+                                     eventHolderPhoto.heightAnchor.constraint(equalToConstant: 40)
                                     ])
     }
     

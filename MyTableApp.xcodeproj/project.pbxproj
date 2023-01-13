@@ -226,11 +226,11 @@
 		11E640CC2886AA020018DBD1 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				11BF060F294F2823006B6CC0 /* ContactsSynchronizeController */,
 				11E640C22885B5400018DBD1 /* StartController */,
-				11E640C32885B5790018DBD1 /* AddEventHolderController */,
+				11BF060F294F2823006B6CC0 /* ContactsSynchronizeController */,
 				1191FEE928DA383200656B2B /* DetailedEventViewController */,
 				11D5C45E292688A20073DB91 /* CongratulationViewController */,
+				11E640C32885B5790018DBD1 /* AddEventHolderController */,
 				11F88EA928BBBBF7000E1E59 /* AddEventToEventHolder */,
 			);
 			path = Controllers;
@@ -487,6 +487,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = MyTableApp/MyTableApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -518,6 +519,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = MyTableApp/MyTableApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
